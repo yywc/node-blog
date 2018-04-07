@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
-// import '@/assets/stylus/index.styl'
+import '@/assets/stylus/index.styl'
 
 Vue.config.productionTip = false
 
