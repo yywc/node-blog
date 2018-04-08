@@ -1,5 +1,5 @@
 <template>
-    <div>Hello world!</div>
+    <div>Hello Login!</div>
 </template>
 
 <script type="text/ecmascript-6">
