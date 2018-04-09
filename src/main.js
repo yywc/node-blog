@@ -6,6 +6,7 @@ import router from './router'
 import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import ElementUI from 'element-ui'
+import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/stylus/index.styl'
 
@@ -13,6 +14,7 @@ Vue.config.productionTip = false
 
 fastclick.attach(document.body)
 Vue.use(ElementUI)
+Vue.prototype.$ajax = axios
 
 Vue.use(VueLazyLoad, {
   loading: require('@/assets/imgs/default.png'),

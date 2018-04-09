@@ -76,7 +76,18 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!')
+            // alert('submit!')
+            this.$ajax
+              .post('127.0.0.1:3000/login', {
+                username: this.ruleForm2.userName,
+                pass: this.ruleForm2.pass
+              })
+              .then((res) => {
+                console.log(res)
+              })
+              .catch((error) => {
+                console.log('内部错误: ' + error)
+              })
           } else {
             console.log('error submit!!')
             return false
