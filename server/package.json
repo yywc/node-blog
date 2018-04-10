@@ -1,7 +1,7 @@
 {
   "name": "blog-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "node-blog server",
   "main": "index.js",
   "scripts": {
     "start": "supervisor index.js",
