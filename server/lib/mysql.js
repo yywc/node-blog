@@ -1,7 +1,7 @@
-var mysql = require('mysql')
-var config = require('default.js')
+const mysql = require('mysql')
+const config = require('./default.js')
 
-var pool = mysql.createPool({
+const pool = mysql.createPool({
   host: config.database.HOST,
   user: config.database.USERNAME,
   password: config.database.PASSWORD,
@@ -28,9 +28,8 @@ let query = function (sql, values) {
 }
 
 // 查找用户
-let findUserData = function (name) {
-  console.log(111)
-  let _sql = `select * from blog_user where name="${name}";`
+let findUserData = function (userName, password) {
+  let _sql = `SELECT * FROM blog_user WHERE user_name='${userName}' AND user_password='${password}';`
   return query(_sql)
 }
 

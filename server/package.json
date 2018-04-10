@@ -1,0 +1,19 @@
+{
+  "name": "blog-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "supervisor index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "koa": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "mysql": "^2.15.0",
+    "koa-bodyparser": "^4.2.0",
+    "supervisor": "^0.12.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
