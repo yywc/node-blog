@@ -18,7 +18,11 @@ let query = function (sql, values) {
           if (err) {
             reject(err)
           } else {
-            resolve(rows)
+            if (rows.length > 0) {
+              resolve(1)
+            } else {
+              resolve(0)
+            }
           }
           connection.release()
         })

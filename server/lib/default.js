@@ -1,7 +1,4 @@
 const config = {
-  // 启动端口
-  port: 8088,
-
   // 数据库配置
   database: {
     DATABASE: 'nodeblog',

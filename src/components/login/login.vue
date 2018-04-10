@@ -59,8 +59,8 @@
             // alert('submit!')
             this.$ajax
               .post('api/login', {
-                username: this.ruleForm2.userName,
-                pass: this.ruleForm2.pass
+                userName: this.ruleForm2.userName,
+                password: this.ruleForm2.pass
               })
               .then((res) => {
                 console.log(res)
