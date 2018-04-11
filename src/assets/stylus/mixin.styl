@@ -23,3 +23,9 @@ clear-float()
     overflow: hidden
     clear: both
     content: ''
+
+// 媒体查询
+base_width = 300px
+$pc = "screen and (min-width: " + 3 * base_width + ")"
+$tablet = "screen and (min-width: " + 2 * base_width + ") and (max-width: " + (3 * base_width - 1) + ")"
+$phone = "screen and (max-width: " + (2 * base_width - 1) + ")"

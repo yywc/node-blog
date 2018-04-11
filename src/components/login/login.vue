@@ -1,13 +1,18 @@
 <template>
-  <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+  <el-form :model="loginForm"
+           status-icon
+           :rules="rules"
+           ref="loginForm"
+           label-width="70px"
+           class="login-form">
     <el-form-item label="用户名" prop="userName">
-      <el-input v-model.number="ruleForm2.userName"></el-input>
+      <el-input v-model.number="loginForm.userName"></el-input>
     </el-form-item>
-    <el-form-item label="密码" prop="pass">
-      <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
+    <el-form-item label="密码" prop="password">
+      <el-input type="password" v-model="loginForm.password" auto-complete="off"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+      <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -30,7 +35,7 @@
           }
         }
       }
-      const validatePass = (rule, value, callback) => {
+      const validatePassword = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'))
         } else {
@@ -38,18 +43,18 @@
         }
       }
       return {
-        ruleForm2: {
+        loginForm: {
           userName: '',
-          pass: ''
+          password: ''
         },
-        rules2: {
+        rules: {
           userName: [
             {
               validator: validateUserName, required: true, trigger: 'blur'
             }
           ],
-          pass: [
-            {validator: validatePass, required: true, trigger: 'blur'}
+          password: [
+            {validator: validatePassword, required: true, trigger: 'blur'}
           ]
         }
       }
@@ -58,6 +63,7 @@
       _login(data) {
         login(data)
           .then((res) => {
+            console.log(res.code)
             if (res.code === 200) {
               if (res.data.status === 'success') {
                 this.$router.push('/')
@@ -65,7 +71,7 @@
                 alert('账号或密码错误')
               }
             } else {
-              console.error('内部错误.')
+              console.error(res.data.status)
             }
           })
           .catch((error) => {
@@ -77,8 +83,8 @@
           if (valid) {
             // alert('submit!')
             const data = {
-              userName: this.ruleForm2.userName,
-              password: this.ruleForm2.pass
+              userName: this.loginForm.userName,
+              password: this.loginForm.password
             }
             this._login(data)
           } else {
@@ -86,14 +92,50 @@
             return false
           }
         })
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields()
       }
     }
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" rel="stylesheet/stylus">
+  @import "~@/assets/stylus/mixin.styl"
 
+  html
+    height: 100%
+    body
+      position: relative
+      height: 100%
+
+  @media $phone
+    .login-form
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      margin: auto
+      width: 90%
+      height: 400px
+
+  @media $tablet
+    .login-form
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      margin: auto
+      width: 60%
+      height: 400px
+
+  @media $pc
+    .login-form
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      margin: auto
+      width: 20%
+      height: 400px
 </style>
