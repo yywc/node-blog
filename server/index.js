@@ -9,24 +9,31 @@ const bodyParser = require('koa-bodyparser')
 app.use(bodyParser())
 
 router.post('/login', async (ctx, next) => {
-  let statusCode, data
+  let code, data
   const {userName, password} = ctx.request.body
   const result = await findUserData(userName, password)
-  if (result === 1) {
-    statusCode = 200
-    data = {
-      status: 'success'
+  if (result) {
+    if (result === 1) {
+      code = 200
+      data = {
+        status: 'success'
+      }
+    } else {
+      code = 200
+      data = {
+        status: 'failure'
+      }
     }
   } else {
-    statusCode = 401
+    code = 500
     data = {
-      status: 'failure'
+      status: 'error'
     }
   }
-  ctx.body = {
-    statusCode,
+  ctx.body = JSON.stringify({
+    code,
     data
-  }
+  })
 })
 
 // 加载路由中间件

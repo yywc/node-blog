@@ -13,6 +13,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {login} from '@/common/api/login'
+
   export default {
     name: 'Login',
     data() {
@@ -53,23 +55,34 @@
       }
     },
     methods: {
+      _login(data) {
+        login(data)
+          .then((res) => {
+            if (res.code === 200) {
+              if (res.data.status === 'success') {
+                this.$router.push('/')
+              } else {
+                alert('账号或密码错误')
+              }
+            } else {
+              console.error('内部错误.')
+            }
+          })
+          .catch((error) => {
+            console.error('内部错误: ' + error)
+          })
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // alert('submit!')
-            this.$ajax
-              .post('api/login', {
-                userName: this.ruleForm2.userName,
-                password: this.ruleForm2.pass
-              })
-              .then((res) => {
-                console.log(res)
-              })
-              .catch((error) => {
-                console.log('内部错误: ' + error)
-              })
+            const data = {
+              userName: this.ruleForm2.userName,
+              password: this.ruleForm2.pass
+            }
+            this._login(data)
           } else {
-            console.log('error submit!!')
+            console.error('请检查数据.')
             return false
           }
         })

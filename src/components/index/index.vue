@@ -1,11 +1,5 @@
 <template>
-  <el-container>
-    <el-header>
-      <router-link to="/login">
-        <el-button>注册</el-button>
-      </router-link>
-    </el-header>
-  </el-container>
+  <div>hello world!</div>
 </template>
 
 <script type="text/ecmascript-6">
