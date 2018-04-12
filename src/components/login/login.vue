@@ -103,12 +103,12 @@
     right: 0
     bottom: 0
     left: 0
-    background: url("./bg.jpg") no-repeat center
+    background: url("./bg.jpg") no-repeat left
     background-size: cover
     .login-form
       position: absolute
       top: 45%
-      left: 50%
+      left: 45%
       transform: translate3d(-50%, -50%, 0)
 
   @media $phone
