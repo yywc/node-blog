@@ -1,5 +1,5 @@
 const mysql = require('mysql')
-const config = require('../config/config.js')
+const config = require('../config/dbConfig.js')
 
 const pool = mysql.createPool({
   host: config.database.HOST,
@@ -33,4 +33,10 @@ const query = function (sql, values) {
   })
 }
 
-module.exports = {query}
+// 用户登录
+const userLogin = function (userName, password) {
+  let sql = `SELECT * FROM blog_user WHERE user_name='${userName}' AND user_password='${password}';`
+  return query(sql)
+}
+
+module.exports = {userLogin}

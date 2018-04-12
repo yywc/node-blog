@@ -1,9 +1,7 @@
-const {query} = require('../db/mysql')
+const {login} = require('../router/login/login')
 
-// 用户登录
-const userLogin = function (userName, password) {
-  let sql = `SELECT * FROM blog_user WHERE user_name='${userName}' AND user_password='${password}';`
-  return query(sql)
+const API = {
+  USER_LOGIN: login
 }
 
-module.exports = {userLogin}
+module.exports = API
