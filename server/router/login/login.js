@@ -33,6 +33,8 @@ const login = async (ctx, next) => {
     await userLogin(userName, password)
       .then((res) => {
         if (res.length > 0) {
+          // 设置 session
+          ctx.session.user = userName
           ctx.body = resObj(1, '登录成功')
         } else {
           ctx.body = resObj(2, '用户名或者密码有误')
