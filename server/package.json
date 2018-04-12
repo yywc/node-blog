@@ -11,7 +11,9 @@
     "koa": "^2.5.0",
     "koa-router": "^7.4.0",
     "mysql": "^2.15.0",
-    "koa-bodyparser": "^4.2.0"
+    "koa-bodyparser": "^4.2.0",
+    "koa-session-minimal": "^3.0.4",
+    "koa-mysql-session": "^0.0.2"
   },
   "author": "",
   "license": "ISC"
