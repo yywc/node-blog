@@ -9,35 +9,42 @@ const {userLogin} = require('../../db/mysql')
  * @return
  */
 
-const resObj = (code, msg, resData, token) => {
+const resObj = (code, msg, resData) => {
   return {
     status: code,
     msg: msg,
-    data: resData,
-    token: token
+    data: resData
   }
 }
 
 const login = async (ctx, next) => {
-  const {userName, password} = ctx.request.body
-  if (!userName || !password) {
-    ctx.body = resObj(-1, '用户名密码填写不完整')
+  const {loginName, password} = ctx.request.body
+  if (!loginName || !password) {
+    ctx.body = resObj(-1, '账号密码填写不完整')
     return
   }
-  const userNameReg = /^[a-z]\w{3,15}/
-  if (!userName.match(userNameReg)) {
-    ctx.body = resObj(-1, '用户名格式不正确')
+  const loginNameReg = /^[a-z]\w{3,15}/
+  if (!loginName.match(loginNameReg)) {
+    ctx.body = resObj(-1, '账号格式不正确')
     return
   }
   try {
-    await userLogin(userName, password)
+    const resData = (userName, token) => {
+      return {
+        userName,
+        token
+      }
+    }
+    await userLogin(loginName, password)
       .then((res) => {
-        if (res.length > 0) {
+        if (Array.isArray(res) && res.length > 0) {
           // 设置 session
-          ctx.session.user = userName
-          ctx.body = resObj(1, '登录成功')
+          const userName = res[0].user_name
+          ctx.session.loginName = loginName
+          ctx.session.userName = userName
+          ctx.body = resObj(1, '登录成功', resData(userName, ctx.header.cookie))
         } else {
-          ctx.body = resObj(2, '用户名或者密码有误')
+          ctx.body = resObj(2, '账号或者密码有误')
         }
       })
       .catch((e) => {

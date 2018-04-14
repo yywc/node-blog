@@ -6,8 +6,8 @@
              ref="loginForm"
              label-width="70px"
              class="login-form">
-      <el-form-item label="用户名" prop="userName">
-        <el-input v-model.number="loginForm.userName"></el-input>
+      <el-form-item label="账号" prop="loginName">
+        <el-input v-model.number="loginForm.loginName"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input type="password" v-model="loginForm.password" auto-complete="off"></el-input>
@@ -20,18 +20,19 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import store from 'store'
   import {login} from '@/common/api/login'
 
   export default {
     name: 'Login',
     data() {
-      const validateUserName = (rule, value, callback) => {
+      const validateLoginName = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请输入用户名'))
+          callback(new Error('请输入账号'))
         } else {
-          const userNameReg = /^[a-z]\w{3,15}/
-          if (!userNameReg.exec(value)) {
-            callback(new Error('用户名为4-16个字母或数字,且开头必须为字母'))
+          const loginNameReg = /^[a-z]\w{3,15}/
+          if (!loginNameReg.exec(value)) {
+            callback(new Error('账号为4-16个字母或数字,且开头必须为字母'))
           } else {
             callback()
           }
@@ -46,13 +47,13 @@
       }
       return {
         loginForm: {
-          userName: '',
+          loginName: '',
           password: ''
         },
         rules: {
-          userName: [
+          loginName: [
             {
-              validator: validateUserName, required: true, trigger: 'blur'
+              validator: validateLoginName, required: true, trigger: 'blur'
             }
           ],
           password: [
@@ -62,28 +63,15 @@
       }
     },
     methods: {
-      _login(data) {
-        login(data)
-          .then((res) => {
-            if (res.status === 1) {
-              this.$router.push('/')
-            } else {
-              alert(res.msg)
-            }
-          })
-          .catch((error) => {
-            console.error('内部错误: ' + error)
-          })
-      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // alert('submit!')
             const data = {
-              userName: this.loginForm.userName,
+              loginName: this.loginForm.loginName,
               password: this.loginForm.password
             }
-            this._login(data)
+            login(data)
           } else {
             console.error('请检查数据.')
             return false

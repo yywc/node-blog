@@ -34,8 +34,8 @@ const query = function (sql, values) {
 }
 
 // 用户登录
-const userLogin = function (userName, password) {
-  let sql = `SELECT * FROM blog_user WHERE user_name='${userName}' AND user_password='${password}';`
+const userLogin = function (loginName, password) {
+  let sql = `SELECT * FROM blog_user WHERE login_name='${loginName}' AND login_password='${password}';`
   return query(sql)
 }
 
