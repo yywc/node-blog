@@ -20,7 +20,7 @@
     },
     methods: {
       logout() {
-        if (!Cookies.get('TOKEN')) {
+        if (!isLogin) {
           window.location.reload()
         } else {
           logout()

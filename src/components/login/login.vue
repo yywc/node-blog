@@ -22,6 +22,7 @@
 <script type="text/ecmascript-6">
   import {login} from '@/api/index'
   import Cookies from 'js-cookie'
+  import {isLogin} from '@/common/base'
 
   export default {
     name: 'Login',
@@ -78,7 +79,7 @@
         })
       },
       _login(data) {
-        if (Cookies.get('TOKEN')) {
+        if (isLogin) {
           this.$router.push('/')
         } else {
           login(data)
