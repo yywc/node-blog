@@ -78,19 +78,23 @@
         })
       },
       _login(data) {
-        login(data)
-          .then((res) => {
-            if (res.status === 1) {
-              Cookies.set('TOKEN', 'token', {expires: 30})
-              window.location.reload()
-              this.$router.push('/')
-            } else {
-              console.error(res.msg)
-            }
-          })
-          .catch((error) => {
-            console.log('内部错误: ' + error)
-          })
+        if (Cookies.get('TOKEN')) {
+          this.$router.push('/')
+        } else {
+          login(data)
+            .then((res) => {
+              if (res.status === 1) {
+                Cookies.set('TOKEN', 'token', {expires: 30})
+                window.location.reload()
+                this.$router.push('/')
+              } else {
+                console.error(res.msg)
+              }
+            })
+            .catch((error) => {
+              console.log('内部错误: ' + error)
+            })
+        }
       }
     }
   }

@@ -20,18 +20,22 @@
     },
     methods: {
       logout() {
-        logout()
-          .then((res) => {
-            if (res.status === 1) {
-              Cookies.remove('TOKEN')
-              window.location.reload()
-            } else {
-              console.error(res.data.msg)
-            }
-          })
-          .catch((error) => {
-            console.error('内部错误: ' + error)
-          })
+        if (!Cookies.get('TOKEN')) {
+          window.location.reload()
+        } else {
+          logout()
+            .then((res) => {
+              if (res.status === 1) {
+                Cookies.remove('TOKEN')
+                window.location.reload()
+              } else {
+                console.error(res.data.msg)
+              }
+            })
+            .catch((error) => {
+              console.error('内部错误: ' + error)
+            })
+        }
       }
     }
   }
