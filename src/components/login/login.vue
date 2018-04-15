@@ -20,8 +20,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  // import store from 'store'
-  import {login} from '@/common/api/login'
+  import {login} from '@/api/index'
+  import Cookies from 'js-cookie'
 
   export default {
     name: 'Login',
@@ -66,19 +66,31 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            // alert('submit!')
             const data = {
               loginName: this.loginForm.loginName,
               password: this.loginForm.password
             }
-            if (login(data)) {
-              this.$router.push('/')
-            }
+            this._login(data)
           } else {
             console.error('请检查数据.')
             return false
           }
         })
+      },
+      _login(data) {
+        login(data)
+          .then((res) => {
+            if (res.status === 1) {
+              Cookies.set('TOKEN', 'token', {expires: 30})
+              window.location.reload()
+              this.$router.push('/')
+            } else {
+              console.error(res.msg)
+            }
+          })
+          .catch((error) => {
+            console.log('内部错误: ' + error)
+          })
       }
     }
   }
