@@ -94,7 +94,7 @@
               }
             })
             .catch((error) => {
-              console.log('内部错误: ' + error)
+              console.error('内部错误: ' + error)
             })
         }
       }
