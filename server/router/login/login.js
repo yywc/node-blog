@@ -1,3 +1,4 @@
+const md5 = require('md5')
 const {userLogin} = require('../../db/mysql')
 
 /**
@@ -29,12 +30,6 @@ const login = async (ctx, next) => {
     return
   }
   try {
-    const resData = (userName, token) => {
-      return {
-        userName,
-        token
-      }
-    }
     await userLogin(loginName, password)
       .then((res) => {
         if (Array.isArray(res) && res.length > 0) {
@@ -42,7 +37,9 @@ const login = async (ctx, next) => {
           const userName = res[0].user_name
           ctx.session.loginName = loginName
           ctx.session.userName = userName
-          ctx.body = resObj(1, '登录成功', resData(userName, ctx.header.cookie))
+          ctx.body = resObj(1, '登录成功', userName)
+          // md5 加密设置 response header
+          ctx.set('x-auth-token', md5(ctx.header.cookie.split('=')[1]))
         } else {
           ctx.body = resObj(2, '账号或者密码有误')
         }

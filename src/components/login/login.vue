@@ -20,7 +20,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import store from 'store'
+  // import store from 'store'
   import {login} from '@/common/api/login'
 
   export default {
@@ -71,7 +71,9 @@
               loginName: this.loginForm.loginName,
               password: this.loginForm.password
             }
-            login(data)
+            if (login(data)) {
+              this.$router.push('/')
+            }
           } else {
             console.error('请检查数据.')
             return false

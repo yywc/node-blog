@@ -1,18 +1,20 @@
 import axios from 'axios'
 import config from './config'
-import store from 'store'
+import Cookies from 'js-cookie'
 
 const login = function (data) {
   const url = config.login
-  axios
+  return axios
     .post(url, data)
     .then((res) => {
       const data = res.data
       if (data.status === 1) {
-        store.set('__token__', res.headers['x-auth-token'])
-        store.set('__user__', res.data.data)
+        const token = encodeURIComponent(res.headers['x-auth-token'] + '|' + data.data)
+        Cookies.set('__token__', token, {expires: 30})
+        return true
       } else {
         alert(res.data.msg)
+        return false
       }
     })
     .catch((error) => {

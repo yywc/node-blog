@@ -20,7 +20,7 @@ const store = new MysqlSession({
 
 // 存放sessionId的cookie配置
 const cookie = {
-  maxAge: 24 * 60 * 60 * 1000, // cookie有效时长
+  maxAge: 30 * 24 * 60 * 60 * 1000, // cookie有效时长
   path: '/', // 写cookie所在的路径
   // domain: '', // 写cookie所在的域名
   httpOnly: true, // 是否只用于http请求中获取
