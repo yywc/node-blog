@@ -13,7 +13,8 @@
     "mysql": "^2.15.0",
     "koa-bodyparser": "^4.2.0",
     "koa-session-minimal": "^3.0.4",
-    "koa-mysql-session": "^0.0.2"
+    "koa-mysql-session": "^0.0.2",
+    "md5": "^2.2.1"
   },
   "author": "",
   "license": "ISC"

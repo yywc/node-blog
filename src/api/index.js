@@ -6,7 +6,7 @@ const login = function (data) {
   return axios
     .post(url, data)
     .then((res) => {
-      return Promise.resolve(res.data)
+      return Promise.resolve(res)
     })
     .catch((error) => {
       console.error('内部错误: ' + error)

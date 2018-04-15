@@ -1,3 +1,4 @@
+const md5 = require('md5')
 const {userLogin} = require('../../db/mysql')
 
 /**
@@ -37,6 +38,8 @@ const login = async (ctx, next) => {
           ctx.session.loginName = loginName
           ctx.session.userName = userName
           ctx.body = resObj(1, '登录成功', userName)
+          // md5 加密设置 response header
+          ctx.set('x-auth-token', md5('gyjYYwc.1993'))
         } else {
           ctx.body = resObj(2, '账号或者密码有误')
         }

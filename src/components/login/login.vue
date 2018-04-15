@@ -83,12 +83,13 @@
         } else {
           login(data)
             .then((res) => {
-              if (res.status === 1) {
-                Cookies.set('TOKEN', 'token', {expires: 30})
+              const data = res.data
+              if (data.status === 1) {
+                Cookies.set('TOKEN', res.headers['x-auth-token'], {expires: 30})
                 window.location.reload()
                 this.$router.push('/')
               } else {
-                console.error(res.msg)
+                console.error(data.msg)
               }
             })
             .catch((error) => {
