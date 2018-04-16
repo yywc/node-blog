@@ -1,5 +1,6 @@
 const md5 = require('md5')
-const {userLogin, delSession} = require('../../db/mysql')
+const config = require('../../config/dbConfig')
+const {userLogin} = require('../../db/mysql')
 
 /**
  * 返回值
@@ -19,8 +20,6 @@ const resObj = (code, msg, resData) => {
 }
 
 const login = async (ctx, next) => {
-  // 清除 session
-  delSession()
   const {loginName, password} = ctx.request.body
   if (!loginName || !password) {
     ctx.body = resObj(-1, '账号密码填写不完整')
@@ -39,7 +38,7 @@ const login = async (ctx, next) => {
           const userName = res[0].user_name
           ctx.session.loginName = loginName
           ctx.session.userName = userName
-          ctx.body = resObj(1, '登录成功', userName)
+          ctx.body = resObj(1, '登录成功', {userName, maxAge: config.maxAge})
           // md5 加密设置 response header
           ctx.set('x-auth-token', md5('gyjYYwc.1993'))
         } else {

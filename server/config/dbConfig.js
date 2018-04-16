@@ -1,4 +1,6 @@
 const config = {
+  port: 3000,
+  maxAge: 30 * 24 * 60 * 60 * 1000,
   // 数据库配置
   database: {
     DATABASE: 'nodeblog',

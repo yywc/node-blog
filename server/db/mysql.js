@@ -38,10 +38,5 @@ const userLogin = function (loginName, password) {
   const sql = `SELECT * FROM blog_user WHERE login_name='${loginName}' AND login_password='${password}';`
   return query(sql)
 }
-// 用户登录清除 session 数据库
-const delSession = function () {
-  const sql = `DELETE FROM _mysql_session_store;;`
-  return query(sql)
-}
 
-module.exports = {userLogin, delSession}
+module.exports = {userLogin}

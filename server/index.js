@@ -6,7 +6,6 @@ const config = require('./config/dbConfig')
 const router = require('./router/index')
 
 const app = new Koa()
-const port = 3000
 
 app.use(bodyParser())
 
@@ -20,7 +19,7 @@ const store = new MysqlSession({
 
 // 存放sessionId的cookie配置
 const cookie = {
-  maxAge: 30 * 24 * 60 * 60 * 1000, // cookie有效时长
+  maxAge: config.maxAge, // cookie有效时长
   path: '/', // 写cookie所在的路径
   // domain: '', // 写cookie所在的域名
   httpOnly: true, // 是否只用于http请求中获取
@@ -42,6 +41,6 @@ app
   .use(router.routes())
   .use(router.allowedMethods())
 
-app.listen(port, () => {
-  console.log('Listening at http://localhost:' + port + '\n')
+app.listen(config.port, () => {
+  console.log('Listening at http://localhost:' + config.port + '\n')
 })

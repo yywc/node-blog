@@ -86,7 +86,8 @@
             .then((res) => {
               const data = res.data
               if (data.status === 1) {
-                Cookies.set('TOKEN', res.headers['x-auth-token'], {expires: 30})
+                const maxAge = data.data.maxAge / (24 * 60 * 60 * 1000)
+                Cookies.set('TOKEN', res.headers['x-auth-token'], {expires: maxAge})
                 window.location.reload()
                 this.$router.push('/')
               } else {
