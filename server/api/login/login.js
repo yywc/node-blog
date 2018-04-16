@@ -33,7 +33,7 @@ const login = async (ctx, next) => {
       .then((res) => {
         if (Array.isArray(res) && res.length > 0) {
           // 设置 session
-          const userName = res[0].user_name
+          const userName = res[0].nickname
           ctx.session.loginName = loginName
           ctx.session.userName = userName
           ctx.body = resObj(1, '登录成功', {userName, maxAge: config.maxAge})

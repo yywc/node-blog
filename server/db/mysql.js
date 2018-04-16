@@ -35,8 +35,13 @@ const query = function (sql, values) {
 
 // 用户登录
 const userLogin = function (loginName, password) {
-  const sql = `SELECT * FROM blog_user WHERE login_name='${loginName}' AND login_password='${password}';`
+  const sql = `SELECT * FROM blog_user WHERE name='${loginName}' AND password='${password}';`
   return query(sql)
 }
 
-module.exports = {userLogin}
+// 获取全部文章
+const getAllArtical = function () {
+
+}
+
+module.exports = {userLogin, getAllArtical}
