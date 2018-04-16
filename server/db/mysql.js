@@ -40,8 +40,9 @@ const userLogin = function (loginName, password) {
 }
 
 // 获取全部文章
-const getAllArtical = function () {
-
+const getArticleByAll = function () {
+  const sql = `SELECT * FROM blog_article`
+  return query(sql)
 }
 
-module.exports = {userLogin, getAllArtical}
+module.exports = {userLogin, getArticleByAll}

@@ -8,7 +8,7 @@
 
 <script type="text/ecmascript-6">
   import {isLogin} from '@/common/base'
-  import {logout} from '@/api/index'
+  import {logout, getAllArticle} from '@/api/index'
   import Cookies from 'js-cookie'
 
   export default {
@@ -17,6 +17,15 @@
       return {
         isLogin: isLogin
       }
+    },
+    created() {
+      getAllArticle()
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((e) => {
+          console.error('内部错误: ' + e.toString())
+        })
     },
     methods: {
       logout() {
@@ -33,7 +42,7 @@
               }
             })
             .catch((error) => {
-              console.error('内部错误: ' + error)
+              console.error('内部错误: ' + error.toString())
             })
         }
       }
