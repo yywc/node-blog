@@ -1,3 +1,9 @@
+/**
+ * body 返回值
+ * @param code
+ * @param msg
+ * @returns {{status: *, msg: *}}
+ */
 const resObj = (code, msg) => {
   return {
     status: code,

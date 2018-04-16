@@ -1,5 +1,5 @@
-const {login} = require('../router/login/login')
-const {logout} = require('../router/logout/logout')
+const {login} = require('./login/login')
+const {logout} = require('./logout/logout')
 
 const API = {
   USER_LOGIN: login,

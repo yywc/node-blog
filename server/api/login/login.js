@@ -3,14 +3,12 @@ const config = require('../../config/dbConfig')
 const {userLogin} = require('../../db/mysql')
 
 /**
- * 返回值
- * @param code 返回码
- * @param msg  返回信息
- * @param resData 返回数据
- * @param token token 码
- * @return
+ * body 返回值
+ * @param code
+ * @param msg
+ * @param resData
+ * @returns {{status: *, msg: *, data: *}}
  */
-
 const resObj = (code, msg, resData) => {
   return {
     status: code,
