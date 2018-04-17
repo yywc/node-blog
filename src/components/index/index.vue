@@ -2,26 +2,32 @@
   <div id="index">
     <em>hello world</em>
     <!--登录用户编辑-->
-    <el-button v-if="isLogin" @click="logout">退出</el-button>
+    <el-button v-if="this.$isLogin" @click="logout">退出</el-button>
+    <ArticleItem :articles="this.articles"></ArticleItem>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {isLogin} from '@/common/base'
   import {logout, getAllArticle} from '@/api/index'
   import Cookies from 'js-cookie'
+  import ArticleItem from '@/common/article-item/article-item'
 
   export default {
     name: 'Index',
     data() {
       return {
-        isLogin: isLogin
+        articles: []
       }
     },
     created() {
       getAllArticle()
         .then((res) => {
-          console.log(res.data)
+          if (res.status === 1) {
+            this.articles = res.data
+            console.log(res.data)
+          } else {
+            console.error('内部错误: ' + res.data)
+          }
         })
         .catch((e) => {
           console.error('内部错误: ' + e.toString())
@@ -29,7 +35,7 @@
     },
     methods: {
       logout() {
-        if (!isLogin) {
+        if (!this.$isLogin) {
           window.location.reload()
         } else {
           logout()
@@ -46,6 +52,9 @@
             })
         }
       }
+    },
+    components: {
+      ArticleItem
     }
   }
 </script>

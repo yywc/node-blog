@@ -6,6 +6,7 @@ import router from './router'
 import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import ElementUI from 'element-ui'
+import {isLogin} from '@/assets/js/base'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/stylus/index.styl'
 
@@ -18,6 +19,9 @@ Vue.use(VueLazyLoad, {
   loading: require('@/assets/imgs/default.png'),
   error: require('@/assets/imgs/error.png')
 })
+
+// 校验是否登录
+Vue.prototype.$isLogin = isLogin
 
 /* eslint-disable no-new */
 new Vue({

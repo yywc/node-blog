@@ -42,7 +42,7 @@ const getAllArticle = function () {
   return axios
     .post(url)
     .then((res) => {
-      return Promise.resolve(res)
+      return Promise.resolve(res.data)
     })
     .catch((error) => {
       console.error('内部错误: ' + error)

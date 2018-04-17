@@ -21,8 +21,8 @@
 
 <script type="text/ecmascript-6">
   import {login} from '@/api/index'
+  // import {isLogin} from '@/assets/js/base'
   import Cookies from 'js-cookie'
-  import {isLogin} from '@/common/base'
 
   export default {
     name: 'Login',
@@ -79,7 +79,7 @@
         })
       },
       _login(data) {
-        if (isLogin) {
+        if (this.$isLogin) {
           this.$router.push('/')
         } else {
           login(data)
@@ -88,10 +88,7 @@
               if (data.status === 1) {
                 const maxAge = data.data.maxAge / (24 * 60 * 60 * 1000)
                 Cookies.set('TOKEN', res.headers['x-auth-token'], {expires: maxAge})
-                this.$router.push('/')
-                setTimeout(() => {
-                  window.location.reload()
-                }, 17)
+                window.location.href = window.location.href.split('#')[0]
               } else {
                 alert(data.msg)
               }
