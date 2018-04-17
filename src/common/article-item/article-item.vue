@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-for="article in articles" :key="article.id">
+    <article v-for="article in articles" :key="article.id">
       <h1>{{article.title}}</h1>
       <p>{{article.content}}</p>
-    </div>
+    </article>
   </div>
 </template>
 
