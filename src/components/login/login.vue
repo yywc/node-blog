@@ -111,7 +111,7 @@
     right: 0
     bottom: 0
     left: 0
-    background: url("./bg.jpg") no-repeat left
+    background: url("~@/assets/imgs/bg.jpg") no-repeat left
     background-size: cover
     .login-form
       position: absolute
