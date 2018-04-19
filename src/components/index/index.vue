@@ -20,7 +20,7 @@
           </el-col>
         </el-row>
       </nav>
-      <img src="~@/assets/imgs/header.png" alt="无欲则刚">
+      <img src="~@/assets/imgs/header.png" @click="extraScene" alt="无欲则刚">
     </header>
     <el-main>
       <div class="article-wrapper">
@@ -32,9 +32,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {logout, getAllArticle} from '@/api/index'
-  import Cookies from 'js-cookie'
   import ArticleItem from '@/common/article-item/article-item'
+  import Cookies from 'js-cookie'
+  import {logout, getAllArticle} from '@/api/index'
 
   export default {
     name: 'Index',
@@ -44,6 +44,7 @@
       }
     },
     created() {
+      this.extraSceneTrigger = 0
       getAllArticle()
         .then((res) => {
           if (res.status === 1) {
@@ -74,6 +75,24 @@
               console.error('内部错误: ' + error.toString())
             })
         }
+      },
+      extraScene() {
+        this.extraSceneTrigger++
+        if (this.extraSceneTrigger > 5) {
+          this.$alert('将子无怒，秋以为期', '眼已望穿', {
+            showConfirmButton: false,
+            center: true,
+            lockScroll: false,
+            callback: () => {
+            }
+          })
+          // alert('将子无怒，秋以为期')
+        } else if (!this.extraSceneTimer) {
+          this.extraSceneTimer = setTimeout(() => {
+            this.extraSceneTrigger = 0
+            this.extraSceneTimer = null
+          }, 1500)
+        }
       }
     },
     components: {
@@ -87,7 +106,7 @@
 
   .header
     padding-top: 100px;
-    height: 150px
+    height: 105px
     .top
       position: fixed
       top: 0
@@ -126,7 +145,7 @@
     img
       display: block
       margin: 0 auto
-      width: 500px
+      width: 400px
 
   .article-wrapper
     margin: 0 auto
