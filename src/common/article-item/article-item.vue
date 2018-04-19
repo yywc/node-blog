@@ -4,10 +4,10 @@
       <h1>{{article.title}}</h1>
       <p>
         {{
-        article.content.length > 90 ? article.content.slice(0, 90) + '...' :article.content
+        getContent(article)
         }}
       </p>
-      <a href="#"><img src="~@/assets/imgs/desk.jpg" alt=""></a>
+      <a href="#" v-if="article.id!==3"><img src="~@/assets/imgs/desk.jpg" alt=""></a>
       <div><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 / </em><em>分享</em></div>
     </article>
   </div>
@@ -24,7 +24,10 @@
         }
       }
     },
-    created() {
+    methods: {
+      getContent(article) {
+        return article.id !== 3 ? article.content.length > 90 ? article.content.slice(0, 90) + '...' : article.content : article.content.length > 350 ? article.content.slice(0, 350) + '...' : article.content
+      }
     }
   }
 </script>
@@ -40,6 +43,7 @@
       margin: 40px 20px
       padding: 0 24px
       width: 560px
+      height: 350px
       border-top: 1px solid $line-dark
       box-sizing: border-box
       h1
@@ -52,6 +56,7 @@
         no-wrap()
       p
         text-indent: 2em
+        min-height: 50px
         line-height: 1.8
         font-size: $text-size-medium
         color: $text-primary-dark
@@ -60,7 +65,7 @@
           display: block
           margin: 10px auto
           width: 452px
-          height: 220px
+          height: 180px
       div
         height: 40px
         line-height: 40px
