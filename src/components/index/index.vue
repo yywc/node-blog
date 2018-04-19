@@ -102,7 +102,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "~@/assets/stylus/design"
+  @import "~@/assets/stylus/mixin"
 
   .header
     padding-top: 100px;
@@ -113,10 +113,11 @@
       right: 0
       left: 0
       height: 60px
-      border-bottom: 1px solid $dividing-line-dark
-      box-shadow: 1px 1px 5px $dividing-line-dark
+      border-bottom: 1px solid $line-dark
+      box-shadow: 1px 1px 5px $line-dark
       box-sizing: border-box
       background: $white
+      z-index: $z-index-top
       ._row-bg_
         margin: 0 auto
         width: 1200px
