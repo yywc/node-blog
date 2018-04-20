@@ -40,13 +40,19 @@
     .article
       position: relative;
       float: left
-      margin: 40px 20px
+      margin-top: 75px;
       padding: 0 24px
-      width: 560px
+      width: 510px
       height: 375px
       box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.25);
       border-radius: 5px
       box-sizing: border-box
+      &:first-of-type, &:nth-of-type(2)
+        margin-top: 0
+      &:nth-of-type(odd)
+        margin-left: 52.5px
+      &:nth-of-type(even)
+        margin-left: 75px
       h1
         padding: 0 14px
         height: 60px
@@ -65,7 +71,7 @@
         img
           display: block
           margin: 10px auto
-          width: 452px
+          width: 410px
           height: 180px
       div
         position: absolute

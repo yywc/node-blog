@@ -5,10 +5,10 @@
         <el-row type="flex" class="row-bg _row-bg_" align="middle">
           <el-col :span="4">
             <!--登录用户编辑-->
-            <el-button class="user" type="text">
-            <span class="avatar">
-              <img src="@/assets/imgs/avatar.jpg" alt="">
-            </span>
+            <el-button class="user" type="text" onclick="location.reload()">
+              <span class="avatar">
+                <img src="@/assets/imgs/avatar.jpg" alt="">
+              </span>
               <em class="user-name">眼已望穿</em>
             </el-button>
           </el-col>
@@ -16,18 +16,61 @@
             <h1 class="title">岂曰无衣 与子同袍</h1>
           </el-col>
           <el-col :span="4">
-            <el-button v-if="this.$isLogin" @click="logout" type="text">退出</el-button>
+            <el-button class="logout" v-if="this.$isLogin" @click="logout" type="text"><i
+              class="iconfont icon-logout"></i>退出
+            </el-button>
           </el-col>
         </el-row>
       </nav>
       <img src="~@/assets/imgs/header.png" @click="extraScene" alt="无欲则刚">
     </header>
+    <nav class="nav">
+      <ul class="menu">
+        <li>
+          <a href="#"><i class="iconfont icon-home"></i>首页</a>
+        </li>
+        <li>
+          <a href="#"><i class="iconfont icon-computer"></i>技术</a>
+        </li>
+        <li>
+          <a href="#"><i class="iconfont icon-page"></i>杂谈</a>
+        </li>
+        <li>
+          <a href="#"><i class="iconfont icon-category"></i>分类</a>
+        </li>
+        <li>
+          <a href="#"><i class="iconfont icon-message"></i>留言</a>
+        </li>
+        <li>
+          <a href="#"><i class="iconfont icon-statistics"></i>统计</a>
+        </li>
+        <li>
+          <a href="#"><i class="iconfont icon-people"></i>关于</a>
+        </li>
+      </ul>
+    </nav>
     <el-main>
       <div class="article-wrapper">
         <ArticleItem :articles="this.articles"></ArticleItem>
       </div>
     </el-main>
-    <el-footer>111</el-footer>
+    <el-footer>
+      <em>版权所有 © (2018 - ?)</em>
+      <em class="dividing">|</em>
+      <em>独家赞助: 深圳市爱望舒科技有限公司 (我还没注册)</em>
+      <em class="dividing">|</em>
+      <a href="https://github.com/yywc" target="_blank">
+        <i class="iconfont icon-github"></i>
+      </a>
+      <em class="dividing">|</em>
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=gyjyywc@gmail.com" target="_blank">
+        <i class="iconfont icon-email"></i>
+      </a>
+      <em class="dividing">|</em>
+      <a href="https://weibo.com/u/3294217170" target="_blank">
+        <i class="iconfont icon-microblog"></i>
+      </a>
+    </el-footer>
   </el-container>
 </template>
 
@@ -106,17 +149,18 @@
 
   .header
     padding-top: 100px;
-    height: 105px
+    height: 120px
     .top
       position: fixed
       top: 0
       right: 0
       left: 0
       height: 60px
+      color: $text-secondary-light
       border-bottom: 1px solid $line-dark
-      box-shadow: 1px 1px 5px $line-dark
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.7)
       box-sizing: border-box
-      background: $white
+      background: $blue-grey-800
       z-index: $z-index-top
       ._row-bg_
         margin: 0 auto
@@ -139,16 +183,61 @@
               vertical-align: middle
               border-radius: 50%
           .user-name
-            color: $text-secondary-dark
+            color: $text-secondary-light
+          &:hover .user-name
+            color: $green-500
+        .logout
+          color: $text-secondary-light
+          &:hover
+            color: $green-500
         .title
           text-align: center
-          color: $text-secondary-dark
+          color: $text-primary-light
+        .iconfont
+          margin-right: 3px
+          font-size: $text-size-medium
+          vertical-align: middle
     img
       display: block
       margin: 0 auto
       width: 400px
 
+  .nav
+    margin-bottom: 40px
+    width: 100%
+    height: 40px
+    .menu
+      margin: 0 auto
+      width: 1200px
+      height: 40px
+      line-height: 40px
+      text-align: center
+      li
+        display: inline-block
+        padding: 0 15px
+        color: $text-secondary-dark
+        &:hover
+          color: $green-500
+      .iconfont
+        margin-right: 3px
+
   .article-wrapper
     margin: 0 auto
     width: 1200px
+
+  .el-footer
+    display: flex
+    align-items: center
+    font-size: $text-size-small
+    justify-content: center
+    color: $text-secondary-light
+    background: $blue-grey-800
+    border-top: 1px solid $line-dark;
+    .dividing
+      margin: 0 7px
+      font-size: $text-size-large
+    .iconfont
+      font-size: $icon-size-large-x
+      &:hover
+        color: $green-500
 </style>
