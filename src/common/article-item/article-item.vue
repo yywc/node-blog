@@ -43,8 +43,9 @@
       margin: 40px 20px
       padding: 0 24px
       width: 560px
-      height: 350px
-      border-top: 1px solid $line-dark
+      height: 375px
+      box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.25);
+      border-radius: 5px
       box-sizing: border-box
       h1
         padding: 0 14px
@@ -67,6 +68,10 @@
           width: 452px
           height: 180px
       div
+        position: absolute
+        right: 0
+        bottom: 10px
+        left: 0
         height: 40px
         line-height: 40px
         text-align: center
