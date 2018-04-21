@@ -75,6 +75,7 @@
       .user
         display: inline-block
         height: 100%
+        font-size: $text-size-medium
         .avatar
           display: inline-block
           padding: 0 7px
@@ -100,6 +101,5 @@
       .iconfont
         margin-right: 3px
         font-size: $text-size-medium
-        vertical-align: middle
 
 </style>

@@ -70,6 +70,7 @@
       &:nth-of-type(even)
         margin-left: 75px
       h1
+        margin-top: 10px
         padding: 0 14px
         height: 60px
         line-height: 60px
