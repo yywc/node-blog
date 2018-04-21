@@ -3,12 +3,12 @@
     <el-row type="flex" class="row-bg _row-bg_" align="middle">
       <el-col :span="4">
         <!--登录用户编辑-->
-        <el-button class="user" type="text" onclick="location.reload()">
+        <router-link class="user" to="/">
               <span class="avatar">
                 <img src="@/assets/imgs/avatar.jpg" alt="">
               </span>
           <em class="user-name">眼已望穿</em>
-        </el-button>
+        </router-link>
       </el-col>
       <el-col :span="16">
         <h1 class="title">岂曰无衣 与子同袍</h1>

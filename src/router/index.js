@@ -15,6 +15,12 @@ const Index = (resolve) => {
   })
 }
 
+const Article = (resolve) => {
+  import('@/components/article/article').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -26,6 +32,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/article/:id',
+      name: 'Article',
+      component: Article
     }
   ]
 })

@@ -1,13 +1,19 @@
 <template>
   <div class="wrapper">
     <article class="article" v-for="article in articles" :key="article.id">
-      <h1>{{article.title}}</h1>
+      <h1>
+        <router-link :to="getArticlePath(article)">
+          {{article.title}}
+        </router-link>
+      </h1>
       <p>
         {{
         getContent(article)
         }}
       </p>
-      <a href="#" v-if="article.id!==3"><img src="~@/assets/imgs/desk.jpg" alt=""></a>
+      <router-link :to="getArticlePath(article)" v-if="article.avatar">
+        <img :src="article.avatar" :alt="article.title">
+      </router-link>
       <div><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 / </em><em>分享</em></div>
     </article>
   </div>
@@ -26,7 +32,17 @@
     },
     methods: {
       getContent(article) {
-        return article.id !== 3 ? article.content.length > 90 ? article.content.slice(0, 90) + '...' : article.content : article.content.length > 350 ? article.content.slice(0, 350) + '...' : article.content
+        if (article.avatar) {
+          if (article.content.length > 90) {
+            return article.content.slice(0, 90) + '...'
+          }
+        } else if (article.content.length > 300) {
+          return article.content.slice(0, 300) + '...'
+        }
+        return article.content
+      },
+      getArticlePath(article) {
+        return `/article/${article.id}`
       }
     }
   }
@@ -61,6 +77,8 @@
         font-size: $text-size-large-x
         text-align: center
         no-wrap()
+        a:hover
+          color: $green-500
       p
         text-indent: 2em
         min-height: 50px
@@ -73,6 +91,7 @@
           margin: 10px auto
           width: 410px
           height: 180px
+          border-radius: 3px
       div
         position: absolute
         right: 0
