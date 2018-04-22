@@ -49,8 +49,24 @@ const getAllArticle = function () {
     })
 }
 
+/**
+ * 获取某一篇文章
+ */
+const getArticle = function (data) {
+  const url = config.getArticle
+  return axios
+    .post(url, data)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
 export {
   login,
   logout,
-  getAllArticle
+  getAllArticle,
+  getArticle
 }

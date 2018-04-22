@@ -12,5 +12,9 @@
   }
 </script>
 
-<style>
+<style lang="stylus" rel="stylesheet/stylus">
+  html, body
+    height: 100%
+    #app
+      height: 100%
 </style>

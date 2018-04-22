@@ -7,13 +7,18 @@
               <span class="avatar">
                 <img src="@/assets/imgs/avatar.jpg" alt="">
               </span>
-          <em class="user-name">眼已望穿</em>
+          <span class="user-name">眼已望穿</span>
         </router-link>
       </el-col>
       <el-col :span="16">
         <h1 class="title">岂曰无衣 与子同袍</h1>
       </el-col>
       <el-col :span="4">
+        <router-link to="/">
+          <el-button class="home" v-if="isArticlePage" type="text">
+            <i class="iconfont icon-home"></i>首页
+          </el-button>
+        </router-link>
         <el-button class="logout" v-if="this.$isLogin" @click="logout" type="text"><i
           class="iconfont icon-logout"></i>退出
         </el-button>
@@ -28,6 +33,12 @@
 
   export default {
     name: 'MHeader',
+    props: {
+      isArticlePage: {
+        type: Boolean,
+        default: false
+      }
+    },
     methods: {
       logout() {
         if (!this.$isLogin) {
@@ -91,7 +102,9 @@
           color: $text-secondary-light
         &:hover .user-name
           color: $green-500
-      .logout
+      .home
+        margin-right: 10px
+      .logout, .home
         color: $text-secondary-light
         &:hover
           color: $green-500

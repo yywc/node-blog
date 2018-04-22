@@ -1,4 +1,4 @@
-const {getArticleByAll} = require('../../db/mysql')
+const {getArticleByAll, getArticleById} = require('../../db/mysql')
 
 /**
  * 返回值
@@ -24,4 +24,18 @@ const getAllArticle = async (ctx, next) => {
     })
 }
 
-module.exports = {getAllArticle}
+const getArticle = async (ctx, next) => {
+  const {articleId} = ctx.request.body
+  await getArticleById(articleId)
+    .then((res) => {
+      ctx.body = resObj(1, res)
+    })
+    .catch((e) => {
+      ctx.body = resObj(0, e.toString())
+    })
+}
+
+module.exports = {
+  getAllArticle,
+  getArticle
+}

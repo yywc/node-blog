@@ -35,14 +35,24 @@ const query = function (sql, values) {
 
 // 用户登录
 const userLogin = function (loginName, password) {
-  const sql = `SELECT * FROM blog_user WHERE name='${loginName}' AND password='${password}';`
+  const sql = `SELECT * FROM blog_user WHERE name='${loginName}' AND password='${password}' LIMIT 1;`
   return query(sql)
 }
 
 // 获取全部文章
 const getArticleByAll = function () {
-  const sql = `SELECT * FROM blog_article`
+  const sql = `SELECT * FROM blog_article;`
   return query(sql)
 }
 
-module.exports = {userLogin, getArticleByAll}
+// 查看某一篇文章
+const getArticleById = function (id) {
+  const sql = `SELECT * FROM blog_article WHERE id='${id}' LIMIT 1;`
+  return query(sql)
+}
+
+module.exports = {
+  userLogin,
+  getArticleByAll,
+  getArticleById
+}
