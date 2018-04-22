@@ -83,8 +83,6 @@
     .nav
       width: 100%
       height: 50px
-      border-bottom: 1px solid $line-dark
-      box-shadow: 1px 2px 3px $line-dark
       .menu
         margin: 0 auto
         width: 1200px

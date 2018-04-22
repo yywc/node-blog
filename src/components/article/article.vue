@@ -10,8 +10,8 @@
       </div>
       <p class="content">{{this.article.content}}</p>
       <div class="page">
-        <span><< 上一篇</span>
-        <span class="next">下一篇 >></span>
+        <span>上一篇</span>
+        <span class="next">下一篇</span>
       </div>
     </div>
     <el-footer>
@@ -47,6 +47,14 @@
       },
       getTime(article) {
         return article.create_date ? article.create_date.split('T')[0] : ''
+      }
+    },
+    watch: {
+      '$route'(to, from) {
+        // data数据操作
+        if (to.name === 'Article') {
+          this._getArticle({articleId: this.$route.params.id})
+        }
       }
     },
     components: {
