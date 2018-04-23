@@ -18,15 +18,9 @@ const query = function (sql, values) {
           if (err) {
             reject(err)
           } else {
-            connection.query(sql, values, (err, rows) => {
-              if (err) {
-                reject(err)
-              } else {
-                resolve(rows)
-              }
-              connection.release()
-            })
+            resolve(rows)
           }
+          connection.release()
         })
       }
     })
