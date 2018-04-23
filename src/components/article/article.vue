@@ -119,14 +119,15 @@
       .page
         position: relative
         margin-top: 25px
-        padding-top: 20px
-        border-top: 1px solid $line-dark
+        padding-top: 15px
+        font-size: $text-size-medium
         color: $text-secondary-dark
+        border-top: 1px solid $line-dark
         .next
           position: absolute
           right: 0
       .entry-tag
-        margin: 50px auto 30px
+        margin: 50px auto 15px
         width: 680px
         box-sizing: border-box
         .tag
@@ -139,7 +140,7 @@
             height: 22px
             line-height: 22px
             color: $white
-            font-size: $text-size-medium
+            font-size: $text-size-small
           .dark
             padding: 0 7px
             border-bottom-left-radius: 4px
