@@ -6,25 +6,30 @@
       status-icon
       ref="loginForm"
       :model="loginForm"
-      :rules="rules">
+      :rules="rules"
+    >
       <el-form-item
         label="账号"
-        prop="loginName">
+        prop="loginName"
+      >
         <el-input v-model.number="loginForm.loginName"></el-input>
       </el-form-item>
       <el-form-item
         label="密码"
-        prop="password">
+        prop="password"
+      >
         <el-input
           type="password"
           auto-complete="off"
-          v-model="loginForm.password">
+          v-model="loginForm.password"
+        >
         </el-input>
       </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
-          @click="submitForm('loginForm')">
+          @click="submitForm('loginForm')"
+        >
           登录
         </el-button>
       </el-form-item>

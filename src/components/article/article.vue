@@ -1,17 +1,47 @@
 <template>
   <el-container>
-    <the-header :is-article-page="true"></the-header>
+    <the-header></the-header>
     <div class="main">
-      <h1 class="title">{{ this.article.title }}</h1>
+      <h1 class="title">
+        {{ this.article.title }}
+      </h1>
       <div class="meta">
-        <time :datetime="getTime">{{ getTime }}</time>
+        <span>javascript</span>
         <span>/</span>
-        <span>点赞数 23 / 阅读数 25 / 评论 11</span>
+        <time :datetime="getTime">{{ getTime }}</time>
       </div>
       <p class="content">{{ this.article.content }}</p>
       <div class="page">
         <span>上一篇</span>
         <span class="next">下一篇</span>
+      </div>
+      <div class="entry-tag">
+        <a
+          class="tag"
+          href="#"
+        >
+          <em class="dark">tag</em>
+          <em class="light">方法</em>
+        </a>
+        <a
+          class="tag"
+          href="#"
+        >
+          <em class="dark">tag</em>
+          <em class="light">javascript</em>
+        </a>
+      </div>
+      <div class="user-detail">
+        <img
+          class="user-avatar"
+          src="~@/assets/imgs/avatar.jpg"
+          alt="眼已望穿"
+        >
+        <div class="user-info">
+          <p class="user-name">眼已望穿</p>
+          <p class="user-desc">暂时不知道写什么东西</p>
+        </div>
+        <button class="share">分享</button>
       </div>
     </div>
     <el-footer>
@@ -73,7 +103,7 @@
     height: 100%
     .main
       margin: 60px auto 0
-      width: 1200px
+      width: 800px
       height: 100%
       .title
         margin: 70px 0 10px
@@ -85,16 +115,77 @@
         text-align: center
         font-size: $text-size-medium
       .content
-        padding-bottom: 30px
         line-height: 1.8
-        border-bottom: 1px solid $line-dark
       .page
         position: relative
-        margin: 20px 0
+        margin-top: 25px
+        padding-top: 20px
+        border-top: 1px solid $line-dark
         color: $text-secondary-dark
         .next
           position: absolute
           right: 0
+      .entry-tag
+        margin: 50px auto 30px
+        width: 680px
+        box-sizing: border-box
+        .tag
+          display: inline-block
+          margin-right: 10px
+          height: 22px
+          font-size: 0
+          .tag-common
+            display: inline-block
+            height: 22px
+            line-height: 22px
+            color: $white
+            font-size: $text-size-medium
+          .dark
+            padding: 0 7px
+            border-bottom-left-radius: 4px
+            border-top-left-radius: 4px
+            background: #5e5e5e
+            @extends .el-container .main .entry-tag .tag .tag-common
+          .light
+            padding: 0 5px
+            border-bottom-right-radius: 4px
+            border-top-right-radius: 4px
+            background: #59c441
+            @extend .el-container .main .entry-tag .tag .tag-common
+      .user-detail
+        display: flex
+        align-items: center
+        margin: 0 auto
+        padding: 30px 40px
+        width: 680px
+        height: 126px
+        border: 1px solid $line-dark
+        border-radius: 5px
+        box-sizing: border-box
+        background: $grey-100
+        .user-avatar
+          flex: 0 0 64px
+          margin-right: 15px
+          width: 64px
+          height: 64px
+          border-radius: 50%
+        .user-info
+          display: flex
+          flex: 1
+          flex-direction: column
+          .user-name
+            flex: 1
+            line-height: 32px
+            font-size: $text-size-large-x
+          .user-desc
+            flex: 1
+            line-height: 32px
+            font-size: $text-size-medium
+            color: $text-secondary-dark
+        .share
+          flex: 0 0 100px
+          height: 34px
+          box-sizing: border-box
 
   .el-footer
     background: $blue-grey-800

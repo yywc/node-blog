@@ -3,17 +3,20 @@
     <el-row
       class="row-bg _row-bg_"
       type="flex"
-      align="middle">
+      align="middle"
+    >
       <el-col :span="4">
         <!--登录用户编辑-->
         <router-link
           class="user"
-          to="/">
+          to="/"
+        >
               <span class="avatar">
                 <img
                   class="avatar-pic"
                   src="@/assets/imgs/avatar.jpg"
-                  alt="眼已望穿">
+                  alt="眼已望穿"
+                >
               </span>
           <span class="user-name">眼已望穿</span>
         </router-link>
@@ -22,19 +25,12 @@
         <h1 class="title">岂曰无衣 与子同袍</h1>
       </el-col>
       <el-col :span="4">
-        <router-link to="/">
-          <el-button
-            class="home"
-            type="text"
-            v-if="isArticlePage">
-            <i class="iconfont icon-home"></i>首页
-          </el-button>
-        </router-link>
         <el-button
           class="logout"
           type="text"
           v-if="this.$isLogin"
-          @click="$_logout">
+          @click="$_logout"
+        >
           <i class="iconfont icon-logout"></i>退出
         </el-button>
       </el-col>
@@ -48,12 +44,6 @@
 
   export default {
     name: 'TheHeader',
-    props: {
-      isArticlePage: {
-        type: Boolean,
-        default: false
-      }
-    },
     methods: {
       $_logout() {
         if (!this.$isLogin) {

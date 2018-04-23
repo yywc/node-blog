@@ -3,21 +3,25 @@
     <article
       class="article"
       v-for="article in articles"
-      :key="article.id">
+      :key="article.id"
+    >
       <h1 class="title">
         <router-link
           class="title-router"
-          :to="getArticlePath(article)">{{ article.title }}
+          :to="getArticlePath(article)"
+        >{{ article.title }}
         </router-link>
       </h1>
       <p class="content">{{ getContent(article) }}</p>
       <router-link
         v-if="article.avatar"
-        :to="getArticlePath(article)">
+        :to="getArticlePath(article)"
+      >
         <img
           class="img"
           :src="article.avatar"
-          :alt="article.title">
+          :alt="article.title"
+        >
       </router-link>
       <div class="meta"><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 / </em><em>分享</em></div>
     </article>
