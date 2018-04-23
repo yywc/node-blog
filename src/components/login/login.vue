@@ -1,27 +1,39 @@
 <template>
   <el-container class="form-wrapper">
-    <el-form :model="loginForm"
-             status-icon
-             :rules="rules"
-             ref="loginForm"
-             label-width="70px"
-             class="login-form">
-      <el-form-item label="账号" prop="loginName">
+    <el-form
+      class="login-form"
+      label-width="70px"
+      status-icon
+      ref="loginForm"
+      :model="loginForm"
+      :rules="rules">
+      <el-form-item
+        label="账号"
+        prop="loginName">
         <el-input v-model.number="loginForm.loginName"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input type="password" v-model="loginForm.password" auto-complete="off"></el-input>
+      <el-form-item
+        label="密码"
+        prop="password">
+        <el-input
+          type="password"
+          auto-complete="off"
+          v-model="loginForm.password">
+        </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm('loginForm')">
+          登录
+        </el-button>
       </el-form-item>
     </el-form>
   </el-container>
 </template>
 
 <script type="text/ecmascript-6">
-  import {login} from '@/api/index'
-  // import {isLogin} from '@/assets/js/base'
+  import { login } from '@/api/index'
   import Cookies from 'js-cookie'
 
   export default {
@@ -58,7 +70,7 @@
             }
           ],
           password: [
-            {validator: validatePassword, required: true, trigger: 'blur'}
+            { validator: validatePassword, required: true, trigger: 'blur' }
           ]
         }
       }
@@ -71,14 +83,14 @@
               loginName: this.loginForm.loginName,
               password: this.loginForm.password
             }
-            this._login(data)
+            this.$_login(data)
           } else {
             console.error('请检查数据.')
             return false
           }
         })
       },
-      _login(data) {
+      $_login(data) {
         if (this.$isLogin) {
           this.$router.push('/')
         } else {
@@ -87,7 +99,7 @@
               const data = res.data
               if (data.status === 1) {
                 const maxAge = data.data.maxAge / (24 * 60 * 60 * 1000)
-                Cookies.set('TOKEN', res.headers['x-auth-token'], {expires: maxAge})
+                Cookies.set('TOKEN', res.headers['x-auth-token'], { expires: maxAge })
                 window.location.href = window.location.href.split('#')[0]
               } else {
                 alert(data.msg)

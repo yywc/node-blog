@@ -1,42 +1,59 @@
 <template>
   <el-container>
-    <m-header :isArticlePage="true"></m-header>
+    <the-header :is-article-page="true"></the-header>
     <div class="main">
-      <h1 class="title">{{this.article.title}}</h1>
+      <h1 class="title">{{ this.article.title }}</h1>
       <div class="meta">
-        <time :datetime="getTime(article)">{{getTime(article)}}</time>
+        <time :datetime="getTime">{{ getTime }}</time>
         <span>/</span>
         <span>点赞数 23 / 阅读数 25 / 评论 11</span>
       </div>
-      <p class="content">{{this.article.content}}</p>
+      <p class="content">{{ this.article.content }}</p>
       <div class="page">
         <span>上一篇</span>
         <span class="next">下一篇</span>
       </div>
     </div>
     <el-footer>
-      <m-footer></m-footer>
+      <the-footer></the-footer>
     </el-footer>
   </el-container>
 </template>
 
 <script type="text/ecmascript-6">
-  import MHeader from '@/common/m-header/m-header'
-  import MFooter from '@/common/m-footer/m-footer'
-  import {getArticle} from '@/api/index'
+  import TheHeader from '@/common/the-header/the-header'
+  import TheFooter from '@/common/the-footer/the-footer'
+  import { getArticle } from '@/api/index'
 
   export default {
     name: 'Article',
+    components: {
+      TheFooter,
+      TheHeader
+    },
     data() {
       return {
         article: {}
       }
     },
+    computed: {
+      getTime() {
+        return this.article.create_date ? this.article.create_date.split('T')[0] : ''
+      }
+    },
+    watch: {
+      '$route'(to, from) {
+        // data数据操作
+        if (to.name === 'Article') {
+          this.$_getArticle({ articleId: this.$route.params.id })
+        }
+      }
+    },
     created() {
-      this._getArticle({articleId: this.$route.params.id})
+      this.$_getArticle({ articleId: this.$route.params.id })
     },
     methods: {
-      _getArticle(id) {
+      $_getArticle(id) {
         getArticle(id)
           .then((res) => {
             this.article = res.data[0]
@@ -44,22 +61,7 @@
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
           })
-      },
-      getTime(article) {
-        return article.create_date ? article.create_date.split('T')[0] : ''
       }
-    },
-    watch: {
-      '$route'(to, from) {
-        // data数据操作
-        if (to.name === 'Article') {
-          this._getArticle({articleId: this.$route.params.id})
-        }
-      }
-    },
-    components: {
-      MFooter,
-      MHeader
     }
   }
 </script>

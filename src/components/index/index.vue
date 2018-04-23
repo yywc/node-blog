@@ -1,27 +1,33 @@
 <template>
   <el-container>
-    <m-header></m-header>
-    <m-nav></m-nav>
+    <the-header></the-header>
+    <the-nav></the-nav>
     <el-main>
       <div class="article-wrapper">
-        <ArticleItem :articles="this.articles"></ArticleItem>
+        <article-item :articles="this.articles"></article-item>
       </div>
     </el-main>
     <el-footer>
-      <m-footer></m-footer>
+      <the-footer></the-footer>
     </el-footer>
   </el-container>
 </template>
 
 <script type="text/ecmascript-6">
   import ArticleItem from '@/common/article-item/article-item'
-  import MHeader from '@/common/m-header/m-header'
-  import MNav from '@/common/m-nav/m-nav'
-  import MFooter from '@/common/m-footer/m-footer'
-  import {getAllArticle} from '@/api/index'
+  import TheHeader from '@/common/the-header/the-header'
+  import TheNav from '@/common/the-nav/the-nav'
+  import TheFooter from '@/common/the-footer/the-footer'
+  import { getAllArticle } from '@/api/index'
 
   export default {
     name: 'Index',
+    components: {
+      ArticleItem,
+      TheFooter,
+      TheNav,
+      TheHeader
+    },
     data() {
       return {
         articles: []
@@ -39,12 +45,6 @@
         .catch((e) => {
           console.error('内部错误: ' + e.toString())
         })
-    },
-    components: {
-      ArticleItem,
-      MFooter,
-      MNav,
-      MHeader
     }
   }
 </script>

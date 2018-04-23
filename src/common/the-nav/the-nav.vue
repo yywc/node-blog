@@ -1,39 +1,43 @@
 <template>
   <div class="nav-wrapper">
-    <img class="bg" src="~@/assets/imgs/header.png" @click="extraScene" alt="无欲则刚">
+    <img
+      class="bg"
+      src="~@/assets/imgs/header.png"
+      alt="无欲则刚"
+      @click="extraScene">
     <nav class="nav">
       <ul class="menu">
-        <li>
+        <li class="router-item">
           <router-link to="/">
             <i class="iconfont icon-home"></i>首页
           </router-link>
         </li>
-        <li>
+        <li class="router-item">
           <router-link to="/tech">
             <i class="iconfont icon-computer"></i>技术
           </router-link>
         </li>
-        <li>
+        <li class="router-item">
           <router-link to="/note">
             <i class="iconfont icon-page"></i>杂谈
           </router-link>
         </li>
-        <li>
+        <li class="router-item">
           <router-link to="/sort">
             <i class="iconfont icon-category"></i>分类
           </router-link>
         </li>
-        <li>
+        <li class="router-item">
           <router-link to="/message">
             <i class="iconfont icon-message"></i>留言
           </router-link>
         </li>
-        <li>
+        <li class="router-item">
           <router-link to="/statistics">
             <i class="iconfont icon-statistics"></i>统计
           </router-link>
         </li>
-        <li>
+        <li class="router-item">
           <router-link to="/about">
             <i class="iconfont icon-people"></i>关于
           </router-link>
@@ -45,7 +49,7 @@
 
 <script type="text/ecmascript-6">
   export default {
-    name: 'MNav',
+    name: 'TheNav',
     created() {
       this.extraSceneTrigger = 0
     },
@@ -89,7 +93,7 @@
         height: 40px
         line-height: 40px
         text-align: center
-        li
+        .router-item
           display: inline-block
           padding: 0 15px
           color: $text-secondary-dark

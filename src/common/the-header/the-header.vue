@@ -1,11 +1,19 @@
 <template>
   <header class="header">
-    <el-row type="flex" class="row-bg _row-bg_" align="middle">
+    <el-row
+      class="row-bg _row-bg_"
+      type="flex"
+      align="middle">
       <el-col :span="4">
         <!--登录用户编辑-->
-        <router-link class="user" to="/">
+        <router-link
+          class="user"
+          to="/">
               <span class="avatar">
-                <img src="@/assets/imgs/avatar.jpg" alt="">
+                <img
+                  class="avatar-pic"
+                  src="@/assets/imgs/avatar.jpg"
+                  alt="眼已望穿">
               </span>
           <span class="user-name">眼已望穿</span>
         </router-link>
@@ -15,12 +23,19 @@
       </el-col>
       <el-col :span="4">
         <router-link to="/">
-          <el-button class="home" v-if="isArticlePage" type="text">
+          <el-button
+            class="home"
+            type="text"
+            v-if="isArticlePage">
             <i class="iconfont icon-home"></i>首页
           </el-button>
         </router-link>
-        <el-button class="logout" v-if="this.$isLogin" @click="logout" type="text"><i
-          class="iconfont icon-logout"></i>退出
+        <el-button
+          class="logout"
+          type="text"
+          v-if="this.$isLogin"
+          @click="$_logout">
+          <i class="iconfont icon-logout"></i>退出
         </el-button>
       </el-col>
     </el-row>
@@ -29,10 +44,10 @@
 
 <script type="text/ecmascript-6">
   import Cookies from 'js-cookie'
-  import {logout} from '@/api/index'
+  import { logout } from '@/api/index'
 
   export default {
-    name: 'MHeader',
+    name: 'TheHeader',
     props: {
       isArticlePage: {
         type: Boolean,
@@ -40,7 +55,7 @@
       }
     },
     methods: {
-      logout() {
+      $_logout() {
         if (!this.$isLogin) {
           window.location.reload()
         } else {
@@ -92,7 +107,7 @@
           padding: 0 7px
           width: 36px
           height: 100%
-          img
+          .avatar-pic
             display: inline-block
             width: 36px
             height: 36px

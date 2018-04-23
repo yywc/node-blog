@@ -1,27 +1,32 @@
 <template>
   <div class="wrapper">
-    <article class="article" v-for="article in articles" :key="article.id">
-      <h1>
-        <router-link :to="getArticlePath(article)">
-          {{article.title}}
+    <article
+      class="article"
+      v-for="article in articles"
+      :key="article.id">
+      <h1 class="title">
+        <router-link
+          class="title-router"
+          :to="getArticlePath(article)">{{ article.title }}
         </router-link>
       </h1>
-      <p>
-        {{
-        getContent(article)
-        }}
-      </p>
-      <router-link :to="getArticlePath(article)" v-if="article.avatar">
-        <img :src="article.avatar" :alt="article.title">
+      <p class="content">{{ getContent(article) }}</p>
+      <router-link
+        v-if="article.avatar"
+        :to="getArticlePath(article)">
+        <img
+          class="img"
+          :src="article.avatar"
+          :alt="article.title">
       </router-link>
-      <div><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 / </em><em>分享</em></div>
+      <div class="meta"><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 / </em><em>分享</em></div>
     </article>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
-    name: 'articleItem',
+    name: 'ArticleItem',
     props: {
       articles: {
         type: Array,
@@ -31,6 +36,9 @@
       }
     },
     methods: {
+      getArticlePath(article) {
+        return `/article/${article.id}`
+      },
       getContent(article) {
         if (article.avatar) {
           if (article.content.length > 90) {
@@ -40,9 +48,6 @@
           return article.content.slice(0, 300) + '...'
         }
         return article.content
-      },
-      getArticlePath(article) {
-        return `/article/${article.id}`
       }
     }
   }
@@ -69,7 +74,7 @@
         margin-left: 52.5px
       &:nth-of-type(even)
         margin-left: 75px
-      h1
+      .title
         margin-top: 10px
         padding: 0 14px
         height: 60px
@@ -78,22 +83,21 @@
         font-size: $text-size-large-x
         text-align: center
         no-wrap()
-        a:hover
+        .title-router:hover
           color: $green-500
-      p
+      .content
         text-indent: 2em
         min-height: 50px
         line-height: 1.8
         font-size: $text-size-medium
         color: $text-primary-dark
-      a
-        img
-          display: block
-          margin: 10px auto
-          width: 410px
-          height: 180px
-          border-radius: 3px
-      div
+      .img
+        display: block
+        margin: 10px auto
+        width: 410px
+        height: 180px
+        border-radius: 3px
+      .meta
         position: absolute
         right: 0
         bottom: 10px
