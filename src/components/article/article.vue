@@ -30,6 +30,7 @@
           <em class="dark">tag</em>
           <em class="light">javascript</em>
         </a>
+        <router-link class="edit" :to="routerPath">编辑</router-link>
       </div>
       <div class="user-detail">
         <img
@@ -69,18 +70,22 @@
     computed: {
       getTime() {
         return this.article.create_date ? this.article.create_date.split('T')[0] : ''
+      },
+      routerPath() {
+        return `/writer/${this.id}`
       }
     },
     watch: {
       '$route'(to, from) {
         // data数据操作
         if (to.name === 'Article') {
-          this.$_getArticle({ articleId: this.$route.params.id })
+          this.$_getArticle({ articleId: this.id })
         }
       }
     },
     created() {
-      this.$_getArticle({ articleId: this.$route.params.id })
+      this.id = this.$route.params.id
+      this.$_getArticle({ articleId: this.id })
     },
     methods: {
       $_getArticle(id) {
@@ -127,6 +132,7 @@
           position: absolute
           right: 0
       .entry-tag
+        position: relative
         margin: 50px auto 15px
         width: 680px
         box-sizing: border-box
@@ -153,10 +159,15 @@
             border-top-right-radius: 4px
             background: #59c441
             @extend .tag-common
+        .edit
+          position: absolute
+          right: 0
+          font-size: $text-size-medium
+          color: $text-secondary-dark
       .user-detail
         display: flex
         align-items: center
-        margin: 0 auto
+        margin: 0 auto 20px
         padding: 30px 40px
         width: 680px
         height: 126px

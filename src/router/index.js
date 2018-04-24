@@ -21,6 +21,12 @@ const Article = (resolve) => {
   })
 }
 
+const ArticleWriter = (resolve) => {
+  import('@/components/article-writer/article-writer').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -37,6 +43,11 @@ export default new Router({
       path: '/article/:id',
       name: 'Article',
       component: Article
+    },
+    {
+      path: '/writer/:id',
+      name: 'ArticleWriter',
+      component: ArticleWriter
     }
   ]
 })
