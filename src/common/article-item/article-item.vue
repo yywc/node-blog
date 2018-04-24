@@ -81,8 +81,8 @@
       .title
         margin-top: 10px
         padding: 0 14px
-        height: 60px
-        line-height: 60px
+        height: $height = 60px
+        line-height: $height
         color: $text-primary-dark
         font-size: $text-size-large-x
         text-align: center
@@ -106,8 +106,8 @@
         right: 0
         bottom: 10px
         left: 0
-        height: 40px
-        line-height: 40px
+        height: $height = 40px
+        line-height: $height
         text-align: center
         font-size: $text-size-small
         color: $text-secondary-dark

@@ -56,6 +56,12 @@
     margin: 0 auto
     width: 1200px
 
+  .el-main
+    width: 100%
+    min-width: 1200px
+
   .el-footer
+    width: 100%
+    min-width: 1200px
     background: $blue-grey-800
 </style>

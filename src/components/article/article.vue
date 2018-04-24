@@ -133,12 +133,12 @@
         .tag
           display: inline-block
           margin-right: 10px
-          height: 22px
+          height: $height = 22px
           font-size: 0
-          .tag-common
+          /.tag-common
             display: inline-block
-            height: 22px
-            line-height: 22px
+            height: $height
+            line-height: $height
             color: $white
             font-size: $text-size-small
           .dark
@@ -146,13 +146,13 @@
             border-bottom-left-radius: 4px
             border-top-left-radius: 4px
             background: #5e5e5e
-            @extends .el-container .main .entry-tag .tag .tag-common
+            @extends .tag-common
           .light
             padding: 0 5px
             border-bottom-right-radius: 4px
             border-top-right-radius: 4px
             background: #59c441
-            @extend .el-container .main .entry-tag .tag .tag-common
+            @extend .tag-common
       .user-detail
         display: flex
         align-items: center
@@ -165,10 +165,10 @@
         box-sizing: border-box
         background: $grey-100
         .user-avatar
-          flex: 0 0 64px
+          flex: 0 0 $dimension = 64px
           margin-right: 15px
-          width: 64px
-          height: 64px
+          width: $dimension
+          height: $dimension
           border-radius: 50%
         .user-info
           display: flex

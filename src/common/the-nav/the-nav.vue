@@ -91,8 +91,8 @@
       .menu
         margin: 0 auto
         width: 1200px
-        height: 40px
-        line-height: 40px
+        height: $height = 40px
+        line-height: $height
         text-align: center
         .router-item
           display: inline-block

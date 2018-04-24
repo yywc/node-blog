@@ -75,7 +75,7 @@
     top: 0
     right: 0
     left: 0
-    height: 60px
+    height: $height = 60px
     color: $text-secondary-light
     border-bottom: 1px solid $line-dark
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.7)
@@ -85,22 +85,22 @@
     ._row-bg_
       margin: 0 auto
       width: 1200px
-      height: 100%
+      height: $height
       .el-col:last-child
         text-align: right
       .user
         display: inline-block
-        height: 100%
+        height: $height
+        line-height: $height
         font-size: $text-size-medium
         .avatar
           display: inline-block
           padding: 0 7px
-          width: 36px
-          height: 100%
+          width: $dimension = 36px
           .avatar-pic
             display: inline-block
-            width: 36px
-            height: 36px
+            width: $dimension
+            height: $dimension
             vertical-align: middle
             border-radius: 50%
         .user-name
