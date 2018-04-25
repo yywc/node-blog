@@ -10,7 +10,7 @@
         <span>/</span>
         <time :datetime="getTime">{{ getTime }}</time>
       </div>
-      <p class="content">{{ this.article.content }}</p>
+      <p class="markdown-content" v-html="getContent"></p>
       <div class="page">
         <span>上一篇</span>
         <span class="next">下一篇</span>
@@ -55,6 +55,7 @@
   import TheHeader from '@/common/the-header/the-header'
   import TheFooter from '@/common/the-footer/the-footer'
   import { getArticle } from '@/api/index'
+  import MarkdownIt from 'markdown-it'
 
   export default {
     name: 'Article',
@@ -71,6 +72,9 @@
       getTime() {
         return this.article.create_date ? this.article.create_date.split('T')[0] : ''
       },
+      getContent() {
+        return this.article.content ? new MarkdownIt().render(this.article.content) : ''
+      },
       routerPath() {
         return `/writer/${this.id}`
       }
@@ -79,7 +83,7 @@
       '$route'(to, from) {
         // data数据操作
         if (to.name === 'Article') {
-          this.$_getArticle({ articleId: this.id })
+          this.$_getArticle({ articleId: this.$route.params.id })
         }
       }
     },
@@ -108,8 +112,7 @@
     height: 100%
     .main
       margin: 60px auto 0
-      width: 800px
-      height: 100%
+      width: 850px
       .title
         margin: 70px 0 10px
         font-size: $text-size-large-xx
@@ -119,7 +122,7 @@
         color: $text-hint-dark
         text-align: center
         font-size: $text-size-medium
-      .content
+      .markdown-content
         line-height: 1.8
       .page
         position: relative
