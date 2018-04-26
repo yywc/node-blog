@@ -56,6 +56,7 @@
   import TheFooter from '@/common/the-footer/the-footer'
   import { getArticle } from '@/api/index'
   import MarkdownIt from 'markdown-it'
+  import hljs from 'highlight.js'
 
   export default {
     name: 'Article',
@@ -73,7 +74,7 @@
         return this.article.create_date ? this.article.create_date.split('T')[0] : ''
       },
       getContent() {
-        return this.article.content ? new MarkdownIt().render(this.article.content) : ''
+        return this.article.content ? this.md.render(this.article.content) : ''
       },
       routerPath() {
         return `/writer/${this.id}`
@@ -88,6 +89,19 @@
       }
     },
     created() {
+      this.md = new MarkdownIt({
+        highlight: function (str, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return '<pre class="hljs"><code>' +
+                hljs.highlight(lang, str, true).value +
+                '</code></pre>'
+            } catch (__) {
+            }
+          }
+          return '<pre class="hljs"><code>' + this.md.utils.escapeHtml(str) + '</code></pre>'
+        }
+      })
       this.id = this.$route.params.id
       this.$_getArticle({ articleId: this.id })
     },
