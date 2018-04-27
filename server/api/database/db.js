@@ -1,4 +1,4 @@
-const {getArticleByAll, getArticleById} = require('../../db/mysql')
+const { getArticleByAll, getArticleById } = require('../../db/mysql')
 
 /**
  * 返回值
@@ -15,24 +15,32 @@ const resObj = (code, data) => {
 }
 
 const getAllArticle = async (ctx, next) => {
-  await getArticleByAll()
-    .then((res) => {
-      ctx.body = resObj(1, res)
-    })
-    .catch((e) => {
-      ctx.body = resObj(0, e.toString())
-    })
+  try {
+    await getArticleByAll()
+      .then((res) => {
+        ctx.body = resObj(1, res)
+      })
+      .catch((e) => {
+        ctx.body = resObj(2, e.toString())
+      })
+  } catch (e) {
+    ctx.body = resObj(0, '数据库错误: ' + e.toString())
+  }
 }
 
 const getArticle = async (ctx, next) => {
-  const {articleId} = ctx.request.body
-  await getArticleById(articleId)
-    .then((res) => {
-      ctx.body = resObj(1, res)
-    })
-    .catch((e) => {
-      ctx.body = resObj(0, e.toString())
-    })
+  const { articleId } = ctx.request.body
+  try {
+    await getArticleById(articleId)
+      .then((res) => {
+        ctx.body = resObj(1, res)
+      })
+      .catch((e) => {
+        ctx.body = resObj(2, e.toString())
+      })
+  } catch (e) {
+    ctx.body = resObj(0, '数据库错误: ' + e.toString())
+  }
 }
 
 module.exports = {

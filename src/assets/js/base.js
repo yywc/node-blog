@@ -5,7 +5,7 @@ const isLogin = new MD5().update('gyjYYwc.1993').digest('hex') === Cookies.get('
 
 const throttle = function (fn, threshhold) {
   let lastTime, throttleTimer
-  lastTime = +new Date() + 10000
+  lastTime = +new Date()
   threshhold || (threshhold = 250)
   return function (...args) {
     const nowTime = +new Date()

@@ -4,27 +4,43 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const Login = (resolve) => {
-  import('@/components/login/login').then((module) => {
-    resolve(module)
-  })
+  import('@/components/login/login')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
 }
 
 const Index = (resolve) => {
-  import('@/components/index/index').then((module) => {
-    resolve(module)
-  })
+  import('@/components/index/index')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
 }
 
 const Article = (resolve) => {
-  import('@/components/article/article').then((module) => {
-    resolve(module)
-  })
+  import('@/components/article/article')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
 }
 
 const ArticleWriter = (resolve) => {
-  import('@/components/article-writer/article-writer').then((module) => {
-    resolve(module)
-  })
+  import('@/components/article-writer/article-writer')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
 }
 
 export default new Router({

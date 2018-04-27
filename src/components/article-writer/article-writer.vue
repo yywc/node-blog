@@ -3,10 +3,12 @@
     <the-header></the-header>
     <section class="main">
       <div class="title">
-        <input type="text" :value="this.article.title" title="标题">
+        <input type="text" v-model="article.title" title="标题">
       </div>
       <div class="content">
-        <textarea :value="this.article.content" title="文章内容"></textarea>
+        <textarea class="editor" ref="textareaContent" v-model="article.content" title="文章内容">
+        </textarea>
+        <p class="markdown-content" v-html="getContent"></p>
       </div>
     </section>
     <el-footer>
@@ -19,6 +21,8 @@
   import TheHeader from '@/common/the-header/the-header'
   import TheFooter from '@/common/the-footer/the-footer'
   import { getArticle } from '@/api/index'
+  import MarkdownIt from 'markdown-it'
+  import hljs from 'highlight.js'
 
   export default {
     name: 'ArticleWriter',
@@ -31,7 +35,25 @@
         article: {}
       }
     },
+    computed: {
+      getContent() {
+        return this.article.content ? this.md.render(this.article.content) : ''
+      }
+    },
     created() {
+      this.md = new MarkdownIt({
+        highlight: function (str, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return '<pre class="hljs"><code>' +
+                hljs.highlight(lang, str, true).value +
+                '</code></pre>'
+            } catch (__) {
+            }
+          }
+          return '<pre class="hljs"><code>' + this.md.utils.escapeHtml(str) + '</code></pre>'
+        }
+      })
       this.id = this.$route.params.id
       this.$_getArticle({ articleId: this.id })
     },
@@ -40,6 +62,7 @@
         getArticle(id)
           .then((res) => {
             this.article = res.data[0]
+            console.log(this.$refs.textareaContent)
           })
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
@@ -54,11 +77,33 @@
 
   .main
     margin: 60px auto 0
-    width: 800px
+    width: $width = 1200px
     .title
       margin: 70px 0 10px
       font-size: $text-size-large-xx
       text-align: center
+      input
+        width: $width
+        height: 30px
+        box-sizing: border-box
+    .content
+      clear-float()
+      / .passage
+        float: left
+        padding: 10px
+        width: ($width / 2 - 10)
+        height: 600px
+        font-size: $text-size-medium
+        line-height: 1.8
+        box-sizing: border-box
+      .editor
+        margin-right: 20px
+        @extend .passage
+      .markdown-content
+        border: 1px solid $line-dark
+        border-radius: 3px
+        overflow: auto
+        @extend .passage
 
   .el-footer
     width: 100%
