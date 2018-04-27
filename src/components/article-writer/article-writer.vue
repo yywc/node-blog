@@ -6,9 +6,20 @@
         <input type="text" v-model="article.title" title="标题">
       </div>
       <div class="content">
-        <textarea class="editor" ref="textareaContent" v-model="article.content" title="文章内容">
+        <textarea
+          class="editor"
+          title="文章内容"
+          @scroll="scroll"
+          ref="textareaContent"
+          v-model="article.content"
+        >
         </textarea>
-        <p class="markdown-content" v-html="getContent"></p>
+        <p
+          class="markdown-content"
+          ref="markdownContent"
+          v-html="getContent"
+        >
+        </p>
       </div>
     </section>
     <el-footer>
@@ -62,11 +73,21 @@
         getArticle(id)
           .then((res) => {
             this.article = res.data[0]
-            console.log(this.$refs.textareaContent)
           })
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
           })
+      },
+      scroll(e) {
+        const ele = e.target
+        const editor = this.$refs.textareaContent
+        const shower = this.$refs.markdownContent
+        const scrollTopPercent = ele.scrollTop / (ele.scrollHeight - ele.offsetHeight)
+        if (ele === editor) {
+          shower.scrollTop = (shower.scrollHeight - shower.offsetHeight) * scrollTopPercent
+        } else if (ele === shower) {
+          editor.scrollTop = (editor.scrollHeight - editor.offsetHeight) * scrollTopPercent
+        }
       }
     }
   }
