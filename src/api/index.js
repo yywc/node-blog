@@ -64,9 +64,26 @@ const getArticle = function (data) {
     })
 }
 
+/**
+ * 更新某一篇文章
+ */
+const updateArticle = function (data) {
+  // todo 修改请求内容
+  const url = config.updateArticle
+  return axios
+    .post(url, data)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
 export {
   login,
   logout,
   getAllArticle,
-  getArticle
+  getArticle,
+  updateArticle
 }

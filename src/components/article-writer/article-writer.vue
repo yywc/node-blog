@@ -4,6 +4,7 @@
     <section class="main">
       <div class="title">
         <input type="text" v-model="article.title" title="标题">
+        <button>发布</button>
       </div>
       <div class="content">
         <textarea
@@ -34,7 +35,7 @@
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
-  const TIMER_DELAY = 666
+  const TIMER_DELAY = 233
 
   export default {
     name: 'ArticleWriter',
@@ -139,7 +140,11 @@
       font-size: $text-size-large-xx
       text-align: center
       input
-        width: $width
+        width: $width - 100
+        height: 30px
+        box-sizing: border-box
+      button
+        width: 80px
         height: 30px
         box-sizing: border-box
     .content

@@ -45,8 +45,16 @@ const getArticleById = function (id) {
   return query(sql)
 }
 
+// 修改某一篇文章
+// todo 语句要更改
+const updateArticleById = function (id) {
+  const sql = `SELECT * FROM blog_article WHERE id='${id}' LIMIT 1;`
+  return query(sql)
+}
+
 module.exports = {
   userLogin,
   getArticleByAll,
-  getArticleById
+  getArticleById,
+  updateArticleById
 }
