@@ -9,7 +9,6 @@
         <textarea
           class="editor"
           title="文章内容"
-          @scroll="scroll"
           ref="textareaContent"
           v-model="article.content"
         >
@@ -35,6 +34,8 @@
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
+  const TIMER_DELAY = 17
+
   export default {
     name: 'ArticleWriter',
     components: {
@@ -43,7 +44,10 @@
     },
     data() {
       return {
-        article: {}
+        article: {},
+        scrollTopPercent: 0,
+        editorScrollFlag: true, // 控制添加监听事件，防止多次添加
+        contentScrollFlag: true // 控制添加监听事件，防止多次添加
       }
     },
     computed: {
@@ -68,6 +72,12 @@
       this.id = this.$route.params.id
       this.$_getArticle({ articleId: this.id })
     },
+    mounted() {
+      const editor = this.$refs.textareaContent
+      const shower = this.$refs.markdownContent
+      editor.addEventListener('scroll', this.scroll)
+      shower.addEventListener('scroll', this.scroll)
+    },
     methods: {
       $_getArticle(id) {
         getArticle(id)
@@ -79,14 +89,39 @@
           })
       },
       scroll(e) {
+        if (this.scrollTimer) {
+          clearInterval(this.scrollTimer)
+        }
+        this.scrollTimer = setTimeout(() => {
+          this.scrollCallback(e)
+        }, TIMER_DELAY)
+        this.scrollTop(e)
+      },
+      scrollTop(e) {
         const ele = e.target
         const editor = this.$refs.textareaContent
-        const shower = this.$refs.markdownContent
+        const content = this.$refs.markdownContent
         const scrollTopPercent = ele.scrollTop / (ele.scrollHeight - ele.offsetHeight)
         if (ele === editor) {
-          shower.scrollTop = (shower.scrollHeight - shower.offsetHeight) * scrollTopPercent
-        } else if (ele === shower) {
+          this.contentScrollFlag = true
+          content.removeEventListener('scroll', this.scroll)
+          content.scrollTop = (content.scrollHeight - content.offsetHeight) * scrollTopPercent
+        } else if (ele === content) {
+          this.editorScrollFlag = true
+          editor.removeEventListener('scroll', this.scroll)
           editor.scrollTop = (editor.scrollHeight - editor.offsetHeight) * scrollTopPercent
+        }
+      },
+      scrollCallback(e) {
+        const ele = e.target
+        const editor = this.$refs.textareaContent
+        const content = this.$refs.markdownContent
+        if (ele === editor && this.contentScrollFlag) {
+          this.editorScrollFlag = false
+          content.addEventListener('scroll', this.scroll)
+        } else if (ele === content && this.editorScrollFlag) {
+          this.contentScrollFlag = false
+          editor.addEventListener('scroll', this.scroll)
         }
       }
     }
