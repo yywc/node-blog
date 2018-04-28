@@ -6,7 +6,7 @@ import router from './router'
 import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import ElementUI from 'element-ui'
-import {isLogin} from '@/assets/js/base'
+import { isLogin } from '@/assets/js/base'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/stylus/index.styl'
 
@@ -14,6 +14,17 @@ Vue.config.productionTip = false
 
 fastclick.attach(document.body)
 Vue.use(ElementUI)
+
+// 未登录拦截
+router.beforeEach((to, from, next) => {
+  if (to.name === 'ArticleWriter' && !Vue.prototype.$isLogin) {
+    next({
+      path: '/'
+    })
+  } else {
+    next()
+  }
+})
 
 Vue.use(VueLazyLoad, {
   loading: require('@/assets/imgs/default.png'),
@@ -27,6 +38,6 @@ Vue.prototype.$isLogin = isLogin
 new Vue({
   el: '#app',
   router,
-  components: {App},
+  components: { App },
   template: '<App/>'
 })

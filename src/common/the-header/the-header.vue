@@ -28,7 +28,7 @@
         <el-button
           class="logout"
           type="text"
-          v-if="this.$isLogin"
+          v-if="$isLogin"
           @click="$_logout"
         >
           <i class="iconfont icon-logout"></i>退出

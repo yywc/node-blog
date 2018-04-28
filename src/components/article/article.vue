@@ -30,7 +30,12 @@
           <em class="dark">tag</em>
           <em class="light">javascript</em>
         </a>
-        <router-link class="edit" :to="routerPath">编辑</router-link>
+        <router-link
+          class="edit"
+          v-if="$isLogin"
+          :to="routerPath"
+        >编辑
+        </router-link>
       </div>
       <div class="user-detail">
         <img

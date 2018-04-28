@@ -32,3 +32,6 @@ CREATE TABLE IF NOT EXISTS blog_article (
 );
 --创建一条测试文章数据
 INSERT INTO blog_article VALUES (NULL, 'test', 'test', NULL, NULL, NULL, NULL, NULL);
+
+--更新文章
+UPDATE blog_article SET title='new title' where id='1';

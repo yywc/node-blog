@@ -34,7 +34,7 @@
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
-  const TIMER_DELAY = 17
+  const TIMER_DELAY = 666
 
   export default {
     name: 'ArticleWriter',
@@ -74,9 +74,9 @@
     },
     mounted() {
       const editor = this.$refs.textareaContent
-      const shower = this.$refs.markdownContent
+      const content = this.$refs.markdownContent
       editor.addEventListener('scroll', this.scroll)
-      shower.addEventListener('scroll', this.scroll)
+      content.addEventListener('scroll', this.scroll)
     },
     methods: {
       $_getArticle(id) {
