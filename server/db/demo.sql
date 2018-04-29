@@ -34,4 +34,4 @@ CREATE TABLE IF NOT EXISTS blog_article (
 INSERT INTO blog_article VALUES (NULL, 'test', 'test', NULL, NULL, NULL, NULL, NULL);
 
 --更新文章
-UPDATE blog_article SET title='new title' where id='1';
+UPDATE blog_article SET title='new title' WHERE id='1';

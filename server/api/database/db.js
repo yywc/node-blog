@@ -44,12 +44,12 @@ const getArticle = async (ctx, next) => {
 }
 
 const updateArticle = async (ctx, next) => {
-  // todo 要修改返回信息
-  const { articleId } = ctx.request.body
+  // todo 传参
+  const { articleId, title } = ctx.request.body
   try {
-    await updateArticleById(articleId)
+    await updateArticleById(articleId, title)
       .then((res) => {
-        ctx.body = resObj(1, res)
+        ctx.body = resObj(1, '文章修改成功')
       })
       .catch((e) => {
         ctx.body = resObj(2, e.toString())

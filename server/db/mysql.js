@@ -46,9 +46,9 @@ const getArticleById = function (id) {
 }
 
 // 修改某一篇文章
-// todo 语句要更改
-const updateArticleById = function (id) {
-  const sql = `SELECT * FROM blog_article WHERE id='${id}' LIMIT 1;`
+// todo 传参
+const updateArticleById = function (id, title) {
+  const sql = `UPDATE blog_article SET title='${title}' WHERE id='${id}';`
   return query(sql)
 }
 

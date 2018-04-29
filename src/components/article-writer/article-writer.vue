@@ -2,9 +2,9 @@
   <el-container>
     <the-header></the-header>
     <section class="main">
-      <div class="title">
-        <input type="text" v-model="article.title" title="标题">
-        <button>发布</button>
+      <div class="title-wrapper">
+        <input class="article-title" ref="articleTitle" type="text" v-model="article.title" title="标题">
+        <button class="btn-submit" @click="submit">发布</button>
       </div>
       <div class="content">
         <textarea
@@ -31,7 +31,7 @@
 <script type="text/ecmascript-6">
   import TheHeader from '@/common/the-header/the-header'
   import TheFooter from '@/common/the-footer/the-footer'
-  import { getArticle } from '@/api/index'
+  import { getArticle, updateArticle } from '@/api/index'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
@@ -124,6 +124,20 @@
           this.contentScrollFlag = false
           editor.addEventListener('scroll', this.scroll)
         }
+      },
+      submit() {
+        // todo 传参
+        const data = {
+          articleId: this.id,
+          title: this.article.title
+        }
+        updateArticle(data)
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((e) => {
+            console.error('内部错误: ' + e.toString())
+          })
       }
     }
   }
@@ -135,15 +149,15 @@
   .main
     margin: 60px auto 0
     width: $width = 1200px
-    .title
+    .title-wrapper
       margin: 70px 0 10px
       font-size: $text-size-large-xx
       text-align: center
-      input
+      .article-title
         width: $width - 100
         height: 30px
         box-sizing: border-box
-      button
+      .btn-submit
         width: 80px
         height: 30px
         box-sizing: border-box
@@ -159,6 +173,10 @@
         box-sizing: border-box
       .editor
         margin-right: 20px
+        outline: none
+        resize: none
+        border: 1px solid $line-dark
+        border-radius: 3px
         @extend .passage
       .markdown-content
         border: 1px solid $line-dark

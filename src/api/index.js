@@ -68,7 +68,6 @@ const getArticle = function (data) {
  * 更新某一篇文章
  */
 const updateArticle = function (data) {
-  // todo 修改请求内容
   const url = config.updateArticle
   return axios
     .post(url, data)
