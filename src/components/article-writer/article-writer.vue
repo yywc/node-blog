@@ -3,8 +3,19 @@
     <the-header></the-header>
     <section class="main">
       <div class="title-wrapper">
-        <input class="article-title" ref="articleTitle" type="text" v-model="article.title" title="标题">
-        <button class="btn-submit" @click="submit">发布</button>
+        <input
+          class="article-title"
+          type="text"
+          title="标题"
+          ref="articleTitle"
+          v-model="article.title"
+        >
+        <button
+          class="btn-submit"
+          @click="submit"
+        >
+          发布
+        </button>
       </div>
       <div class="content">
         <textarea
@@ -25,13 +36,18 @@
     <el-footer>
       <the-footer></the-footer>
     </el-footer>
+    <div class="layer-wrapper" ref="layerWrapper">
+      <pop-up-layer></pop-up-layer>
+    </div>
   </el-container>
 </template>
 
 <script type="text/ecmascript-6">
   import TheHeader from '@/common/the-header/the-header'
   import TheFooter from '@/common/the-footer/the-footer'
-  import { getArticle, updateArticle } from '@/api/index'
+  import PopUpLayer from '@/common/pop-up-layer/pop-up-layer'
+  // import { getArticle, updateArticle } from '@/api/index'
+  import { getArticle } from '@/api/index'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
@@ -41,7 +57,8 @@
     name: 'ArticleWriter',
     components: {
       TheFooter,
-      TheHeader
+      TheHeader,
+      PopUpLayer
     },
     data() {
       return {
@@ -127,17 +144,18 @@
       },
       submit() {
         // todo 传参
-        const data = {
-          articleId: this.id,
-          title: this.article.title
-        }
-        updateArticle(data)
-          .then((res) => {
-            console.log(res)
-          })
-          .catch((e) => {
-            console.error('内部错误: ' + e.toString())
-          })
+        // const data = {
+        //   articleId: this.id,
+        //   title: this.article.title
+        // }
+        // updateArticle(data)
+        //   .then((res) => {
+        //     console.log(res)
+        //   })
+        //   .catch((e) => {
+        //     console.error('内部错误: ' + e.toString())
+        //   })
+        this.$refs.layerWrapper.style.display = 'block'
       }
     }
   }
@@ -188,4 +206,13 @@
     width: 100%
     min-width: 1200px
     background: $blue-grey-800
+
+  .layer-wrapper
+    display: none
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    background: rgba(0, 0, 0, .54)
 </style>

@@ -10,7 +10,10 @@
         <span>/</span>
         <time :datetime="getTime">{{ getTime }}</time>
       </div>
-      <p class="markdown-content" v-html="getContent"></p>
+      <p
+        class="markdown-content"
+        v-html="getContent"
+      ></p>
       <div class="page">
         <span>上一篇</span>
         <span class="next">下一篇</span>

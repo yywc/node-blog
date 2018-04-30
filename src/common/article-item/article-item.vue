@@ -23,7 +23,7 @@
           :alt="article.title"
         >
       </router-link>
-      <div class="meta"><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 / </em><em>分享</em></div>
+      <div class="meta"><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 </em></div>
     </article>
   </div>
 </template>
