@@ -54,7 +54,7 @@
   const Category = Vue.extend({
     data() {
       return {
-        tagStyle: {
+        categoryStyle: {
           float: 'left',
           display: 'flex',
           marginRight: '8px',
@@ -88,8 +88,8 @@
       }
     },
     template: '' +
-    '<div :style="this.tagStyle">' +
-    '<span :style="this.nameStyle" contenteditable="true"></span>' +
+    '<div :style="this.categoryStyle">' +
+    '<span class="name" :style="this.nameStyle" contenteditable="true"></span>' +
     '<i class="iconfont icon-close" :style="this.iconStyle"></i>' +
     '</div>'
   })
@@ -119,6 +119,10 @@
         const el = document.getElementById('category')
         // eslint-disable-next-line no-unused-expressions
         const tagEl = new Category().$mount().$el
+        const nameList = document.getElementsByClassName('name')
+        if (nameList.length > 0 && nameList[nameList.length - 1].textContent === '') {
+          return
+        }
         el.parentNode.insertBefore(tagEl, el)
       }
     }
