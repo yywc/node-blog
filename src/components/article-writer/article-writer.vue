@@ -37,7 +37,7 @@
       <the-footer></the-footer>
     </el-footer>
     <div class="layer-wrapper" ref="layerWrapper">
-      <pop-up-layer></pop-up-layer>
+      <pop-up-layer @close="closeLayer"></pop-up-layer>
     </div>
   </el-container>
 </template>
@@ -156,6 +156,11 @@
         //     console.error('内部错误: ' + e.toString())
         //   })
         this.$refs.layerWrapper.style.display = 'block'
+        // 强行改变 ele-ui 下拉框样式为了好看点
+        document.getElementsByClassName('el-scrollbar__wrap')[0].style.marginBottom = '-16px'
+      },
+      closeLayer() {
+        this.$refs.layerWrapper.style.display = 'none'
       }
     }
   }
@@ -215,4 +220,5 @@
     bottom: 0
     left: 0
     background: rgba(0, 0, 0, .54)
+
 </style>
