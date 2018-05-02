@@ -48,6 +48,7 @@
           ref="tag"
         >
         <button
+          id="addTag"
           @click="addCategory"
         >
           <i class="el-icon-plus"></i>添加标签
@@ -69,8 +70,10 @@
 <script type="text/ecmascript-6">
   import Vue from 'vue'
   import Tag from '@/common/tag/tag'
+  import { addClass } from '@/assets/js/base'
 
   const Category = Vue.extend(Tag)
+  const TagComponent = Vue.extend(Tag)
 
   export default {
     name: 'PopUpLayer',
@@ -94,14 +97,25 @@
         this.$emit('close')
       },
       addCategory(e) {
-        // eslint-disable-next-line no-unused-expressions
+        const addCategory = document.getElementById('addCategory')
+        const addTag = document.getElementById('addTag')
         const tagEl = new Category().$mount().$el
-        const nameList = document.getElementsByClassName('name')
-        if ((nameList.length > 0 && nameList[nameList.length - 1].textContent === '') || nameList.length > 4) {
-          return
+        if (e.target === addCategory) {
+          addClass(tagEl.children[0], 'category-item')
+          const nameList = document.getElementsByClassName('category-item')
+          if ((nameList.length > 0 && nameList[nameList.length - 1].textContent === '') || nameList.length > 4) {
+            return
+          }
+          addCategory.parentNode.insertBefore(tagEl, addCategory)
+        } else if (e.target === addTag) {
+          addClass(tagEl.children[0], 'tag-item')
+          const nameList = document.getElementsByClassName('tag-item')
+          if ((nameList.length > 0 && nameList[nameList.length - 1].textContent === '') || nameList.length > 4) {
+            return
+          }
+          addTag.parentNode.insertBefore(tagEl, addTag)
         }
-        const target = document.getElementById('addCategory')
-        target.parentNode.insertBefore(tagEl, target)
+        tagEl.children[0].focus()
       }
     }
   }
@@ -112,7 +126,7 @@
 
   .btn-add
     margin: 7px 0 10px
-    padding: 3px 7px 5px
+    padding: 4px 7px
     font-size: $text-size-small
     color: $white
     border: none
@@ -122,10 +136,10 @@
       margin-right: 3px
 
   .list-wrapper
-      padding: 10px
-      max-height: 150px
-      border: 1px solid $line-dark
-      border-radius: 3px
+    padding: 10px
+    max-height: 150px
+    border: 1px solid $line-dark
+    border-radius: 3px
 
   .box
     position: absolute

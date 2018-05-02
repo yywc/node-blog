@@ -37,8 +37,41 @@ const debounce = function (fn, delay) {
   }
 }
 
+const hasClass = function (el, clsName) {
+  const reg = new RegExp('(^|\\s)' + clsName.trim() + '(\\s|$)')
+  return reg.test(el.className)
+}
+
+const addClass = function (el, clsName) {
+  const spaceReg = new RegExp('^\\s+$')
+  if (!clsName.match(spaceReg) && !hasClass(el, clsName)) {
+    el.className += ' ' + clsName.trim()
+  }
+}
+
+const removeClass = function (el, clsName) {
+  const spaceReg = new RegExp('^\\s+$')
+  if (!clsName.match(spaceReg) && hasClass(el, clsName)) {
+    const reg = new RegExp('(\\s|^)' + clsName.trim() + '(\\s|$)')
+    el.className = el.className.replace(reg, ' ').trim()
+  }
+}
+
+const toggleClass = function (el, clsName) {
+  clsName = clsName.trim()
+  if (hasClass(el, clsName)) {
+    removeClass(el, clsName)
+  } else {
+    addClass(el, clsName)
+  }
+}
+
 export {
   isLogin,
   throttle,
-  debounce
+  debounce,
+  hasClass,
+  addClass,
+  removeClass,
+  toggleClass
 }

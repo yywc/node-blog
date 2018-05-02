@@ -220,5 +220,6 @@
     bottom: 0
     left: 0
     background: rgba(0, 0, 0, .54)
+    z-index: $z-index-top
 
 </style>

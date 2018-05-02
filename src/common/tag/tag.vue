@@ -15,16 +15,31 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { hasClass } from '@/assets/js/base'
+
   export default {
     name: 'Tag',
+    props: {
+      articles: {
+        type: Array,
+        default: () => {
+          return []
+        }
+      }
+    },
     methods: {
       handlerBlur(e) {
         if (e.target.textContent === '') {
           const target = e.target.parentNode
           target.parentNode.removeChild(target)
         } else {
+          let nameList
+          if (hasClass(e.target, 'category-item')) {
+            nameList = document.getElementsByClassName('category-item')
+          } else if (hasClass(e.target, 'tag-item')) {
+            nameList = document.getElementsByClassName('tag-item')
+          }
           e.target.setAttribute('contenteditable', false)
-          const nameList = document.getElementsByClassName('name')
           // 如果标签重复，则移除这个标签
           for (let i = 0, len = nameList.length - 1; i < len; i++) {
             if (nameList[i].textContent === e.target.textContent) {
@@ -47,7 +62,7 @@
   .tag
     float: left
     display: flex
-    margin-right: 8px
+    margin: 5px 8px 0 0
     line-height: 30px
     .name
       margin-top: 5px
@@ -64,12 +79,13 @@
       white-space: nowrap
       box-sizing: border-box
       outline: none
+
   .iconfont
-      display: block
-      margin-left: 3px
-      height: 12px
-      color: #ddd
-      transition: color .3s ease-in
-      vertical-align: -1px
-      cursor: pointer
+    display: block
+    margin-left: 3px
+    height: 12px
+    color: #ddd
+    transition: color .3s ease-in
+    vertical-align: -1px
+    cursor: pointer
 </style>
