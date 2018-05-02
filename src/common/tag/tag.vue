@@ -29,6 +29,7 @@
     },
     methods: {
       handlerBlur(e) {
+        // 失焦的时候判断是否为空，是否与之前的值有相同
         if (e.target.textContent === '') {
           const target = e.target.parentNode
           target.parentNode.removeChild(target)
@@ -39,9 +40,11 @@
           } else if (hasClass(e.target, 'tag-item')) {
             nameList = document.getElementsByClassName('tag-item')
           }
+          // 设置为不可编辑
           e.target.setAttribute('contenteditable', false)
           // 如果标签重复，则移除这个标签
           for (let i = 0, len = nameList.length - 1; i < len; i++) {
+            // 如果与之前的值有相同，则移除该元素
             if (nameList[i].textContent === e.target.textContent) {
               const target = e.target.parentNode
               target.parentNode.removeChild(target)
