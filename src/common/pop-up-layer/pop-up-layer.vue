@@ -30,6 +30,7 @@
         <input
           type="hidden"
           ref="category"
+          v-model="categoryList"
         >
         <button
           id="addCategory"
@@ -46,6 +47,7 @@
         <input
           type="hidden"
           ref="tag"
+          v-model="tagList"
         >
         <button
           id="addTag"
@@ -73,12 +75,13 @@
   import { addClass } from '@/assets/js/base'
 
   const Category = Vue.extend(Tag)
-  const TagComponent = Vue.extend(Tag)
 
   export default {
     name: 'PopUpLayer',
     data() {
       return {
+        categoryList: '',
+        tagList: '',
         options: [
           {
             value: '选项1',
@@ -143,7 +146,7 @@
 
   .box
     position: absolute
-    top: 40%
+    top: 45%
     left: 50%
     padding: 20px
     width: 650px

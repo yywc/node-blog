@@ -19,14 +19,6 @@
 
   export default {
     name: 'Tag',
-    props: {
-      articles: {
-        type: Array,
-        default: () => {
-          return []
-        }
-      }
-    },
     methods: {
       handlerBlur(e) {
         // 失焦的时候判断是否为空，是否与之前的值有相同
@@ -35,20 +27,36 @@
           target.parentNode.removeChild(target)
         } else {
           let nameList
-          if (hasClass(e.target, 'category-item')) {
-            nameList = document.getElementsByClassName('category-item')
-          } else if (hasClass(e.target, 'tag-item')) {
-            nameList = document.getElementsByClassName('tag-item')
-          }
+          const category = hasClass(e.target, 'category-item')
+          const tag = hasClass(e.target, 'tag-item')
+
           // 设置为不可编辑
           e.target.setAttribute('contenteditable', false)
-          // 如果标签重复，则移除这个标签
-          for (let i = 0, len = nameList.length - 1; i < len; i++) {
-            // 如果与之前的值有相同，则移除该元素
-            if (nameList[i].textContent === e.target.textContent) {
-              const target = e.target.parentNode
-              target.parentNode.removeChild(target)
+
+          if (category) {
+            nameList = document.getElementsByClassName('category-item')
+            // 如果标签重复，则移除这个标签
+            for (let i = 0, len = nameList.length - 1; i < len; i++) {
+              this.categoryList += nameList[i].textContent + ','
+              // 如果与之前的值有相同，则移除该元素
+              if (nameList[i].textContent === e.target.textContent) {
+                const target = e.target.parentNode
+                target.parentNode.removeChild(target)
+              }
             }
+            this.categoryList += e.target.textContent
+          } else if (tag) {
+            nameList = document.getElementsByClassName('tag-item')
+            // 如果标签重复，则移除这个标签
+            for (let i = 0, len = nameList.length - 1; i < len; i++) {
+              this.tagList += nameList[i].textContent + ','
+              // 如果与之前的值有相同，则移除该元素
+              if (nameList[i].textContent === e.target.textContent) {
+                const target = e.target.parentNode
+                target.parentNode.removeChild(target)
+              }
+            }
+            this.tagList += e.target.textContent
           }
         }
       },

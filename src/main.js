@@ -6,6 +6,7 @@ import router from './router'
 import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import ElementUI from 'element-ui'
+import store from './store'
 import { isLogin } from '@/assets/js/base'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/stylus/index.styl'
@@ -38,6 +39,7 @@ Vue.prototype.$isLogin = isLogin
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
