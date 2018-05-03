@@ -70,11 +70,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Vue from 'vue'
-  import Tag from '@/common/tag/tag'
-  import { addClass } from '@/assets/js/base'
-
-  const Category = Vue.extend(Tag)
+  import { addClass, hasClass } from '@/assets/js/base'
 
   export default {
     name: 'PopUpLayer',
@@ -95,22 +91,27 @@
         value: ''
       }
     },
+    mounted() {
+      this.dataV = document.getElementById('addTag').attributes[0].name
+    },
     methods: {
       close() {
         this.$emit('close')
       },
       addCategory(e) {
+        const tagEl = this.buildNode()
         const addCategory = document.getElementById('addCategory')
         const addTag = document.getElementById('addTag')
-        const tagEl = new Category().$mount().$el
-        if (e.target === addCategory) {
+        if (e.target === addCategory || e.target.parentNode === addCategory) {
+          // 新增分类
           addClass(tagEl.children[0], 'category-item')
           const nameList = document.getElementsByClassName('category-item')
           if ((nameList.length > 0 && nameList[nameList.length - 1].textContent === '') || nameList.length > 4) {
             return
           }
           addCategory.parentNode.insertBefore(tagEl, addCategory)
-        } else if (e.target === addTag) {
+        } else if (e.target === addTag || e.target.parentNode === addTag) {
+          // 新增标签
           addClass(tagEl.children[0], 'tag-item')
           const nameList = document.getElementsByClassName('tag-item')
           if ((nameList.length > 0 && nameList[nameList.length - 1].textContent === '') || nameList.length > 4) {
@@ -119,6 +120,75 @@
           addTag.parentNode.insertBefore(tagEl, addTag)
         }
         tagEl.children[0].focus()
+      },
+      buildNode() {
+        // 构建标签元素
+        const div = document.createElement('div')
+        div.setAttribute(this.dataV, '')
+        div.setAttribute('class', 'tag')
+        const span = document.createElement('span')
+        span.setAttribute(this.dataV, '')
+        span.setAttribute('class', 'name')
+        span.setAttribute('contenteditable', 'true')
+        const i = document.createElement('i')
+        i.setAttribute(this.dataV, '')
+        i.setAttribute('class', 'iconfont icon-close')
+        div.appendChild(span)
+        div.appendChild(i)
+
+        const _this = this
+
+        // 设置方法
+        const _handlerBlur = function (e) {
+          // 失焦的时候判断是否为空，是否与之前的值有相同
+          if (e.target.textContent === '') {
+            const target = e.target.parentNode
+            target.parentNode.removeChild(target)
+          } else {
+            let nameList
+            const category = hasClass(e.target, 'category-item')
+            const tag = hasClass(e.target, 'tag-item')
+
+            // 设置为不可编辑
+            e.target.setAttribute('contenteditable', false)
+
+            if (category) {
+              nameList = document.getElementsByClassName('category-item')
+              // 如果标签重复，则移除这个标签
+              for (let i = 0, len = nameList.length - 1; i < len; i++) {
+                // 如果与之前的值有相同，则移除该元素
+                if (nameList[i].textContent === e.target.textContent) {
+                  const target = e.target.parentNode
+                  target.parentNode.removeChild(target)
+                  return
+                }
+              }
+              _this.categoryList === '' ? _this.categoryList += e.target.textContent : _this.categoryList += ',' + e.target.textContent
+            } else if (tag) {
+              nameList = document.getElementsByClassName('tag-item')
+              // 如果标签重复，则移除这个标签
+              for (let i = 0, len = nameList.length - 1; i < len; i++) {
+                // 如果与之前的值有相同，则移除该元素
+                if (nameList[i].textContent === e.target.textContent) {
+                  const target = e.target.parentNode
+                  target.parentNode.removeChild(target)
+                  return
+                }
+              }
+              _this.tagList === '' ? _this.tagList += e.target.textContent : _this.tagList += ',' + e.target.textContent
+            }
+          }
+        }
+
+        const _handlerClick = function (e) {
+          const target = e.target.parentNode
+          target.parentNode.removeChild(target)
+        }
+
+        span.addEventListener('blur', _handlerBlur)
+        i.addEventListener('click', _handlerClick)
+
+        return div
       }
     }
   }
@@ -198,5 +268,35 @@
         @extend .btn-add
     .button-wrapper
       margin-top: 20px
+
+  .tag
+    float: left
+    display: flex
+    margin: 5px 8px 0 0
+    line-height: 30px
+    .name
+      margin-top: 5px
+      display: block
+      padding: 3px 8px
+      font-size: 12px
+      max-width: 480px
+      background: #e9e9e9
+      border-radius: 2px
+      line-height: 15px
+      height: 21px
+      color: #4f4f4f
+      overflow: hidden
+      white-space: nowrap
+      box-sizing: border-box
+      outline: none
+
+  .iconfont
+    display: block
+    margin-left: 3px
+    height: 12px
+    color: #ddd
+    transition: color .3s ease-in
+    vertical-align: -1px
+    cursor: pointer
 
 </style>
