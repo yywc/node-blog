@@ -6,7 +6,7 @@ import router from './router'
 import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import ElementUI from 'element-ui'
-import { isLogin } from '@/assets/js/base'
+import { isLogin } from '@/assets/js/utils'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/stylus/index.styl'
 

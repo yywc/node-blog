@@ -66,6 +66,20 @@ const toggleClass = function (el, clsName) {
   }
 }
 
+const removeElementFromArray = function (array, element) {
+  let _array = [...array]
+  let index = -1
+  for (let i in _array) {
+    if (_array[i] === element) {
+      index = i
+    }
+  }
+  if (index !== -1) {
+    _array.splice(index, 1)
+  }
+  return _array
+}
+
 export {
   isLogin,
   throttle,
@@ -73,5 +87,6 @@ export {
   hasClass,
   addClass,
   removeClass,
-  toggleClass
+  toggleClass,
+  removeElementFromArray
 }

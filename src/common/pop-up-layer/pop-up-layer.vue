@@ -42,7 +42,7 @@
       </div>
     </div>
     <div>
-      <p class="label">文章标签<em>最多添加 5 个标签</em></p>
+      <p class="label">文章标签<em class="notice-content">最多添加 5 个标签</em></p>
       <div class="tag-list">
         <input
           type="hidden"
@@ -70,14 +70,14 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { addClass, hasClass } from '@/assets/js/base'
+  import { addClass, hasClass, removeElementFromArray } from '@/assets/js/utils'
 
   export default {
     name: 'PopUpLayer',
     data() {
       return {
-        categoryList: '',
-        tagList: '',
+        categoryList: [],
+        tagList: [],
         options: [
           {
             value: '选项1',
@@ -114,7 +114,7 @@
           // 新增标签
           addClass(tagEl.children[0], 'tag-item')
           const nameList = document.getElementsByClassName('tag-item')
-          if ((nameList.length > 0 && nameList[nameList.length - 1].textContent === '') || nameList.length > 4) {
+          if ((nameList.length > 0 && nameList[nameList.length - 1].textContent.trim() === '') || nameList.length > 4) {
             return
           }
           addTag.parentNode.insertBefore(tagEl, addTag)
@@ -141,7 +141,7 @@
         // 设置方法
         const _handlerBlur = function (e) {
           // 失焦的时候判断是否为空，是否与之前的值有相同
-          if (e.target.textContent === '') {
+          if (e.target.textContent.trim() === '') {
             const target = e.target.parentNode
             target.parentNode.removeChild(target)
           } else {
@@ -157,35 +157,48 @@
               // 如果标签重复，则移除这个标签
               for (let i = 0, len = nameList.length - 1; i < len; i++) {
                 // 如果与之前的值有相同，则移除该元素
-                if (nameList[i].textContent === e.target.textContent) {
+                if (nameList[i].textContent.trim() === e.target.textContent.trim()) {
                   const target = e.target.parentNode
                   target.parentNode.removeChild(target)
                   return
                 }
               }
-              _this.categoryList === '' ? _this.categoryList += e.target.textContent : _this.categoryList += ',' + e.target.textContent
+              _this.categoryList.push(e.target.textContent.trim())
             } else if (tag) {
               nameList = document.getElementsByClassName('tag-item')
               // 如果标签重复，则移除这个标签
               for (let i = 0, len = nameList.length - 1; i < len; i++) {
                 // 如果与之前的值有相同，则移除该元素
-                if (nameList[i].textContent === e.target.textContent) {
+                if (nameList[i].textContent.trim() === e.target.textContent.trim()) {
                   const target = e.target.parentNode
                   target.parentNode.removeChild(target)
                   return
                 }
               }
-              _this.tagList === '' ? _this.tagList += e.target.textContent : _this.tagList += ',' + e.target.textContent
+              _this.tagList.push(e.target.textContent.trim())
             }
           }
         }
 
         const _handlerClick = function (e) {
           const target = e.target.parentNode
+          const targetChild = e.target.parentNode.children[0]
+          if (hasClass(targetChild, 'tag-item')) {
+            _this.tagList = removeElementFromArray(_this.tagList, targetChild.textContent)
+          } else if (hasClass(targetChild, 'category-item')) {
+            _this.categoryList = removeElementFromArray(_this.categoryList, targetChild.textContent)
+          }
           target.parentNode.removeChild(target)
         }
 
+        const _handlerEnter = function (e) {
+          if (e.key === 'Enter') {
+            _handlerBlur(e)
+          }
+        }
+
         span.addEventListener('blur', _handlerBlur)
+        span.addEventListener('keydown', _handlerEnter)
         i.addEventListener('click', _handlerClick)
 
         return div
@@ -205,7 +218,7 @@
     border: none
     border-radius: 3px
     background: $green-500
-    i
+    .el-icon-plus
       margin-right: 3px
 
   .list-wrapper
@@ -256,7 +269,7 @@
         @extend .btn-add
     .label
       margin-top: 20px
-      em
+      .notice-content
         margin-left: 16px
         font-size: $text-size-medium
         color: $text-hint-dark
