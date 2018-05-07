@@ -41,7 +41,7 @@
     },
     methods: {
       getArticlePath(article) {
-        return `/article/${article.id}`
+        return `/article/${article.article_id}`
       },
       getContent(article) {
         if (article.avatar) {

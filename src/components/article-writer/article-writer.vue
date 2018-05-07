@@ -173,18 +173,38 @@
     margin: 60px auto 0
     width: $width = 1200px
     .title-wrapper
+      display: flex
       margin: 70px 0 10px
-      font-size: $text-size-large-xx
-      text-align: center
       .article-title
+        flex: auto
+        padding-left: 10px
         width: $width - 100
-        height: 30px
+        height: 40px
+        line-height: 40px
+        font-size: $text-size-large-x
+        border-radius: 3px
+        border: 1px solid $line-dark
         box-sizing: border-box
+        outline none
+        &:focus
+          border: 1px solid $green-100
       .btn-submit
+        flex: 0 0 80px
+        margin-left: 20px
         width: 80px
-        height: 30px
+        height: 40px
+        color: $white
+        font-size: $text-size-medium
+        letter-spacing: 3px
         box-sizing: border-box
+        border: none
+        border-radius: 3px
+        background: $green-500
+        cursor: pointer
+        &:hover
+          background: $green-400
     .content
+      margin: 20px 0 40px
       clear-float()
       / .passage
         float: left
@@ -201,6 +221,8 @@
         border: 1px solid $line-dark
         border-radius: 3px
         @extend .passage
+        &:focus
+          border: 1px solid $green-100
       .markdown-content
         border: 1px solid $line-dark
         border-radius: 3px

@@ -38,7 +38,7 @@
         >
           <i class="el-icon-plus"></i>添加分类
         </button>
-        <div class="category-wrapper">111</div>
+        <!--<div class="category-wrapper"></div>-->
       </div>
     </div>
     <div>
@@ -55,7 +55,7 @@
         >
           <i class="el-icon-plus"></i>添加标签
         </button>
-        <div class="tag-wrapper">111</div>
+        <!--<div class="tag-wrapper"></div>-->
       </div>
     </div>
     <div class="button-wrapper">
@@ -93,6 +93,8 @@
     },
     mounted() {
       this.dataV = document.getElementById('addTag').attributes[0].name
+      // 改造 ui 框架样式
+      document.getElementsByClassName('el-input__inner')[0].setAttribute(this.dataV, '')
     },
     methods: {
       close() {
@@ -281,6 +283,31 @@
         @extend .btn-add
     .button-wrapper
       margin-top: 20px
+      text-align right
+      / .btn-common
+        display: inline-block
+        width: 70px
+        height: 30px
+        font-size: $text-size-medium
+        border: none
+        border-radius: 3px
+        cursor: pointer
+      .btn-submit
+        color: $text-primary-light
+        background: $green-500
+        @extend .btn-common
+        &:hover
+          background: $green-400
+      .btn-cancel
+        margin-right: 15px
+        color: $text-primary-dark
+        border: 1px solid $line-dark
+        background: $grey-100
+        @extend .btn-common
+        &:hover
+          color: $green-300
+          border: 1px solid $green-100
+          background: $green-50
 
   .tag
     float: left
@@ -303,13 +330,24 @@
       box-sizing: border-box
       outline: none
 
-  .iconfont
-    display: block
-    margin-left: 3px
-    height: 12px
-    color: #ddd
-    transition: color .3s ease-in
-    vertical-align: -1px
-    cursor: pointer
+  .tag
+    .iconfont
+      display: block
+      margin-left: 3px
+      height: 12px
+      color: #ddd
+      transition: color .3s ease-in
+      vertical-align: -1px
+      cursor: pointer
 
+  .el-select .el-input.is-focus .el-input__inner
+    border-color: $green-200
+
+  .el-select:hover .el-input__inner
+    border-color: $green-200
+
+  .el-select .el-input__inner:focus
+    border-color: $green-200
+  .el-select-dropdown__item.selected
+    color: $green-500
 </style>

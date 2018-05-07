@@ -41,14 +41,14 @@ const getArticleByAll = function () {
 
 // 查看某一篇文章
 const getArticleById = function (id) {
-  const sql = `SELECT * FROM blog_article WHERE id='${id}' LIMIT 1;`
+  const sql = `SELECT * FROM blog_article WHERE article_id='${id}' LIMIT 1;`
   return query(sql)
 }
 
 // 修改某一篇文章
 // todo 传参
 const updateArticleById = function (id, title) {
-  const sql = `UPDATE blog_article SET title='${title}' WHERE id='${id}';`
+  const sql = `UPDATE blog_article SET title='${title}' WHERE article_id='${id}';`
   return query(sql)
 }
 
