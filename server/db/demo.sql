@@ -29,13 +29,13 @@ CREATE TABLE IF NOT EXISTS blog_article (
   COMMENT '创建时间',
   update_time    TIMESTAMP    NOT NULL             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   COMMENT '更新时间',
-  catalog        VARCHAR(100) NOT NULL
+  category        VARCHAR(100) NOT NULL
   COMMENT '文章分类',
   tag            VARCHAR(100) COMMENT '文章标签',
   img            VARCHAR(255) COMMENT '图片地址',
-  read_count     INT UNSIGNED                      DEFAULT '0'
+  read_count     INT UNSIGNED NOT NULL                    DEFAULT '0'
   COMMENT '浏览数',
-  favorite_count INT UNSIGNED                      DEFAULT '0'
+  favorite_count INT UNSIGNED NOT NULL                    DEFAULT '0'
   COMMENT '点赞数'
 );
 --创建一条测试文章数据

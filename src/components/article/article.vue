@@ -79,7 +79,7 @@
     },
     computed: {
       getTime() {
-        return this.article.create_date ? this.article.create_date.split('T')[0] : ''
+        return this.article.create_time ? this.article.create_time.split('T')[0] : ''
       },
       getContent() {
         return this.article.content ? this.md.render(this.article.content) : ''
@@ -98,7 +98,7 @@
     },
     created() {
       this.md = new MarkdownIt({
-        highlight: function (str, lang) {
+        highlight: (str, lang) => {
           if (lang && hljs.getLanguage(lang)) {
             try {
               return '<pre class="hljs"><code>' +

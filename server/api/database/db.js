@@ -44,10 +44,9 @@ const getArticle = async (ctx, next) => {
 }
 
 const updateArticle = async (ctx, next) => {
-  // todo 传参
-  const { articleId, title } = ctx.request.body
+  const { article } = ctx.request.body
   try {
-    await updateArticleById(articleId, title)
+    await updateArticleById(article)
       .then((res) => {
         ctx.body = resObj(1, '文章修改成功')
       })

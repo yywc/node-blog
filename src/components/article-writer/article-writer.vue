@@ -33,20 +33,15 @@
         </p>
       </div>
     </section>
-    <el-footer>
-      <the-footer></the-footer>
-    </el-footer>
     <div class="layer-wrapper" ref="layerWrapper">
-      <pop-up-layer @close="closeLayer"></pop-up-layer>
+      <pop-up-layer @close="closeLayer" :article="this.article" v-if="isLoaded"></pop-up-layer>
     </div>
   </el-container>
 </template>
 
 <script type="text/ecmascript-6">
   import TheHeader from '@/common/the-header/the-header'
-  import TheFooter from '@/common/the-footer/the-footer'
   import PopUpLayer from '@/common/pop-up-layer/pop-up-layer'
-  // import { getArticle, updateArticle } from '@/api/index'
   import { getArticle } from '@/api/index'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
@@ -56,13 +51,13 @@
   export default {
     name: 'ArticleWriter',
     components: {
-      TheFooter,
       TheHeader,
       PopUpLayer
     },
     data() {
       return {
         article: {},
+        isLoaded: false, // 控制获取文章后，正确传入 article 给子组件
         scrollTopPercent: 0,
         editorScrollFlag: true, // 控制添加监听事件，防止多次添加
         contentScrollFlag: true // 控制添加监听事件，防止多次添加
@@ -75,7 +70,7 @@
     },
     created() {
       this.md = new MarkdownIt({
-        highlight: function (str, lang) {
+        highlight: (str, lang) => {
           if (lang && hljs.getLanguage(lang)) {
             try {
               return '<pre class="hljs"><code>' +
@@ -101,6 +96,7 @@
         getArticle(id)
           .then((res) => {
             this.article = res.data[0]
+            this.isLoaded = true
           })
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
@@ -143,18 +139,6 @@
         }
       },
       submit() {
-        // todo 传参
-        // const data = {
-        //   articleId: this.id,
-        //   title: this.article.title
-        // }
-        // updateArticle(data)
-        //   .then((res) => {
-        //     console.log(res)
-        //   })
-        //   .catch((e) => {
-        //     console.error('内部错误: ' + e.toString())
-        //   })
         this.$refs.layerWrapper.style.display = 'block'
         // 强行改变 ele-ui 下拉框样式为了好看点
         document.getElementsByClassName('el-scrollbar__wrap')[0].style.marginBottom = '-16px'
@@ -162,6 +146,9 @@
       closeLayer() {
         this.$refs.layerWrapper.style.display = 'none'
       }
+    },
+    deactivated() {
+      this.$destroy()
     }
   }
 </script>
@@ -171,7 +158,7 @@
 
   .main
     margin: 60px auto 0
-    width: $width = 1200px
+    width: $width = 1400px
     .title-wrapper
       display: flex
       margin: 70px 0 10px
@@ -210,7 +197,7 @@
         float: left
         padding: 10px
         width: ($width / 2 - 10)
-        height: 600px
+        height: 700px
         font-size: $text-size-medium
         line-height: 1.8
         box-sizing: border-box
@@ -228,11 +215,6 @@
         border-radius: 3px
         overflow: auto
         @extend .passage
-
-  .el-footer
-    width: 100%
-    min-width: 1200px
-    background: $blue-grey-800
 
   .layer-wrapper
     display: none

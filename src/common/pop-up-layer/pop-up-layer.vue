@@ -29,9 +29,21 @@
       <div class="category-list">
         <input
           type="hidden"
-          ref="category"
+          ref="categoryValue"
           v-model="categoryList"
         >
+        <div class="tag" v-for="(category, index) in this.categoryList" :key="index">
+          <span
+            class="name category-item"
+            contenteditable="false"
+          >
+            {{category}}
+          </span>
+          <i
+            class="iconfont icon-close"
+            @click="_handlerClick"
+          ></i>
+        </div>
         <button
           id="addCategory"
           @click="addCategory"
@@ -46,9 +58,21 @@
       <div class="tag-list">
         <input
           type="hidden"
-          ref="tag"
+          ref="tagValue"
           v-model="tagList"
         >
+        <div class="tag" v-for="(tag, index) in this.tagList" :key="index">
+          <span
+            class="name tag-item"
+            contenteditable="false"
+          >
+            {{tag}}
+          </span>
+          <i
+            class="iconfont icon-close"
+            @click="_handlerClick"
+          ></i>
+        </div>
         <button
           id="addTag"
           @click="addCategory"
@@ -64,31 +88,40 @@
         @click="close"
       >取消
       </button>
-      <button class="btn-submit">发布</button>
+      <button class="btn-submit" @click="submit">发布</button>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import { addClass, hasClass, removeElementFromArray } from '@/assets/js/utils'
+  import { updateArticle } from '@/api/index'
 
   export default {
     name: 'PopUpLayer',
+    props: {
+      article: {
+        type: Object,
+        default: () => {
+          return {}
+        }
+      }
+    },
     data() {
       return {
-        categoryList: [],
-        tagList: [],
+        categoryList: this.article.category.split(',').slice(1),
+        tagList: this.article.tag.split(','),
         options: [
           {
-            value: '选项1',
+            value: '技术',
             label: '技术'
           },
           {
-            value: '选项2',
+            value: '杂谈',
             label: '杂谈'
           }
         ],
-        value: ''
+        value: this.article.category ? this.article.category.split(',')[0] : ''
       }
     },
     mounted() {
@@ -182,17 +215,6 @@
           }
         }
 
-        const _handlerClick = function (e) {
-          const target = e.target.parentNode
-          const targetChild = e.target.parentNode.children[0]
-          if (hasClass(targetChild, 'tag-item')) {
-            _this.tagList = removeElementFromArray(_this.tagList, targetChild.textContent)
-          } else if (hasClass(targetChild, 'category-item')) {
-            _this.categoryList = removeElementFromArray(_this.categoryList, targetChild.textContent)
-          }
-          target.parentNode.removeChild(target)
-        }
-
         const _handlerEnter = function (e) {
           if (e.key === 'Enter') {
             _handlerBlur(e)
@@ -201,9 +223,53 @@
 
         span.addEventListener('blur', _handlerBlur)
         span.addEventListener('keydown', _handlerEnter)
-        i.addEventListener('click', _handlerClick)
+        i.addEventListener('click', this._handlerClick)
 
         return div
+      },
+      _handlerClick(e) {
+        const target = e.target.parentNode
+        const targetChild = e.target.parentNode.children[0]
+        if (hasClass(targetChild, 'tag-item')) {
+          this.tagList = removeElementFromArray(this.tagList, targetChild.textContent)
+        } else if (hasClass(targetChild, 'category-item')) {
+          this.categoryList = removeElementFromArray(this.categoryList, targetChild.textContent)
+        }
+        target.parentNode.removeChild(target)
+      },
+      submit() {
+        const arr = [...this.categoryList]
+        arr.unshift(this.value)
+        const article = new Proxy(this.article, {
+          set(trapTarget, key, value, receiver) {
+            if (key === 'article_id') {
+              throw new Error('禁止操作文章 Id')
+            }
+            return Reflect.set(trapTarget, key, value, receiver)
+          }
+        })
+        article.category = arr
+        const data = {
+          article: article
+        }
+        updateArticle(data)
+          .then((res) => {
+            if (res.status === 1) {
+              this.$message({
+                message: res.data,
+                type: 'success'
+              })
+              setTimeout(() => {
+                this.$router.push(`/article/${article.article_id}`)
+              }, 1500)
+            } else {
+              this.$message.error(res.data)
+              console.error('内部错误: ' + res.data)
+            }
+          })
+          .catch((e) => {
+            console.error('内部错误: ' + e.toString())
+          })
       }
     }
   }
@@ -348,6 +414,7 @@
 
   .el-select .el-input__inner:focus
     border-color: $green-200
+
   .el-select-dropdown__item.selected
     color: $green-500
 </style>

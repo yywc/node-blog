@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const mysql = require('mysql')
 const config = require('../config/dbConfig.js')
 
@@ -46,9 +47,17 @@ const getArticleById = function (id) {
 }
 
 // 修改某一篇文章
-// todo 传参
-const updateArticleById = function (id, title) {
-  const sql = `UPDATE blog_article SET title='${title}' WHERE article_id='${id}';`
+const updateArticleById = function (article) {
+  const { article_id, category, content, favorite_count, img, read_count, tag, title } = article
+  const sql = `UPDATE blog_article
+              SET category='${category}',
+              content = '${content}',
+              favorite_count='${favorite_count}',
+              img='${img}',
+              read_count='${read_count}',
+              tag='${tag}',
+              title='${title}'
+              WHERE article_id='${article_id}';`
   return query(sql)
 }
 

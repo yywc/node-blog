@@ -69,7 +69,7 @@ const toggleClass = function (el, clsName) {
 const removeElementFromArray = function (array, element) {
   let _array = [...array]
   let index = _array.findIndex((value) => {
-    return value === element
+    return value.trim() === element.trim()
   })
   if (index !== -1) {
     _array.splice(index, 1)
