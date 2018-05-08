@@ -2,6 +2,10 @@
   <el-container>
     <the-header></the-header>
     <section class="main">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>文章编辑</el-breadcrumb-item>
+      </el-breadcrumb>
       <div class="title-wrapper">
         <input
           class="article-title"
@@ -90,6 +94,9 @@
       const content = this.$refs.markdownContent
       editor.addEventListener('scroll', this.scroll)
       content.addEventListener('scroll', this.scroll)
+      this.dataV = document.getElementsByClassName('header')[0].attributes[0].name
+      // 改造 ui 框架样式
+      document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
     },
     methods: {
       $_getArticle(id) {
@@ -146,9 +153,6 @@
       closeLayer() {
         this.$refs.layerWrapper.style.display = 'none'
       }
-    },
-    deactivated() {
-      this.$destroy()
     }
   }
 </script>
@@ -159,9 +163,11 @@
   .main
     margin: 60px auto 0
     width: $width = 1400px
+    .el-breadcrumb
+      margin-top: 30px
     .title-wrapper
       display: flex
-      margin: 70px 0 10px
+      margin: 30px 0 10px
       .article-title
         flex: auto
         padding-left: 10px
@@ -189,7 +195,7 @@
         background: $green-500
         cursor: pointer
         &:hover
-          background: $green-400
+          background: $green-300
     .content
       margin: 20px 0 40px
       clear-float()
@@ -226,4 +232,6 @@
     background: rgba(0, 0, 0, .54)
     z-index: $z-index-top
 
+  .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover
+    color: $green-500
 </style>

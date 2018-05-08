@@ -45,6 +45,7 @@
           ></i>
         </div>
         <button
+          class="add-category"
           id="addCategory"
           @click="addCategory"
         >
@@ -74,6 +75,7 @@
           ></i>
         </div>
         <button
+          class="add-tag"
           id="addTag"
           @click="addCategory"
         >
@@ -125,7 +127,7 @@
       }
     },
     mounted() {
-      this.dataV = document.getElementById('addTag').attributes[0].name
+      this.dataV = document.getElementsByClassName('header')[0].attributes[0].name
       // 改造 ui 框架样式
       document.getElementsByClassName('el-input__inner')[0].setAttribute(this.dataV, '')
     },
@@ -286,6 +288,9 @@
     border: none
     border-radius: 3px
     background: $green-500
+    cursor: pointer;
+    &:hover
+      background: $green-300
     .el-icon-plus
       margin-right: 3px
 
@@ -333,7 +338,7 @@
       padding-left: 80px
       .category-wrapper
         @extend .list-wrapper
-      button
+      .add-category
         @extend .btn-add
     .label
       margin-top: 20px
@@ -345,7 +350,7 @@
       padding-left: 80px
       .tag-wrapper
         @extend .list-wrapper
-      button
+      .add-tag
         @extend .btn-add
     .button-wrapper
       margin-top: 20px
@@ -363,12 +368,12 @@
         background: $green-500
         @extend .btn-common
         &:hover
-          background: $green-400
+          background: $green-300
       .btn-cancel
         margin-right: 15px
         color: $text-primary-dark
         border: 1px solid $line-dark
-        background: $grey-100
+        background: $gray-100
         @extend .btn-common
         &:hover
           color: $green-300

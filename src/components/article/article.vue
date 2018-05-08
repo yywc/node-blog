@@ -2,6 +2,16 @@
   <el-container>
     <the-header></the-header>
     <div class="main">
+      <router-link
+        class="edit"
+        v-if="$isLogin"
+        :to="routerPath"
+      >编辑
+      </router-link>
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ this.article.title }}</el-breadcrumb-item>
+      </el-breadcrumb>
       <h1 class="title">
         {{ this.article.title }}
       </h1>
@@ -22,23 +32,12 @@
         <a
           class="tag"
           href="#"
+          v-for="(tag,index) in articleTag"
+          :key="index"
         >
           <em class="dark">tag</em>
-          <em class="light">方法</em>
+          <em class="light">{{tag}}</em>
         </a>
-        <a
-          class="tag"
-          href="#"
-        >
-          <em class="dark">tag</em>
-          <em class="light">javascript</em>
-        </a>
-        <router-link
-          class="edit"
-          v-if="$isLogin"
-          :to="routerPath"
-        >编辑
-        </router-link>
       </div>
       <div class="user-detail">
         <img
@@ -86,6 +85,9 @@
       },
       routerPath() {
         return `/writer/${this.id}`
+      },
+      articleTag() {
+        return this.article.tag ? this.article.tag.split(',') : []
       }
     },
     watch: {
@@ -113,6 +115,11 @@
       this.id = this.$route.params.id
       this.$_getArticle({ articleId: this.id })
     },
+    mounted() {
+      this.dataV = document.getElementsByClassName('header')[0].attributes[0].name
+      // 改造 ui 框架样式
+      document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
+    },
     methods: {
       $_getArticle(id) {
         getArticle(id)
@@ -133,10 +140,34 @@
   .el-container
     height: 100%
     .main
+      position: relative
       margin: 60px auto 0
       width: 850px
+      .edit
+        position: absolute
+        top: 30px
+        right: 0
+        font-size: $text-size-medium
+        color: $text-primary-light
+        margin-left: 20px
+        width: 80px
+        height: 30px
+        line-height: 30px
+        letter-spacing: 3px
+        text-align: center
+        box-sizing: border-box
+        border-radius: 3px
+        background: $green-500
+        cursor: pointer
+        &:hover
+          background: $green-300
+      .el-breadcrumb
+        display: flex
+        align-items: center
+        margin-top: 30px
+        height: 30px
       .title
-        margin: 70px 0 10px
+        margin: 30px 0 10px
         font-size: $text-size-large-xx
         text-align: center
       .meta
@@ -184,11 +215,6 @@
             border-top-right-radius: 4px
             background: #59c441
             @extend .tag-common
-        .edit
-          position: absolute
-          right: 0
-          font-size: $text-size-medium
-          color: $text-secondary-dark
       .user-detail
         display: flex
         align-items: center
@@ -199,7 +225,7 @@
         border: 1px solid $line-dark
         border-radius: 5px
         box-sizing: border-box
-        background: $grey-100
+        background: $gray-100
         .user-avatar
           flex: 0 0 $dimension = 64px
           margin-right: 15px
@@ -221,9 +247,25 @@
             color: $text-secondary-dark
         .share
           flex: 0 0 100px
+          font-size: $text-size-medium
+          color: $text-primary-light
+          margin-left: 20px
+          width: 80px
           height: 34px
+          line-height: 34px
+          letter-spacing: 3px
+          text-align: center
           box-sizing: border-box
+          border-radius: 3px
+          border: none
+          background: $green-500
+          cursor: pointer
+          &:hover
+            background: $green-300
 
   .el-footer
-    background: $blue-grey-800
+    background: $blue-gray-800
+
+  .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover
+    color: $green-500
 </style>

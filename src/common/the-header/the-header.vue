@@ -80,7 +80,7 @@
     border-bottom: 1px solid $line-dark
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.7)
     box-sizing: border-box
-    background: $blue-grey-800
+    background: $blue-gray-800
     z-index: $z-index-medium
     ._row-bg_
       margin: 0 auto

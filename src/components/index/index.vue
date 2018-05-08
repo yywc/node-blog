@@ -63,5 +63,5 @@
   .el-footer
     width: 100%
     min-width: 1200px
-    background: $blue-grey-800
+    background: $blue-gray-800
 </style>
