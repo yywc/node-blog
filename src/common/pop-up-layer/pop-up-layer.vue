@@ -97,7 +97,7 @@
 
 <script type="text/ecmascript-6">
   import { addClass, hasClass, removeElementFromArray } from '@/assets/js/utils'
-  import { updateArticle } from '@/api/index'
+  import { updateArticle, addArticle } from '@/api/index'
 
   export default {
     name: 'PopUpLayer',
@@ -262,24 +262,45 @@
         const data = {
           article: article
         }
-        updateArticle(data, this.$isLogin)
-          .then((res) => {
-            if (res.status === 1) {
-              this.$message({
-                message: res.data,
-                type: 'success'
-              })
-              setTimeout(() => {
-                this.$router.push(`/article/${article.article_id}`)
-              }, 1500)
-            } else {
-              this.$message.error(res.data)
-              console.error('内部错误: ' + res.data)
-            }
-          })
-          .catch((e) => {
-            console.error('内部错误: ' + e.toString())
-          })
+        if (article.article_id) {
+          updateArticle(data)
+            .then((res) => {
+              if (res.status === 1) {
+                this.$message({
+                  message: res.data,
+                  type: 'success'
+                })
+                setTimeout(() => {
+                  this.$router.push(`/article/${article.article_id}`)
+                }, 1500)
+              } else {
+                this.$message.error(res.data)
+                console.error('内部错误: ' + res.data)
+              }
+            })
+            .catch((e) => {
+              console.error('内部错误: ' + e.toString())
+            })
+        } else {
+          addArticle(data)
+            .then((res) => {
+              if (res.status === 1) {
+                this.$message({
+                  message: res.data,
+                  type: 'success'
+                })
+                setTimeout(() => {
+                  this.$router.push(`/`)
+                }, 1500)
+              } else {
+                this.$message.error(res.data)
+                console.error('内部错误: ' + res.data)
+              }
+            })
+            .catch((e) => {
+              console.error('内部错误: ' + e.toString())
+            })
+        }
       }
     }
   }

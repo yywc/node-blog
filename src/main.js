@@ -11,6 +11,8 @@ import { isLogin } from '@/assets/js/utils'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'nprogress/nprogress.css'
 import '@/assets/stylus/index.styl'
+import axios from 'axios'
+import api from '@/api/config'
 
 Vue.config.productionTip = false
 
@@ -40,6 +42,21 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
   NProgress.done()
+})
+
+axios.interceptors.request.use(function (config) {
+  NProgress.start()
+  if ((
+      config.url === api.updateArticle ||
+      config.url === api.addArticle
+    ) &&
+    !Vue.prototype.$isLogin) {
+    return Promise.reject(new Error('未登录'))
+  }
+  return config
+}, function (error) {
+  NProgress.done()
+  return Promise.reject(error)
 })
 
 Vue.use(VueLazyLoad, {

@@ -29,25 +29,40 @@ const query = function (sql, values) {
 }
 
 // 用户登录
-const userLogin = function (loginName, password) {
+const login = function (loginName, password) {
   const sql = `SELECT * FROM blog_user WHERE name='${loginName}' AND password='${password}' LIMIT 1;`
   return query(sql)
 }
 
 // 获取全部文章
-const getArticleByAll = function () {
+const getAllArticle = function () {
   const sql = `SELECT * FROM blog_article;`
   return query(sql)
 }
 
 // 查看某一篇文章
-const getArticleById = function (id) {
+const getArticle = function (id) {
   const sql = `SELECT * FROM blog_article WHERE article_id='${id}' LIMIT 1;`
   return query(sql)
 }
 
 // 修改某一篇文章
-const updateArticleById = function (article) {
+const updateArticle = function (article) {
+  const { article_id, category, content, favorite_count, img, read_count, tag, title } = article
+  const sql = `UPDATE blog_article
+              SET category='${category}',
+              content = '${content}',
+              favorite_count='${favorite_count}',
+              img='${img}',
+              read_count='${read_count}',
+              tag='${tag}',
+              title='${title}'
+              WHERE article_id='${article_id}';`
+  return query(sql)
+}
+
+// 插入一篇文章
+const addArticle = function (article) {
   const { article_id, category, content, favorite_count, img, read_count, tag, title } = article
   const sql = `UPDATE blog_article
               SET category='${category}',
@@ -62,8 +77,9 @@ const updateArticleById = function (article) {
 }
 
 module.exports = {
-  userLogin,
-  getArticleByAll,
-  getArticleById,
-  updateArticleById
+  login,
+  getAllArticle,
+  getArticle,
+  updateArticle,
+  addArticle
 }

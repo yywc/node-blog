@@ -67,25 +67,32 @@ const getArticle = function (data) {
 /**
  * 更新某一篇文章
  */
-const updateArticle = function (data, isLogin) {
+const updateArticle = function (data) {
   const url = config.updateArticle
-  axios.interceptors.request.use(function () {
-    if (isLogin) {
-      return axios
-        .post(url, data)
-        .then((res) => {
-          return Promise.resolve(res.data)
-        })
-        .catch((error) => {
-          console.error('内部错误: ' + error)
-        })
-    } else {
-// eslint-disable-next-line prefer-promise-reject-errors
-      return Promise.reject('未登录')
-    }
-  }, function (error) {
-    return Promise.reject(error)
-  })
+  return axios
+    .post(url, data)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
+/**
+ * 新建一篇文章
+ */
+const addArticle = function (data) {
+  const url = config.addArticle
+  return axios
+    .post(url, data)
+    .then((res) => {
+      console.log(res)
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
 }
 
 export {
@@ -93,5 +100,6 @@ export {
   logout,
   getAllArticle,
   getArticle,
-  updateArticle
+  updateArticle,
+  addArticle
 }

@@ -3,7 +3,8 @@ const config = {
   logout: '/api/logout',
   getAllArticle: '/api/get-all-article',
   getArticle: '/api/get-article',
-  updateArticle: '/api/update-article'
+  updateArticle: '/api/update-article',
+  addArticle: '/api/add-article'
 }
 
 export default config
