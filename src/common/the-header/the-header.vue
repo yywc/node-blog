@@ -27,6 +27,7 @@
       <el-col :span="4">
         <router-link
           to="/writer"
+          v-if="$isLogin"
         >
           <el-button
             round

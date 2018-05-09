@@ -6,17 +6,29 @@ import router from './router'
 import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import ElementUI from 'element-ui'
+import NProgress from 'nprogress'
 import { isLogin } from '@/assets/js/utils'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'nprogress/nprogress.css'
 import '@/assets/stylus/index.styl'
 
 Vue.config.productionTip = false
+
+NProgress.configure({
+  showSpinner: false,
+  minimum: 0.2,
+  trickleRate: 0.05,
+  trickleSpeed: 500,
+  easing: 'ease',
+  speed: 500
+})
 
 fastclick.attach(document.body)
 Vue.use(ElementUI)
 
 // 未登录拦截
 router.beforeEach((to, from, next) => {
+  NProgress.start()
   if (to.name === 'ArticleWriter' && !Vue.prototype.$isLogin) {
     next({
       path: '/'
@@ -24,6 +36,10 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+})
+
+router.afterEach((to, from) => {
+  NProgress.done()
 })
 
 Vue.use(VueLazyLoad, {

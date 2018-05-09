@@ -262,7 +262,7 @@
         const data = {
           article: article
         }
-        updateArticle(data)
+        updateArticle(data, this.$isLogin)
           .then((res) => {
             if (res.status === 1) {
               this.$message({

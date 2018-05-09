@@ -90,14 +90,6 @@
         return this.article.tag ? this.article.tag.split(',') : []
       }
     },
-    watch: {
-      '$route'(to, from) {
-        // data数据操作
-        if (to.name === 'Article') {
-          this.$_getArticle({ articleId: this.$route.params.id })
-        }
-      }
-    },
     created() {
       this.md = new MarkdownIt({
         highlight: (str, lang) => {

@@ -44,17 +44,21 @@ const getArticle = async (ctx, next) => {
 }
 
 const updateArticle = async (ctx, next) => {
-  const { article } = ctx.request.body
-  try {
-    await updateArticleById(article)
-      .then((res) => {
-        ctx.body = resObj(1, '文章修改成功')
-      })
-      .catch((e) => {
-        ctx.body = resObj(2, e.toString())
-      })
-  } catch (e) {
-    ctx.body = resObj(0, '数据库错误: ' + e.toString())
+  if (ctx.session && ctx.session.userName && ctx.session.loginName) {
+    const { article } = ctx.request.body
+    try {
+      await updateArticleById(article)
+        .then((res) => {
+          ctx.body = resObj(1, '文章修改成功')
+        })
+        .catch((e) => {
+          ctx.body = resObj(2, e.toString())
+        })
+    } catch (e) {
+      ctx.body = resObj(0, '数据库错误: ' + e.toString())
+    }
+  } else {
+    ctx.body = resObj(0, '未登录')
   }
 }
 

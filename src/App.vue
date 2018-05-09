@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive exclude="ArticleWriter">
+    <keep-alive exclude="ArticleWriter,Article">
       <router-view></router-view>
     </keep-alive>
   </div>
