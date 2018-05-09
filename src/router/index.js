@@ -61,9 +61,15 @@ export default new Router({
       component: Article
     },
     {
-      path: '/writer/:id',
+      path: '/writer',
       name: 'ArticleWriter',
-      component: ArticleWriter
+      component: ArticleWriter,
+      children: [
+        {
+          path: '/writer/:id',
+          component: ArticleWriter
+        }
+      ]
     }
   ]
 })

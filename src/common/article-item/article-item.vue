@@ -69,7 +69,7 @@
       padding: 0 24px
       width: 510px
       height: 375px
-      box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.25);
+      box-shadow: 3px 3px 15px 2px rgba(0, 0, 0, 0.2);
       border-radius: 5px
       box-sizing: border-box
       &:first-of-type, &:nth-of-type(2)

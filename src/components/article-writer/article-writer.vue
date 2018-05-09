@@ -60,7 +60,10 @@
     },
     data() {
       return {
-        article: {},
+        article: {
+          title: '',
+          content: ''
+        },
         isLoaded: false, // 控制获取文章后，正确传入 article 给子组件
         scrollTopPercent: 0,
         editorScrollFlag: true, // 控制添加监听事件，防止多次添加
@@ -87,7 +90,11 @@
         }
       })
       this.id = this.$route.params.id
-      this.$_getArticle({ articleId: this.id })
+      if (this.id) {
+        this.$_getArticle({ articleId: this.id })
+      } else {
+        this.isLoaded = true
+      }
     },
     mounted() {
       const editor = this.$refs.textareaContent

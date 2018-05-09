@@ -25,6 +25,16 @@
         <h1 class="title">岂曰无衣 与子同袍</h1>
       </el-col>
       <el-col :span="4">
+        <router-link
+          to="/writer"
+        >
+          <el-button
+            round
+            type="success"
+          >
+            写文章
+          </el-button>
+        </router-link>
         <el-button
           class="logout"
           type="text"
@@ -109,7 +119,9 @@
           color: $green-500
       .home
         margin-right: 10px
-      .logout, .home
+        color: $text-secondary-light
+      .logout
+        margin-left: 15px
         color: $text-secondary-light
         &:hover
           color: $green-500

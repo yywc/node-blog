@@ -32,7 +32,7 @@
           ref="categoryValue"
           v-model="categoryList"
         >
-        <div class="tag" v-for="(category, index) in this.categoryList" :key="index">
+        <div class="tag" v-for="(category, index) in this.categories" :key="index">
           <span
             class="name category-item"
             contenteditable="false"
@@ -62,7 +62,7 @@
           ref="tagValue"
           v-model="tagList"
         >
-        <div class="tag" v-for="(tag, index) in this.tagList" :key="index">
+        <div class="tag" v-for="(tag, index) in this.tags" :key="index">
           <span
             class="name tag-item"
             contenteditable="false"
@@ -111,8 +111,12 @@
     },
     data() {
       return {
-        categoryList: this.article.category.split(',').slice(1),
-        tagList: this.article.tag.split(','),
+        // 存放文章原有目录和标签
+        categories: this.article.category ? this.article.category.split(',').slice(1) : [],
+        tags: this.article.tag ? this.article.tag.split(',') : [],
+        // 处理新建的目录和标签
+        categoryList: [],
+        tagList: [],
         options: [
           {
             value: '技术',
@@ -127,7 +131,7 @@
       }
     },
     mounted() {
-      this.dataV = document.getElementsByClassName('header')[0].attributes[0].name
+      this.dataV = document.getElementsByClassName('box')[0].attributes[0].name
       // 改造 ui 框架样式
       document.getElementsByClassName('el-input__inner')[0].setAttribute(this.dataV, '')
     },
@@ -234,14 +238,17 @@
         const targetChild = e.target.parentNode.children[0]
         if (hasClass(targetChild, 'tag-item')) {
           this.tagList = removeElementFromArray(this.tagList, targetChild.textContent)
+          this.tags = removeElementFromArray(this.tags, targetChild.textContent)
         } else if (hasClass(targetChild, 'category-item')) {
           this.categoryList = removeElementFromArray(this.categoryList, targetChild.textContent)
+          this.categories = removeElementFromArray(this.categories, targetChild.textContent)
         }
         target.parentNode.removeChild(target)
       },
       submit() {
-        const arr = [...this.categoryList]
-        arr.unshift(this.value)
+        const categoryArray = [...this.categories, ...this.categoryList]
+        const tagArray = [...this.tags, ...this.tagList]
+        categoryArray.unshift(this.value)
         const article = new Proxy(this.article, {
           set(trapTarget, key, value, receiver) {
             if (key === 'article_id') {
@@ -250,7 +257,8 @@
             return Reflect.set(trapTarget, key, value, receiver)
           }
         })
-        article.category = arr
+        article.category = categoryArray
+        article.tag = tagArray
         const data = {
           article: article
         }
@@ -391,11 +399,11 @@
       padding: 3px 8px
       font-size: 12px
       max-width: 480px
-      background: #e9e9e9
+      background: $gray-300
       border-radius: 2px
       line-height: 15px
       height: 21px
-      color: #4f4f4f
+      color: $gray-700
       overflow: hidden
       white-space: nowrap
       box-sizing: border-box
@@ -406,7 +414,7 @@
       display: block
       margin-left: 3px
       height: 12px
-      color: #ddd
+      color: $gray-400
       transition: color .3s ease-in
       vertical-align: -1px
       cursor: pointer
