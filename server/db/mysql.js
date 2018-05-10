@@ -48,31 +48,22 @@ const getArticle = function (id) {
 
 // 修改某一篇文章
 const updateArticle = function (article) {
-  const { article_id, category, content, favorite_count, img, read_count, tag, title } = article
   const sql = `UPDATE blog_article
-              SET category='${category}',
-              content = '${content}',
-              favorite_count='${favorite_count}',
-              img='${img}',
-              read_count='${read_count}',
-              tag='${tag}',
-              title='${title}'
-              WHERE article_id='${article_id}';`
+              SET category=${article.category},
+              content=${article.content},
+              favorite_count=${article.favorite_count},
+              img=${article.img},
+              read_count=${article.read_count},
+              tag=${article.tag},
+              title=${article.title}
+              WHERE article_id=${article.article_id};`
   return query(sql)
 }
 
 // 插入一篇文章
 const addArticle = function (article) {
-  const { article_id, category, content, favorite_count, img, read_count, tag, title } = article
-  const sql = `UPDATE blog_article
-              SET category='${category}',
-              content = '${content}',
-              favorite_count='${favorite_count}',
-              img='${img}',
-              read_count='${read_count}',
-              tag='${tag}',
-              title='${title}'
-              WHERE article_id='${article_id}';`
+  const sql = `INSERT INTO blog_article VALUES (NULL, ${article.title}, ${article.content}, NULL, NULL, ${article.category}, ${article.tag}, ${article.img}, 0, 0);`
+  console.log(sql)
   return query(sql)
 }
 

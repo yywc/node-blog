@@ -153,6 +153,10 @@
         }
       },
       submit() {
+        if (this.article.title.trim() === '' || this.article.content.trim() === '') {
+          this.$message.error('文章标题或者内容不能为空')
+          return
+        }
         this.$refs.layerWrapper.style.display = 'block'
         // 强行改变 ele-ui 下拉框样式为了好看点
         document.getElementsByClassName('el-scrollbar__wrap')[0].style.marginBottom = '-16px'

@@ -246,6 +246,10 @@
         target.parentNode.removeChild(target)
       },
       submit() {
+        if (this.value === '') {
+          this.$message.error('请选择必须的文章分类')
+          return
+        }
         const categoryArray = [...this.categories, ...this.categoryList]
         const tagArray = [...this.tags, ...this.tagList]
         categoryArray.unshift(this.value)
@@ -257,8 +261,9 @@
             return Reflect.set(trapTarget, key, value, receiver)
           }
         })
-        article.category = categoryArray
-        article.tag = tagArray
+        // 转化为字符串
+        article.category = categoryArray.join()
+        article.tag = tagArray.toString() === '' ? undefined : tagArray.join()
         const data = {
           article: article
         }
