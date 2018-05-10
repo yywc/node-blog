@@ -63,7 +63,6 @@ const updateArticle = function (article) {
 // 插入一篇文章
 const addArticle = function (article) {
   const sql = `INSERT INTO blog_article VALUES (NULL, ${article.title}, ${article.content}, NULL, NULL, ${article.category}, ${article.tag}, ${article.img}, 0, 0);`
-  console.log(sql)
   return query(sql)
 }
 
