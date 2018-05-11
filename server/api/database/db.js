@@ -44,43 +44,9 @@ const getArticle = async (ctx, next) => {
   }
 }
 
-// 封装文章数据
-const _checkArticleData = function (article, ctx) {
-  let { title, category, content, img, tag, favorite_count, read_count } = article
-  if (!title || !content || !category) {
-    ctx.body = resObj(0, '文章内容不全')
-    return
-  }
-  article.title = `'${title}'`
-  article.content = `'${content}'`
-  article.category = `'${category}'`
-
-  if (img === undefined || img === null) {
-    article.img = null
-  } else {
-    article.img = `'${img}'`
-  }
-
-  if (tag === undefined || tag === null) {
-    article.tag = null
-  } else {
-    article.tag = `'${tag}'`
-  }
-
-  if (favorite_count === undefined) {
-    article.favorite_count = 0
-  }
-
-  if (read_count === undefined) {
-    article.read_count = 0
-  }
-}
-
 const updateArticle = async (ctx, next) => {
   if (ctx.session && ctx.session.userName && ctx.session.loginName) {
     const { article } = ctx.request.body
-    // 处理数据，方便数据库直接提交
-    _checkArticleData(article, ctx)
     try {
       await mysql.updateArticle(article)
         .then(() => {
@@ -100,8 +66,6 @@ const updateArticle = async (ctx, next) => {
 const addArticle = async (ctx, next) => {
   if (ctx.session && ctx.session.userName && ctx.session.loginName) {
     const { article } = ctx.request.body
-    // 处理数据，方便数据库直接提交
-    _checkArticleData(article, ctx)
     try {
       await mysql.addArticle(article)
         .then(() => {
