@@ -30,7 +30,7 @@ const query = function (sql, values) {
 
 // 用户登录
 const login = function (loginName, password) {
-  const sql = 'SELECT * FROM `blog_user` WHERE `name`=? AND `password`=? LIMIT 1;'
+  const sql = 'SELECT * FROM `blog_user` WHERE `name` = ? AND `password` = ? LIMIT 1;'
   return query(sql, [loginName, password])
 }
 
@@ -42,7 +42,7 @@ const getAllArticle = function () {
 
 // 查看某一篇文章
 const getArticle = function (id) {
-  const sql = 'SELECT * FROM `blog_article` WHERE `article_id`=? LIMIT 1;'
+  const sql = 'SELECT * FROM `blog_article` WHERE `article_id` = ? LIMIT 1;'
   return query(sql, id)
 }
 
@@ -50,7 +50,7 @@ const getArticle = function (id) {
 const updateArticle = function (article) {
   const { category, content, favorite_count, img, read_count, tag, title, article_id } = article
   const value = { category, content, favorite_count, img, read_count, tag, title }
-  const sql = 'UPDATE `blog_article` SET ? WHERE `article_id`=?;'
+  const sql = 'UPDATE `blog_article` SET ? WHERE `article_id` = ?;'
   return query(sql, [value, article_id])
 }
 
@@ -62,10 +62,17 @@ const addArticle = function (article) {
   return query(sql, value)
 }
 
+// 删除一篇文章
+const deleteArticle = function (id) {
+  const sql = 'DELETE FROM `blog_article` WHERE `article_id` = ?;'
+  return query(sql, id)
+}
+
 module.exports = {
   login,
   getAllArticle,
   getArticle,
   updateArticle,
-  addArticle
+  addArticle,
+  deleteArticle
 }

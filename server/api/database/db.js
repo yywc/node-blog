@@ -82,9 +82,29 @@ const addArticle = async (ctx, next) => {
   }
 }
 
+const deleteArticle = async (ctx, next) => {
+  if (ctx.session && ctx.session.userName && ctx.session.loginName) {
+    const { article_id } = ctx.request.body
+    try {
+      await mysql.deleteArticle(article_id)
+        .then(() => {
+          ctx.body = resObj(1, '删除文章成功')
+        })
+        .catch((e) => {
+          ctx.body = resObj(2, e.toString())
+        })
+    } catch (e) {
+      ctx.body = resObj(0, '数据库错误: ' + e.toString())
+    }
+  } else {
+    ctx.body = resObj(0, '未登录')
+  }
+}
+
 module.exports = {
   getAllArticle,
   getArticle,
   updateArticle,
-  addArticle
+  addArticle,
+  deleteArticle
 }

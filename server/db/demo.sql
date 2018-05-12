@@ -63,4 +63,7 @@ CREATE TABLE IF NOT EXISTS blog_comment (
 );
 
 --更新文章
-UPDATE blog_article SET title='new title' WHERE id='1';
+UPDATE `blog_article` SET `title`='new title' WHERE `article_id` = 1;
+
+--删除文章
+DELETE FROM `blog_article` WHERE `article_id` = 1;

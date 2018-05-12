@@ -277,7 +277,7 @@
                 })
                 setTimeout(() => {
                   this.$router.push(`/article/${article.article_id}`)
-                }, 1500)
+                }, 1000)
               } else {
                 this.$message.error(res.data)
                 console.error('内部错误: ' + res.data)
@@ -295,8 +295,8 @@
                   type: 'success'
                 })
                 setTimeout(() => {
-                  this.$router.push(`/`)
-                }, 1500)
+                  window.location.href = '/'
+                }, 1000)
               } else {
                 this.$message.error(res.data)
                 console.error('内部错误: ' + res.data)

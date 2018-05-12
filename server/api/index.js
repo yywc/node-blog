@@ -8,7 +8,8 @@ const API = {
   GET_ALL_ARTICLE: db.getAllArticle,
   GET_ARTICLE: db.getArticle,
   UPDATE_ARTICLE: db.updateArticle,
-  ADD_ARTICLE: db.addArticle
+  ADD_ARTICLE: db.addArticle,
+  DELETE_ARTICLE: db.deleteArticle
 }
 
 module.exports = API

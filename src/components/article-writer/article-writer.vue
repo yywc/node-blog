@@ -15,8 +15,13 @@
           v-model="article.title"
         >
         <button
+          class="btn-delete"
+        >
+          <el-button type="text" @click="centerDialogVisible = true">删除</el-button>
+        </button>
+        <button
           class="btn-submit"
-          @click="submit"
+          @click="submitArticle"
         >
           发布
         </button>
@@ -40,13 +45,24 @@
     <div class="layer-wrapper" ref="layerWrapper">
       <pop-up-layer @close="closeLayer" :article="this.article" v-if="isLoaded"></pop-up-layer>
     </div>
+    <el-dialog
+      title="提示"
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center>
+      <span>确定要删除该文章吗?</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="_deleteArticle">确 定</el-button>
+      </span>
+    </el-dialog>
   </el-container>
 </template>
 
 <script type="text/ecmascript-6">
   import TheHeader from '@/common/the-header/the-header'
   import PopUpLayer from '@/common/pop-up-layer/pop-up-layer'
-  import { getArticle } from '@/api/index'
+  import { getArticle, deleteArticle } from '@/api/index'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
@@ -67,7 +83,8 @@
         isLoaded: false, // 控制获取文章后，正确传入 article 给子组件
         scrollTopPercent: 0,
         editorScrollFlag: true, // 控制添加监听事件，防止多次添加
-        contentScrollFlag: true // 控制添加监听事件，防止多次添加
+        contentScrollFlag: true, // 控制添加监听事件，防止多次添加
+        centerDialogVisible: false
       }
     },
     computed: {
@@ -91,7 +108,7 @@
       })
       this.id = this.$route.params.id
       if (this.id) {
-        this.$_getArticle({ articleId: this.id })
+        this._getArticle({ articleId: this.id })
       } else {
         this.isLoaded = true
       }
@@ -106,7 +123,7 @@
       document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
     },
     methods: {
-      $_getArticle(id) {
+      _getArticle(id) {
         getArticle(id)
           .then((res) => {
             this.article = res.data[0]
@@ -152,7 +169,7 @@
           editor.addEventListener('scroll', this.scroll)
         }
       },
-      submit() {
+      submitArticle() {
         if (this.article.title.trim() === '' || this.article.content.trim() === '') {
           this.$message.error('文章标题或者内容不能为空')
           return
@@ -163,6 +180,28 @@
       },
       closeLayer() {
         this.$refs.layerWrapper.style.display = 'none'
+      },
+      _deleteArticle() {
+        if (this.id) {
+          deleteArticle({ article_id: this.id })
+            .then((res) => {
+              if (res.status === 1) {
+                this.$message({
+                  message: res.data,
+                  type: 'success'
+                })
+                setTimeout(() => {
+                  window.location.href = '/'
+                }, 1000)
+              } else {
+                console.error('内部错误: ' + res.data)
+              }
+            })
+            .catch((e) => {
+              console.error('内部错误: ' + e.toString())
+            })
+        }
+        this.centerDialogVisible = false
       }
     }
   }
@@ -192,7 +231,7 @@
         outline none
         &:focus
           border: 1px solid $green-100
-      .btn-submit
+      / .head-btn
         flex: 0 0 80px
         margin-left: 20px
         width: 80px
@@ -203,8 +242,25 @@
         box-sizing: border-box
         border: none
         border-radius: 3px
-        background: $green-500
         cursor: pointer
+      .btn-delete
+        color: $text-primary-dark
+        border: 1px solid $line-dark
+        background: $gray-100
+        @extend .head-btn
+        &:hover
+          color: $green-300
+          border: 1px solid $green-100
+          background: $green-50
+        button
+          width: 100%
+          height: 100%
+          color: $text-primary-dark
+        &:hover button
+          color: $green-300
+      .btn-submit
+        background: $green-500
+        @extend .head-btn
         &:hover
           background: $green-300
     .content

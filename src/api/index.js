@@ -36,6 +36,7 @@ const logout = function () {
 
 /**
  * 获取所有文章列表
+ * @returns {Promise<AxiosResponse<any>>}
  */
 const getAllArticle = function () {
   const url = config.getAllArticle
@@ -51,6 +52,8 @@ const getAllArticle = function () {
 
 /**
  * 获取某一篇文章
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
  */
 const getArticle = function (data) {
   const url = config.getArticle
@@ -66,6 +69,8 @@ const getArticle = function (data) {
 
 /**
  * 更新某一篇文章
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
  */
 const updateArticle = function (data) {
   const url = config.updateArticle
@@ -81,9 +86,28 @@ const updateArticle = function (data) {
 
 /**
  * 新建一篇文章
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
  */
 const addArticle = function (data) {
   const url = config.addArticle
+  return axios
+    .post(url, data)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
+/**
+ * 删除一篇文章
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+const deleteArticle = function (data) {
+  const url = config.deleteArticle
   return axios
     .post(url, data)
     .then((res) => {
@@ -100,5 +124,6 @@ export {
   getAllArticle,
   getArticle,
   updateArticle,
-  addArticle
+  addArticle,
+  deleteArticle
 }
