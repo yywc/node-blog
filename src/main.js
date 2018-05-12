@@ -48,7 +48,8 @@ axios.interceptors.request.use(function (config) {
   NProgress.start()
   if ((
       config.url === api.updateArticle ||
-      config.url === api.addArticle
+      config.url === api.addArticle ||
+      config.url === api.deleteArticle
     ) &&
     !Vue.prototype.$isLogin) {
     return Promise.reject(new Error('未登录'))
