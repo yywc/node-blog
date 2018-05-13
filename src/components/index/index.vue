@@ -33,6 +33,13 @@
         articles: []
       }
     },
+    watch: {
+      $route(to, from) {
+        if (from.name === 'Article') {
+          window.location.reload()
+        }
+      }
+    },
     created() {
       getAllArticle()
         .then((res) => {

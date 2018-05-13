@@ -101,10 +101,30 @@ const deleteArticle = async (ctx, next) => {
   }
 }
 
+const searchArticle = async (ctx, next) => {
+  if (ctx.session && ctx.session.userName && ctx.session.loginName) {
+    const { title } = ctx.request.body
+    try {
+      await mysql.searchArticle(title)
+        .then(() => {
+          ctx.body = resObj(1)
+        })
+        .catch((e) => {
+          ctx.body = resObj(2, e.toString())
+        })
+    } catch (e) {
+      ctx.body = resObj(0, '数据库错误: ' + e.toString())
+    }
+  } else {
+    ctx.body = resObj(0, '未登录')
+  }
+}
+
 module.exports = {
   getAllArticle,
   getArticle,
   updateArticle,
   addArticle,
-  deleteArticle
+  deleteArticle,
+  searchArticle
 }
