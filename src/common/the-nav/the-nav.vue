@@ -1,11 +1,13 @@
 <template>
-  <div class="nav-wrapper">
-    <img
-      class="bg"
-      src="~@/assets/imgs/header.png"
-      alt="无欲则刚"
-      @click="extraScene"
-    >
+  <div>
+    <div class="img-wrapper">
+      <img
+        class="bg"
+        src="~@/assets/imgs/header.png"
+        alt="无欲则刚"
+        @click="extraScene"
+      >
+    </div>
     <nav class="nav">
       <ul class="menu">
         <li class="router-item">
@@ -79,29 +81,32 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "~@/assets/stylus/mixin"
 
-  .nav-wrapper
-    margin: 60px 0 40px
+  .img-wrapper
+    min-width: 1200px
+    margin: 0 auto
     .bg
       display: block
-      margin: 40px auto 15px
+      margin: 0 auto 15px
+      padding-top: 25px
       width: 400px
-    .nav
-      width: 100%
-      height: 50px
-      .menu
-        margin: 0 auto
-        width: 1200px
-        height: $height = 40px
-        line-height: $height
-        text-align: center
-        .router-item
-          display: inline-block
-          padding: 0 15px
-          color: $text-secondary-dark
-          .router-link-active
-            color: $green-500
-          &:hover
-            color: $green-500
-        .iconfont
-          margin-right: 3px
+
+  .nav
+    min-width: 1200px
+    height: 40px
+    .menu
+      margin: 0 auto
+      width: 1200px
+      height: $height = 40px
+      line-height: $height
+      text-align: center
+      .router-item
+        display: inline-block
+        padding: 0 15px
+        color: $text-secondary-dark
+        .router-link-active
+          color: $green-500
+        &:hover
+          color: $green-500
+      .iconfont
+        margin-right: 3px
 </style>

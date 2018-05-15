@@ -86,12 +86,12 @@
     top: 0
     right: 0
     left: 0
-    height: $height = 60px
-    color: $text-secondary-light
+    height: $height = 50px
+    color: $text-secondary-dark
     border-bottom: 1px solid $line-dark
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.7)
     box-sizing: border-box
-    background: $blue-gray-800
+    border-bottom 1px solid $line-dark
+    background: $white
     z-index: $z-index-medium
     ._row-bg_
       margin: 0 auto
@@ -115,20 +115,20 @@
             vertical-align: middle
             border-radius: 50%
         .user-name
-          color: $text-secondary-light
+          color: $text-secondary-dark
         &:hover .user-name
           color: $green-500
       .home
         margin-right: 10px
-        color: $text-secondary-light
+        color: $text-secondary-dark
       .logout
         margin-left: 15px
-        color: $text-secondary-light
+        color: $text-secondary-dark
         &:hover
           color: $green-500
       .title
         text-align: center
-        color: $text-primary-light
+        color: $text-secondary-dark
       .iconfont
         margin-right: 3px
         font-size: $text-size-medium

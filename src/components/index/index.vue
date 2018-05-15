@@ -1,16 +1,12 @@
 <template>
-  <el-container>
-    <the-header></the-header>
-    <the-nav></the-nav>
-    <el-main>
+  <div>
+    <the-nav class="nav-wrapper"></the-nav>
+    <div class="main">
       <div class="article-wrapper">
         <article-item :articles="this.articles"></article-item>
       </div>
-    </el-main>
-    <el-footer>
-      <the-footer></the-footer>
-    </el-footer>
-  </el-container>
+    </div>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -70,16 +66,14 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "~@/assets/stylus/mixin"
 
-  .article-wrapper
-    margin: 0 auto
+  .nav-wrapper
+    margin: 80px 0 0
+
+  .main
+    margin: 60px auto
     width: 1200px
+    .article-wrapper
+      margin: 0 auto
+      width: 1000px
 
-  .el-main
-    width: 100%
-    min-width: 1200px
-
-  .el-footer
-    width: 100%
-    min-width: 1200px
-    background: $blue-gray-800
 </style>

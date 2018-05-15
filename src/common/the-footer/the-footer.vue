@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <footer class="footer">
     <span>版权所有 © (2018 - ?)</span>
     <span class="dividing">|</span>
     <span>独家赞助: 深圳市爱望舒科技有限公司 (我还没注册)</span>
@@ -24,7 +24,7 @@
     >
       <i class="iconfont icon-microblog"></i>
     </a>
-  </div>
+  </footer>
 </template>
 
 <script type="text/ecmascript-6">
@@ -38,13 +38,16 @@
 
   .footer
     display: flex
-    margin: 0 auto
-    width: 1200px
-    height: 100%
     align-items: center
-    font-size: $text-size-small
     justify-content: center
-    color: $text-secondary-light
+    margin: 0 auto
+    min-width: 1200px
+    width: 100%
+    height: 50px
+    line-height: 50px
+    font-size: $text-size-small
+    color: $text-secondary-dark
+    border-top: 1px solid $line-dark
     .dividing
       margin: 0 7px
       font-size: $text-size-large

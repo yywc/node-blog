@@ -1,10 +1,13 @@
 <template>
-  <div class="wrapper">
+  <div class="article-item-wrapper">
     <article
       class="article"
       v-for="article in articles"
       :key="article.id"
     >
+      <header class="line">
+        <i class="iconfont icon-book"></i>
+      </header>
       <h1 class="title">
         <router-link
           class="title-router"
@@ -12,8 +15,10 @@
         >{{ article.title }}
         </router-link>
       </h1>
+      <div class="meta"><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 </em></div>
       <p class="content">{{ getContent(article) }}</p>
       <router-link
+        class="img-wrapper"
         v-if="article.avatar"
         :to="getArticlePath(article)"
       >
@@ -23,7 +28,6 @@
           :alt="article.title"
         >
       </router-link>
-      <div class="meta"><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 </em></div>
     </article>
   </div>
 </template>
@@ -45,8 +49,8 @@
       },
       getContent(article) {
         if (article.avatar) {
-          if (article.content.length > 90) {
-            return article.content.slice(0, 90) + '...'
+          if (article.content.length > 88) {
+            return article.content.slice(0, 88) + '...'
           }
         } else if (article.content.length > 300) {
           return article.content.slice(0, 300) + '...'
@@ -60,28 +64,42 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "~@/assets/stylus/mixin"
 
-  .wrapper
+  .article-item-wrapper
     clear-float()
     .article
       position: relative;
       float: left
       margin-top: 75px;
-      padding: 0 24px
-      width: 510px
-      height: 375px
-      box-shadow: 3px 3px 15px 2px rgba(0, 0, 0, 0.2);
+      width: 450px
+      height: 340px
       border-radius: 5px
       box-sizing: border-box
       &:first-of-type, &:nth-of-type(2)
         margin-top: 0
       &:nth-of-type(odd)
-        margin-left: 52.5px
+        margin-left: 25px
       &:nth-of-type(even)
-        margin-left: 75px
+        margin-left: 50px
+      .line
+        text-align: center
+        &:before
+          display: block
+          content: ''
+          border-top: 1px solid $line-dark
+          position: relative
+          top: 16px
+        .iconfont
+          display: inline-block
+          position: relative
+          top: 5px
+          padding: 0 15px
+          color: $text-primary-dark
+          font-size: $text-size-large-x
+          background: $white
       .title
-        margin-top: 10px
-        padding: 0 14px
-        height: $height = 60px
+        margin-top: 15px
+        padding: 0 38px
+        height: $height = 30px
         line-height: $height
         color: $text-primary-dark
         font-size: $text-size-large-x
@@ -89,27 +107,29 @@
         no-wrap()
         .title-router:hover
           color: $green-500
+      .meta
+        margin: 7px 0
+        height: $height = 20px
+        line-height: $height
+        text-align: center
+        font-size: $text-size-small
+        color: $text-secondary-dark
       .content
+        padding: 0 15px
         text-indent: 2em
         min-height: 50px
         line-height: 1.8
         font-size: $text-size-medium
         color: $text-primary-dark
-      .img
+      .img-wrapper
         display: block
-        margin: 10px auto
-        width: 410px
-        height: 180px
+        margin: 15px auto 0
+        width: 330px
+        height: 150px
         border-radius: 3px
-      .meta
-        position: absolute
-        right: 0
-        bottom: 10px
-        left: 0
-        height: $height = 40px
-        line-height: $height
-        text-align: center
-        font-size: $text-size-small
-        color: $text-secondary-dark
+        .img
+          display: block
+          width: 100%
+          height: 100%
 
 </style>

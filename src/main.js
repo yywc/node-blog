@@ -61,6 +61,14 @@ axios.interceptors.request.use(function (config) {
   return Promise.reject(error)
 })
 
+axios.interceptors.response.use(function (response) {
+  NProgress.done()
+  return response
+}, function (error) {
+  NProgress.done()
+  return Promise.reject(error)
+})
+
 Vue.use(VueLazyLoad, {
   loading: require('@/assets/imgs/default.png'),
   error: require('@/assets/imgs/error.png')
