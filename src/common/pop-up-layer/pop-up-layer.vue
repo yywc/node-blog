@@ -98,6 +98,7 @@
 <script type="text/ecmascript-6">
   import { addClass, hasClass, removeElementFromArray } from '@/assets/js/utils'
   import { updateArticle, addArticle } from '@/api/index'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: 'PopUpLayer',
@@ -271,6 +272,7 @@
           updateArticle(data)
             .then((res) => {
               if (res.status === 1) {
+                this.updateArticleTime()
                 this.$message({
                   message: res.data,
                   type: 'success'
@@ -290,6 +292,7 @@
           addArticle(data)
             .then((res) => {
               if (res.status === 1) {
+                this.updateArticleTime()
                 this.$message({
                   message: res.data,
                   type: 'success'
@@ -306,7 +309,10 @@
               console.error('内部错误: ' + e.toString())
             })
         }
-      }
+      },
+      ...mapMutations({
+        updateArticleTime: 'SET_UPDATE_ARTICLE_TIME'
+      })
     }
   }
 </script>

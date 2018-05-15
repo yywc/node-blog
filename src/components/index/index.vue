@@ -19,6 +19,7 @@
   import TheNav from '@/common/the-nav/the-nav'
   import TheFooter from '@/common/the-footer/the-footer'
   import { getAllArticle } from '@/api/index'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'Index',
@@ -33,25 +34,35 @@
         articles: []
       }
     },
+    computed: {
+      ...mapGetters([
+        'updateArticleTime'
+      ])
+    },
     watch: {
-      $route(to, from) {
-        if (from.name === 'Article') {
-          window.location.reload()
+      updateArticleTime(oldVal, newVal) {
+        if (newVal !== oldVal) {
+          this._getAllArticle()
         }
       }
     },
     created() {
-      getAllArticle()
-        .then((res) => {
-          if (res.status === 1) {
-            this.articles = res.data
-          } else {
-            console.error('内部错误: ' + res.data)
-          }
-        })
-        .catch((e) => {
-          console.error('内部错误: ' + e.toString())
-        })
+      this._getAllArticle()
+    },
+    methods: {
+      _getAllArticle() {
+        getAllArticle()
+          .then((res) => {
+            if (res.status === 1) {
+              this.articles = res.data
+            } else {
+              console.error('内部错误: ' + res.data)
+            }
+          })
+          .catch((e) => {
+            console.error('内部错误: ' + e.toString())
+          })
+      }
     }
   }
 </script>

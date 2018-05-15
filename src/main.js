@@ -13,6 +13,7 @@ import 'nprogress/nprogress.css'
 import '@/assets/stylus/index.styl'
 import axios from 'axios'
 import api from '@/api/config'
+import store from './store'
 
 Vue.config.productionTip = false
 
@@ -72,6 +73,7 @@ Vue.prototype.$isLogin = isLogin
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

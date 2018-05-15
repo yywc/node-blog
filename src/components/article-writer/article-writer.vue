@@ -63,6 +63,7 @@
   import TheHeader from '@/common/the-header/the-header'
   import PopUpLayer from '@/common/pop-up-layer/pop-up-layer'
   import { getArticle, deleteArticle } from '@/api/index'
+  import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
@@ -186,6 +187,7 @@
           deleteArticle({ article_id: this.id })
             .then((res) => {
               if (res.status === 1) {
+                this.updateArticleTime()
                 this.$message({
                   message: res.data,
                   type: 'success'
@@ -202,7 +204,10 @@
             })
         }
         this.centerDialogVisible = false
-      }
+      },
+      ...mapMutations({
+        updateArticleTime: 'SET_UPDATE_ARTICLE_TIME'
+      })
     }
   }
 </script>
