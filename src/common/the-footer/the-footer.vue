@@ -48,6 +48,7 @@
     font-size: $text-size-small
     color: $text-secondary-dark
     border-top: 1px solid $line-dark
+    box-sizing: border-box
     .dividing
       margin: 0 7px
       font-size: $text-size-large
