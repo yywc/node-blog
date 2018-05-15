@@ -69,7 +69,7 @@
     .article
       position: relative;
       float: left
-      margin-top: 75px;
+      margin-top: 40px;
       width: 450px
       height: 340px
       border-radius: 5px

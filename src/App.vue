@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <the-header></the-header>
+    <the-header v-if="login"></the-header>
     <div class="wrapper">
       <keep-alive exclude="ArticleWriter,Article">
         <router-view class="content"></router-view>
       </keep-alive>
     </div>
-    <the-footer></the-footer>
+    <the-footer v-if="login"></the-footer>
   </div>
 </template>
 
@@ -16,9 +16,19 @@
 
   export default {
     name: 'App',
+    data() {
+      return {
+        login: true
+      }
+    },
     components: {
       TheFooter,
       TheHeader
+    },
+    watch: {
+      $route(to, from) {
+        this.login = to.name !== 'Login'
+      }
     }
   }
 </script>
@@ -27,11 +37,12 @@
 
   html, body
     height: 100%
+
   #app
     height: 100%
     .wrapper
       padding-top: 50px
-      min-height: 99.67%
+      min-height: 99.2%
       box-sizing: border-box
       .content
         padding-bottom: 50px

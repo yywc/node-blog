@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <section>
     <the-nav class="nav-wrapper"></the-nav>
     <div class="main">
       <div class="article-wrapper">
         <article-item :articles="this.articles"></article-item>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script type="text/ecmascript-6">
@@ -67,7 +67,7 @@
   @import "~@/assets/stylus/mixin"
 
   .nav-wrapper
-    margin: 80px 0 0
+    margin: 60px 0 0
 
   .main
     margin: 60px auto

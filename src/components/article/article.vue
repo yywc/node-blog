@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <section class="main">
     <router-link
       class="edit"
       v-if="$isLogin"
@@ -49,7 +49,7 @@
       </div>
       <button class="share">分享</button>
     </div>
-  </div>
+  </section>
 </template>
 
 <script type="text/ecmascript-6">
@@ -102,7 +102,7 @@
       this.$_getArticle({ articleId: this.id })
     },
     mounted() {
-      this.dataV = document.getElementsByClassName('header')[0].attributes[0].name
+      this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
       // 改造 ui 框架样式
       document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
     },
@@ -160,6 +160,7 @@
       text-align: center
       font-size: $text-size-medium
     .markdown-content
+      min-height: 50px
       line-height: 1.8
     .page
       position: relative

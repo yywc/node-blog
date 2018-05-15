@@ -87,7 +87,7 @@
     .bg
       display: block
       margin: 0 auto 15px
-      padding-top: 25px
+      padding-top: 15px
       width: 400px
 
   .nav
@@ -101,6 +101,7 @@
       text-align: center
       .router-item
         display: inline-block
+        margin: 0 10px
         padding: 0 15px
         color: $text-secondary-dark
         .router-link-active

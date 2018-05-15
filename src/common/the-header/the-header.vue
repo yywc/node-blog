@@ -86,7 +86,7 @@
     top: 0
     right: 0
     left: 0
-    height: $height = 50px
+    height: $height = 55px
     color: $text-secondary-dark
     border-bottom: 1px solid $line-dark
     box-sizing: border-box

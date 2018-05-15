@@ -1,32 +1,30 @@
 <template>
-  <el-container>
-    <the-header></the-header>
-    <section class="main">
-      <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>文章编辑</el-breadcrumb-item>
-      </el-breadcrumb>
-      <div class="title-wrapper">
-        <input
-          class="article-title"
-          type="text"
-          title="标题"
-          ref="articleTitle"
-          v-model="article.title"
-        >
-        <button
-          class="btn-delete"
-        >
-          <el-button type="text" @click="centerDialogVisible = true">删除</el-button>
-        </button>
-        <button
-          class="btn-submit"
-          @click="submitArticle"
-        >
-          发布
-        </button>
-      </div>
-      <div class="content">
+  <section class="main">
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>文章编辑</el-breadcrumb-item>
+    </el-breadcrumb>
+    <div class="title-wrapper">
+      <input
+        class="article-title"
+        type="text"
+        title="标题"
+        ref="articleTitle"
+        v-model="article.title"
+      >
+      <button
+        class="btn-delete"
+      >
+        <el-button type="text" @click="centerDialogVisible = true">删除</el-button>
+      </button>
+      <button
+        class="btn-submit"
+        @click="submitArticle"
+      >
+        发布
+      </button>
+    </div>
+    <div class="content">
         <textarea
           class="editor"
           title="文章内容"
@@ -34,14 +32,13 @@
           v-model="article.content"
         >
         </textarea>
-        <p
-          class="markdown-content"
-          ref="markdownContent"
-          v-html="getContent"
-        >
-        </p>
-      </div>
-    </section>
+      <p
+        class="markdown-content"
+        ref="markdownContent"
+        v-html="getContent"
+      >
+      </p>
+    </div>
     <div class="layer-wrapper" ref="layerWrapper">
       <pop-up-layer @close="closeLayer" :article="this.article" v-if="isLoaded"></pop-up-layer>
     </div>
@@ -49,14 +46,15 @@
       title="提示"
       :visible.sync="centerDialogVisible"
       width="30%"
-      center>
+      center
+    >
       <span>确定要删除该文章吗?</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="_deleteArticle">确 定</el-button>
       </span>
     </el-dialog>
-  </el-container>
+  </section>
 </template>
 
 <script type="text/ecmascript-6">
@@ -119,7 +117,7 @@
       const content = this.$refs.markdownContent
       editor.addEventListener('scroll', this.scroll)
       content.addEventListener('scroll', this.scroll)
-      this.dataV = document.getElementsByClassName('header')[0].attributes[0].name
+      this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
       // 改造 ui 框架样式
       document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
     },
@@ -216,7 +214,7 @@
   @import "~@/assets/stylus/mixin"
 
   .main
-    margin: 60px auto 0
+    margin: 20px auto 0
     width: $width = 1400px
     .el-breadcrumb
       margin-top: 30px
@@ -269,7 +267,7 @@
         &:hover
           background: $green-300
     .content
-      margin: 20px 0 40px
+      margin: 30px 0 40px
       clear-float()
       / .passage
         float: left
@@ -304,6 +302,6 @@
     background: rgba(0, 0, 0, .54)
     z-index: $z-index-top
 
-  .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover
+  .el-breadcrumb__inner.is-link:hover
     color: $green-500
 </style>
