@@ -37,13 +37,13 @@
         <h1 class="title">岂曰无衣 与子同袍</h1>
       </el-col>
       <el-col :span="7">
-        <input class="search-input" type="text" placeholder="搜索" v-model="articleTile">
+        <input class="search-input" type="text" placeholder="搜索" v-model="articleTitle" @keydown="handleEnter">
         <i class="iconfont icon-search" @click="_searchArticle"></i>
         <el-button
           class="logout"
           type="text"
           v-if="$isLogin"
-          @click="$_logout"
+          @click="_logout"
         >
           <i class="iconfont icon-logout"></i>退出
         </el-button>
@@ -54,18 +54,31 @@
 
 <script type="text/ecmascript-6">
   import Cookies from 'js-cookie'
-  import { logout, searchArticle } from '@/api/index'
-  import { mapMutations } from 'vuex'
+  import { logout, searchArticle, getAllArticle } from '@/api/index'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     name: 'TheHeader',
     data() {
       return {
-        articleTile: ''
+        articleTitle: this.articleTitleOfSearch
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'articleOfSearch',
+        'articleTitleOfSearch'
+      ])
+    },
+    watch: {
+      articleTitleOfSearch(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.articleTitle = newVal
+        }
       }
     },
     methods: {
-      $_logout() {
+      _logout() {
         if (!this.$isLogin) {
           window.location.reload()
         } else {
@@ -85,25 +98,54 @@
       },
       _searchArticle() {
         const data = {
-          title: this.articleTile
+          title: this.articleTitle
         }
-        searchArticle(data)
-          .then((res) => {
-            if (res.status === 1) {
-              res.data.push(new Date().getTime())
-              this.articleOfSearch(res.data)
-              this.$router.push('/')
-            } else {
-              console.error(res.data)
-            }
-          })
-          .catch((e) => {
-            console.error('内部错误: ' + e.toString())
-          })
+        if (!this.articleTitle || this.articleTitle.trim() === '') {
+          // 搜索条件为空时，获取全部文章
+          getAllArticle()
+            .then((res) => {
+              if (res.status === 1) {
+                res.data.push(new Date().getTime())
+                this.setSearchArticle({
+                  title: this.articleTitle,
+                  articles: res.data
+                })
+                this.$router.push('/')
+              } else {
+                console.error('内部错误: ' + res.data)
+              }
+            })
+            .catch((e) => {
+              console.error('内部错误: ' + e.toString())
+            })
+        } else {
+          // 否则进行标题模糊搜索
+          searchArticle(data)
+            .then((res) => {
+              if (res.status === 1) {
+                res.data.push(new Date().getTime())
+                this.setSearchArticle({
+                  title: this.articleTitle,
+                  articles: res.data
+                })
+                this.$router.push('/')
+              } else {
+                console.error(res.data)
+              }
+            })
+            .catch((e) => {
+              console.error('内部错误: ' + e.toString())
+            })
+        }
       },
-      ...mapMutations({
-        articleOfSearch: 'SET_ARTICLE_OF_SEARCH'
-      })
+      handleEnter(e) {
+        if (e.code === 'Enter') {
+          this._searchArticle()
+        }
+      },
+      ...mapActions([
+        'setSearchArticle'
+      ])
     }
   }
 </script>

@@ -1,6 +1,7 @@
 const state = {
   updateArticleTime: 0,
-  articleOfSearch: []
+  articleOfSearch: [],
+  articleTitleOfSearch: ''
 }
 
 export default state

@@ -15,7 +15,7 @@
   import TheNav from '@/common/the-nav/the-nav'
   import TheFooter from '@/common/the-footer/the-footer'
   import { getAllArticle } from '@/api/index'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     name: 'Index',
@@ -37,16 +37,25 @@
       ])
     },
     watch: {
-      updateArticleTime(oldVal, newVal) {
+      updateArticleTime(newVal, oldVal) {
         if (newVal !== oldVal) {
           this._getAllArticle()
         }
       },
-      articleOfSearch(oldVal, newVal) {
+      articleOfSearch(newVal, oldVal) {
         if (oldVal !== newVal) {
-          const arr = [...oldVal]
+          const arr = [...newVal]
           arr.pop()
           this.articles = arr
+        }
+      },
+      $route(to, from) {
+        if (from.name === 'Index') {
+          this.setSearchArticle({
+            title: '',
+            articles: []
+          })
+          this._getAllArticle()
         }
       }
     },
@@ -66,7 +75,10 @@
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
           })
-      }
+      },
+      ...mapActions([
+        'setSearchArticle'
+      ])
     }
   }
 </script>

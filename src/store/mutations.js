@@ -6,6 +6,9 @@ const mutations = {
   },
   [types.SET_ARTICLE_OF_SEARCH](state, articles) {
     state.articleOfSearch = articles
+  },
+  [types.SET_ARTICLETITLE_OF_SEARCH](state, title) {
+    state.articleTitleOfSearch = title
   }
 }
 
