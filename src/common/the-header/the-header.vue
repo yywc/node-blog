@@ -5,7 +5,7 @@
       type="flex"
       align="middle"
     >
-      <el-col :span="4">
+      <el-col :span="7">
         <!--登录用户编辑-->
         <router-link
           class="user"
@@ -20,12 +20,8 @@
               </span>
           <span class="user-name">眼已望穿</span>
         </router-link>
-      </el-col>
-      <el-col :span="16">
-        <h1 class="title">岂曰无衣 与子同袍</h1>
-      </el-col>
-      <el-col :span="4">
         <router-link
+          class="btn-to-writer"
           to="/writer"
           v-if="$isLogin"
         >
@@ -36,6 +32,13 @@
             写文章
           </el-button>
         </router-link>
+      </el-col>
+      <el-col :span="10">
+        <h1 class="title">岂曰无衣 与子同袍</h1>
+      </el-col>
+      <el-col :span="7">
+        <input class="search-input" type="text" placeholder="搜索">
+        <i class="iconfont icon-search" @click="searchArticle"></i>
         <el-button
           class="logout"
           type="text"
@@ -73,6 +76,9 @@
               console.error('内部错误: ' + error.toString())
             })
         }
+      },
+      searchArticle() {
+        console.log('hello world')
       }
     }
   }
@@ -118,19 +124,47 @@
           color: $text-secondary-dark
         &:hover .user-name
           color: $green-500
+      .btn-to-writer
+        margin-left: 40px
       .home
         margin-right: 10px
         color: $text-secondary-dark
-      .logout
-        margin-left: 15px
-        color: $text-secondary-dark
-        &:hover
-          color: $green-500
       .title
         text-align: center
         color: $text-secondary-dark
-      .iconfont
-        margin-right: 3px
-        font-size: $text-size-medium
+      .icon-search
+        position: relative
+        top: 3px
+        left: -35px
+        color: $text-hint-dark
+        font-size: $text-size-large-x
+        cursor: pointer
+        extend-click()
+      .search-input
+        padding: 0 35px 0 15px
+        width: 130px
+        height: 40px
+        line-height: 40px
+        color: $text-secondary-dark
+        border: none
+        border-radius: 20px
+        box-sizing: border-box
+        background: $gray-200
+        transition: all .3s
+        outline: none
+        no-wrap()
+        &:focus
+          width: 200px
+          color: $text-secondary-dark
+          border: 1px solid $green-100
+          background: $green-50
+      .logout
+        margin-left: 40px
+        color: $text-secondary-dark
+        &:hover
+          color: $green-500
+        .icon-logout
+          margin-right: 3px
+          font-size: $text-size-medium
 
 </style>

@@ -24,7 +24,7 @@
         发布
       </button>
     </div>
-    <div class="content">
+    <div class="article-content">
         <textarea
           class="editor"
           title="文章内容"
@@ -266,8 +266,8 @@
         @extend .head-btn
         &:hover
           background: $green-300
-    .content
-      margin: 30px 0 40px
+    .article-content
+      margin: 30px 0
       clear-float()
       / .passage
         float: left

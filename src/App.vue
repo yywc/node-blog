@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <the-header v-if="login"></the-header>
-    <div class="wrapper">
+    <div class="app-wrapper">
       <keep-alive exclude="ArticleWriter,Article">
-        <router-view class="content"></router-view>
+        <router-view class="app-content"></router-view>
       </keep-alive>
     </div>
-    <the-footer v-if="login"></the-footer>
+    <the-footer v-if="login" class="app-footer"></the-footer>
   </div>
 </template>
 
@@ -40,14 +40,14 @@
 
   #app
     height: 100%
-    .wrapper
+    .app-wrapper
       padding-top: 50px
-      min-height: 99.2%
+      min-height: 99%
       box-sizing: border-box
-      .content
+      .app-content
         padding-bottom: 50px
         overflow: hidden
-    .footer
+    .app-footer
       margin-top: -50px
 
 </style>
