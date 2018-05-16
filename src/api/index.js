@@ -118,6 +118,23 @@ const deleteArticle = function (data) {
     })
 }
 
+/**
+ * 搜索文章
+ * @param data
+ * @returns {Promise<any>}
+ */
+const searchArticle = function (data) {
+  const url = config._searchArticle
+  return axios
+    .post(url, data)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
 export {
   login,
   logout,
@@ -125,5 +142,6 @@ export {
   getArticle,
   updateArticle,
   addArticle,
-  deleteArticle
+  deleteArticle,
+  searchArticle
 }

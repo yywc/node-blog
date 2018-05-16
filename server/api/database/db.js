@@ -106,8 +106,8 @@ const searchArticle = async (ctx, next) => {
     const { title } = ctx.request.body
     try {
       await mysql.searchArticle(title)
-        .then(() => {
-          ctx.body = resObj(1)
+        .then((res) => {
+          ctx.body = resObj(1, res)
         })
         .catch((e) => {
           ctx.body = resObj(2, e.toString())

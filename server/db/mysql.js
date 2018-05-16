@@ -70,6 +70,7 @@ const deleteArticle = function (id) {
 
 // 搜索一篇文章
 const searchArticle = function (title) {
+  title = `%${title}%`
   const sql = 'SELECT * FROM `blog_article` WHERE `title` LIKE ?;'
   return query(sql, title)
 }

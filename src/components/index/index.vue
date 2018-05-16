@@ -32,13 +32,21 @@
     },
     computed: {
       ...mapGetters([
-        'updateArticleTime'
+        'updateArticleTime',
+        'articleOfSearch'
       ])
     },
     watch: {
       updateArticleTime(oldVal, newVal) {
         if (newVal !== oldVal) {
           this._getAllArticle()
+        }
+      },
+      articleOfSearch(oldVal, newVal) {
+        if (oldVal !== newVal) {
+          const arr = [...oldVal]
+          arr.pop()
+          this.articles = arr
         }
       }
     },

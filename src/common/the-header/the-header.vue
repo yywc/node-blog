@@ -37,8 +37,8 @@
         <h1 class="title">岂曰无衣 与子同袍</h1>
       </el-col>
       <el-col :span="7">
-        <input class="search-input" type="text" placeholder="搜索">
-        <i class="iconfont icon-search" @click="searchArticle"></i>
+        <input class="search-input" type="text" placeholder="搜索" v-model="articleTile">
+        <i class="iconfont icon-search" @click="_searchArticle"></i>
         <el-button
           class="logout"
           type="text"
@@ -54,10 +54,16 @@
 
 <script type="text/ecmascript-6">
   import Cookies from 'js-cookie'
-  import { logout } from '@/api/index'
+  import { logout, searchArticle } from '@/api/index'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: 'TheHeader',
+    data() {
+      return {
+        articleTile: ''
+      }
+    },
     methods: {
       $_logout() {
         if (!this.$isLogin) {
@@ -77,9 +83,27 @@
             })
         }
       },
-      searchArticle() {
-        console.log('hello world')
-      }
+      _searchArticle() {
+        const data = {
+          title: this.articleTile
+        }
+        searchArticle(data)
+          .then((res) => {
+            if (res.status === 1) {
+              res.data.push(new Date().getTime())
+              this.articleOfSearch(res.data)
+              this.$router.push('/')
+            } else {
+              console.error(res.data)
+            }
+          })
+          .catch((e) => {
+            console.error('内部错误: ' + e.toString())
+          })
+      },
+      ...mapMutations({
+        articleOfSearch: 'SET_ARTICLE_OF_SEARCH'
+      })
     }
   }
 </script>
