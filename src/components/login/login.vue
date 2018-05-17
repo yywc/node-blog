@@ -88,14 +88,14 @@
               loginName: this.loginForm.loginName,
               password: this.loginForm.password
             }
-            this.$_login(data)
+            this._login(data)
           } else {
             console.error('请检查数据.')
             return false
           }
         })
       },
-      $_login(data) {
+      _login(data) {
         if (this.$isLogin) {
           this.$router.push('/')
         } else {

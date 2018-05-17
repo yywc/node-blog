@@ -25,7 +25,7 @@ const login = function (data) {
 const logout = function () {
   const url = config.logout
   return axios
-    .post(url)
+    .get(url)
     .then((res) => {
       return Promise.resolve(res.data)
     })
@@ -41,7 +41,7 @@ const logout = function () {
 const getAllArticle = function () {
   const url = config.getAllArticle
   return axios
-    .post(url)
+    .get(url)
     .then((res) => {
       return Promise.resolve(res.data)
     })
@@ -58,7 +58,9 @@ const getAllArticle = function () {
 const getArticle = function (data) {
   const url = config.getArticle
   return axios
-    .post(url, data)
+    .get(url, {
+      params: data
+    })
     .then((res) => {
       return Promise.resolve(res.data)
     })
@@ -124,9 +126,11 @@ const deleteArticle = function (data) {
  * @returns {Promise<any>}
  */
 const searchArticle = function (data) {
-  const url = config._searchArticle
+  const url = config.searchArticle
   return axios
-    .post(url, data)
+    .get(url, {
+      params: data
+    })
     .then((res) => {
       return Promise.resolve(res.data)
     })

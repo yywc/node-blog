@@ -30,7 +30,7 @@ const getAllArticle = async (ctx, next) => {
 }
 
 const getArticle = async (ctx, next) => {
-  const { articleId } = ctx.request.body
+  const { articleId } = ctx.request.query
   try {
     await mysql.getArticle(articleId)
       .then((res) => {
@@ -103,7 +103,7 @@ const deleteArticle = async (ctx, next) => {
 
 const searchArticle = async (ctx, next) => {
   if (ctx.session && ctx.session.userName && ctx.session.loginName) {
-    const { title } = ctx.request.body
+    const { title } = ctx.request.query
     try {
       await mysql.searchArticle(title)
         .then((res) => {
