@@ -8,14 +8,14 @@
     </router-link>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ this.article.title }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ article.title }}</el-breadcrumb-item>
     </el-breadcrumb>
     <h1 class="title">
-      {{ this.article.title }}
+      {{ article.title }}
     </h1>
     <div class="meta">
-      <span>javascript</span>
-      <span>/</span>
+      <span class="category" v-for="(category, index) in articleCategory" :key="index">{{category}}</span>
+      <span v-if="articleCategory.length>0">/</span>
       <time :datetime="getTime">{{ getTime }}</time>
     </div>
     <p
@@ -82,6 +82,14 @@
       },
       articleTag() {
         return this.article.tag ? this.article.tag.split(',') : []
+      },
+      articleCategory() {
+        if (this.article.category) {
+          const category = this.article.category.split(',')
+          category.shift()
+          return category
+        }
+        return ''
       }
     },
     created() {
@@ -159,6 +167,8 @@
       color: $text-hint-dark
       text-align: center
       font-size: $text-size-medium
+      .category
+        margin-left: 5px
     .markdown-content
       min-height: 50px
       line-height: 1.8

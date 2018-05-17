@@ -33,7 +33,8 @@
     computed: {
       ...mapGetters([
         'updateArticleTime',
-        'articleOfSearch'
+        'articleOfSearch',
+        'articleTitleOfSearch'
       ])
     },
     watch: {
@@ -43,24 +44,22 @@
         }
       },
       articleOfSearch(newVal, oldVal) {
-        if (oldVal !== newVal) {
-          const arr = [...newVal]
-          arr.pop()
-          this.articles = arr
-        }
-      },
-      $route(to, from) {
-        if (from.name === 'Index') {
-          this.setSearchArticle({
-            title: '',
-            articles: []
-          })
-          this._getAllArticle()
-        }
+        const arr = [...newVal]
+        arr.pop()
+        this.articles = arr
       }
     },
     created() {
       this._getAllArticle()
+    },
+    activated() {
+      if (this.articleTitleOfSearch !== '') {
+        this.setSearchArticle({
+          title: '',
+          articles: []
+        })
+        this._getAllArticle()
+      }
     },
     methods: {
       _getAllArticle() {
