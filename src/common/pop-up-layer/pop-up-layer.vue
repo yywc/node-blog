@@ -327,7 +327,7 @@
     color: $white
     border: none
     border-radius: 3px
-    background: $green-500
+    background: $green-400
     cursor: pointer;
     &:hover
       background: $green-300
@@ -405,7 +405,7 @@
         cursor: pointer
       .btn-submit
         color: $text-primary-light
-        background: $green-500
+        background: $green-400
         @extend .btn-common
         &:hover
           background: $green-300
@@ -461,5 +461,5 @@
     border-color: $green-200
 
   .el-select-dropdown__item.selected
-    color: $green-500
+    color: $green-400
 </style>

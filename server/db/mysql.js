@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
 const mysql = require('mysql')
-const config = require('../config/dbConfig.js')
+const config = require('../config/config.js')
 
 const pool = mysql.createPool({
-  host: config.database.HOST,
-  user: config.database.USERNAME,
-  password: config.database.PASSWORD,
-  database: config.database.DATABASE
+  host: config.DATABASE_CONFIG.HOST,
+  user: config.DATABASE_CONFIG.USERNAME,
+  password: config.DATABASE_CONFIG.PASSWORD,
+  database: config.DATABASE_CONFIG.DATABASE,
+  multipleStatements: config.DATABASE_CONFIG.MULTIPLE_STATEMENTS
 })
 
 const query = function (sql, values) {
@@ -35,9 +36,12 @@ const login = function (loginName, password) {
 }
 
 // 获取全部文章
-const getAllArticle = function () {
-  const sql = `SELECT * FROM blog_article;`
-  return query(sql)
+const getAllArticle = function (page, pageCount) {
+  page = (page - 1) * pageCount
+  const totalCountSql = 'SELECT COUNT(`article_id`) FROM `blog_article`;'
+  const allArticleSql = 'SELECT * FROM `blog_article` WHERE `article_id` <= (SELECT `article_id` FROM `blog_article` ORDER BY article_id DESC LIMIT ?, 1) ORDER BY `article_id` DESC LIMIT ?;'
+  const sql = totalCountSql + allArticleSql
+  return query(sql, [page, pageCount])
 }
 
 // 查看某一篇文章

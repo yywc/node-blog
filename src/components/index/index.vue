@@ -5,15 +5,19 @@
       <div class="article-wrapper">
         <article-item :articles="this.articles"></article-item>
       </div>
+      <pagination
+        :totalCount="totalCount"
+        @handleCurrentChange="handleCurrentChange"
+      >
+      </pagination>
     </div>
   </section>
 </template>
 
 <script type="text/ecmascript-6">
   import ArticleItem from '@/common/article-item/article-item'
-  import TheHeader from '@/common/the-header/the-header'
   import TheNav from '@/common/the-nav/the-nav'
-  import TheFooter from '@/common/the-footer/the-footer'
+  import Pagination from '@/common/pagination/pagination'
   import { getAllArticle } from '@/api/index'
   import { mapGetters, mapActions } from 'vuex'
 
@@ -21,13 +25,13 @@
     name: 'Index',
     components: {
       ArticleItem,
-      TheFooter,
       TheNav,
-      TheHeader
+      Pagination
     },
     data() {
       return {
-        articles: []
+        articles: [],
+        totalCount: 0
       }
     },
     computed: {
@@ -52,7 +56,8 @@
     created() {
       this._getAllArticle()
     },
-    activated() {
+    deactivated() {
+      // 如果有搜索条件，则清空
       if (this.articleTitleOfSearch !== '') {
         this.setSearchArticle({
           title: '',
@@ -60,13 +65,18 @@
         })
         this._getAllArticle()
       }
+      // 如果有翻页，则恢复到第一页
+      if (this.currentPage !== 1) {
+        this._getAllArticle()
+      }
     },
     methods: {
-      _getAllArticle() {
-        getAllArticle()
+      _getAllArticle(query) {
+        getAllArticle(query)
           .then((res) => {
             if (res.status === 1) {
-              this.articles = res.data
+              this.articles = res.data.data
+              this.totalCount = res.data.totalCount
             } else {
               console.error('内部错误: ' + res.data)
             }
@@ -74,6 +84,10 @@
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
           })
+      },
+      handleCurrentChange(page) {
+        const data = { p: page }
+        this._getAllArticle(data)
       },
       ...mapActions([
         'setSearchArticle'
@@ -89,10 +103,10 @@
     margin: 60px 0 0
 
   .main
-    margin: 60px auto
+    margin: 60px auto 50px
     width: 1200px
     .article-wrapper
-      margin: 0 auto
+      margin: 0 auto 50px
       width: 1000px
 
 </style>

@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const mysql = require('../../db/mysql')
+const config = require('../../config/config')
 
 /**
  * 返回值
@@ -16,10 +17,18 @@ const resObj = (code, data) => {
 }
 
 const getAllArticle = async (ctx, next) => {
+  let { p, pc } = ctx.request.query
+  p = p !== null && p !== undefined ? parseInt(p) : 1
+  pc = pc !== null && pc !== undefined ? parseInt(pc) : config.PAGE_COUNT
   try {
-    await mysql.getAllArticle()
+    await mysql.getAllArticle(p, pc)
       .then((res) => {
-        ctx.body = resObj(1, res)
+        ctx.body = resObj(1, {
+          data: res[1],
+          totalCount: res[0][0]['COUNT(`article_id`)'],
+          page: p,
+          pageCount: pc
+        })
       })
       .catch((e) => {
         ctx.body = resObj(2, e.toString())

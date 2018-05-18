@@ -105,9 +105,9 @@
         padding: 0 15px
         color: $text-secondary-dark
         .router-link-active
-          color: $green-500
+          color: $green-400
         &:hover
-          color: $green-500
+          color: $green-400
       .iconfont
         margin-right: 3px
 </style>

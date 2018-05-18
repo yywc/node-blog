@@ -2,7 +2,7 @@ const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
-const config = require('./config/dbConfig')
+const config = require('./config/config')
 const router = require('./router/index')
 
 const app = new Koa()
@@ -11,15 +11,15 @@ app.use(bodyParser())
 
 // 配置存储session信息的mysql
 const store = new MysqlSession({
-  user: config.database.USERNAME,
-  password: config.database.PASSWORD,
-  database: config.database.DATABASE,
-  host: config.database.HOST
+  user: config.DATABASE_CONFIG.USERNAME,
+  password: config.DATABASE_CONFIG.PASSWORD,
+  database: config.DATABASE_CONFIG.DATABASE,
+  host: config.DATABASE_CONFIG.HOST
 })
 
 // 存放sessionId的cookie配置
 const cookie = {
-  maxAge: config.maxAge, // cookie有效时长
+  maxAge: config.MAX_AGE, // cookie有效时长
   path: '/', // 写cookie所在的路径
   // domain: '', // 写cookie所在的域名
   httpOnly: true, // 是否只用于http请求中获取
@@ -41,6 +41,6 @@ app
   .use(router.routes())
   .use(router.allowedMethods())
 
-app.listen(config.port, () => {
-  console.log('Listening at http://localhost:' + config.port + '\n')
+app.listen(config.PORT, () => {
+  console.log('Listening at http://localhost:' + config.PORT + '\n')
 })

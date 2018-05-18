@@ -106,7 +106,7 @@
         text-align: center
         no-wrap()
         .title-router:hover
-          color: $green-500
+          color: $green-400
       .meta
         margin: 7px 0
         height: $height = 20px

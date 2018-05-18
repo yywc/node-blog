@@ -58,7 +58,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import TheHeader from '@/common/the-header/the-header'
   import PopUpLayer from '@/common/pop-up-layer/pop-up-layer'
   import { getArticle, deleteArticle } from '@/api/index'
   import { mapMutations } from 'vuex'
@@ -70,7 +69,6 @@
   export default {
     name: 'ArticleWriter',
     components: {
-      TheHeader,
       PopUpLayer
     },
     data() {
@@ -262,7 +260,7 @@
         &:hover button
           color: $green-300
       .btn-submit
-        background: $green-500
+        background: $green-400
         @extend .head-btn
         &:hover
           background: $green-300
@@ -303,5 +301,5 @@
     z-index: $z-index-top
 
   .el-breadcrumb__inner.is-link:hover
-    color: $green-500
+    color: $green-400
 </style>

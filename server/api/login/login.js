@@ -1,5 +1,5 @@
 const md5 = require('md5')
-const config = require('../../config/dbConfig')
+const config = require('../../config/config')
 const mysql = require('../../db/mysql')
 
 /**
@@ -36,7 +36,7 @@ const login = async (ctx, next) => {
           const userName = res[0].nickname
           ctx.session.loginName = loginName
           ctx.session.userName = userName
-          ctx.body = resObj(1, '登录成功', { userName, maxAge: config.maxAge })
+          ctx.body = resObj(1, '登录成功', { userName, maxAge: config.MAX_AGE })
           // md5 加密设置 response header
           ctx.set('x-auth-token', md5('gyjYYwc.1993'))
         } else {

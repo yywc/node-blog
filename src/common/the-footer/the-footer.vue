@@ -55,5 +55,5 @@
     .iconfont
       font-size: $icon-size-large-x
       &:hover
-        color: $green-500
+        color: $green-400
 </style>

@@ -53,18 +53,12 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import TheHeader from '@/common/the-header/the-header'
-  import TheFooter from '@/common/the-footer/the-footer'
   import { getArticle } from '@/api/index'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
   export default {
     name: 'Article',
-    components: {
-      TheFooter,
-      TheHeader
-    },
     data() {
       return {
         article: {}
@@ -149,7 +143,7 @@
       text-align: center
       box-sizing: border-box
       border-radius: 3px
-      background: $green-500
+      background: $green-400
       cursor: pointer
       &:hover
         background: $green-300
@@ -253,7 +247,7 @@
         box-sizing: border-box
         border-radius: 3px
         border: none
-        background: $green-500
+        background: $green-400
         cursor: pointer
         &:hover
           background: $green-300
@@ -262,5 +256,5 @@
     background: $blue-gray-800
 
   .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover
-    color: $green-500
+    color: $green-400
 </style>

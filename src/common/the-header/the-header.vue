@@ -189,7 +189,7 @@
         .user-name
           color: $text-secondary-dark
         &:hover .user-name
-          color: $green-500
+          color: $green-400
       .btn-to-writer
         margin-left: 40px
       .home
@@ -228,7 +228,7 @@
         margin-left: 40px
         color: $text-secondary-dark
         &:hover
-          color: $green-500
+          color: $green-400
         .icon-logout
           margin-right: 3px
           font-size: $text-size-medium

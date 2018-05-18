@@ -38,10 +38,12 @@ const logout = function () {
  * 获取所有文章列表
  * @returns {Promise<AxiosResponse<any>>}
  */
-const getAllArticle = function () {
+const getAllArticle = function (data) {
   const url = config.getAllArticle
   return axios
-    .get(url)
+    .get(url, {
+      params: data
+    })
     .then((res) => {
       return Promise.resolve(res.data)
     })
