@@ -1,16 +1,14 @@
 <template>
-  <div class="block" v-if="page.totalCount > page.pageCount">
-    <el-pagination
-      background
-      v-if="paginationShow"
-      :page-size="page.pageCount"
-      :current-page="page.currentPage"
-      @current-change="handleCurrentChange"
-      layout="prev, pager, next"
-      :total="page.totalCount"
-    >
-    </el-pagination>
-  </div>
+  <el-pagination
+    v-if="page.totalCount > page.pageCount"
+    background
+    :page-size="page.pageCount"
+    :current-page="page.currentPage"
+    @current-change="handleCurrentChange"
+    layout="prev, pager, next"
+    :total="page.totalCount"
+  >
+  </el-pagination>
 </template>
 
 <script type="text/ecmascript-6">
@@ -20,12 +18,6 @@
       page: {
         type: Object,
         required: true
-      },
-      paginationShow: {
-        type: Boolean,
-        default: () => {
-          return true
-        }
       }
     },
     methods: {
@@ -39,44 +31,48 @@
 <style lang="stylus" rel="stylesheet/stylus">
   @import "~@/assets/stylus/mixin"
 
-  .block
+  .el-pagination.is-background
     text-align: center
-    .el-pagination.is-background
-      .el-pager
-        li:not(.disabled).active
-          background-color: $green-400
+    .el-pager
+      li:not(.disabled).active
+        background-color: $green-400
+        color: $white
+        &:hover
           color: $white
-          &:hover
-            color: $white
-            background: $green-300
-    .el-pagination.is-background
-      .el-pager
-        li:not(.disabled):hover
-          color: $text-secondary-dark
-          background: $green-50
-    / .el-pagination__common
-      margin: 0 7px
-      background-color: #f4f4f5
-      color: #606266
-      width: 36px
-      height: 34px
-      line-height: 34px
-      font-size: $text-size-large
-      font-weight: normal
-      border-radius: 3px
-    .el-pagination.is-background
-      .btn-next
+          background: $green-300
+
+  .el-pagination.is-background
+    .el-pager
+      li:not(.disabled):hover
+        color: $text-secondary-dark
+        background: $green-50
+
+  / .el-pagination__common
+    margin: 0 7px
+    background-color: #f4f4f5
+    color: #606266
+    width: 36px
+    height: 34px
+    line-height: 34px
+    font-size: $text-size-large
+    font-weight: normal
+    border-radius: 3px
+
+  .el-pagination.is-background
+    .btn-next
+      @extend .el-pagination__common
+      &:hover
+        background: $green-50
+
+  .el-pagination.is-background
+    .btn-prev
+      @extend .el-pagination__common
+      &:hover
+        background: $green-50
+
+  .el-pagination.is-background
+    .el-pager
+      li
         @extend .el-pagination__common
-        &:hover
-          background: $green-50
-    .el-pagination.is-background
-      .btn-prev
-        @extend .el-pagination__common
-        &:hover
-          background: $green-50
-    .el-pagination.is-background
-      .el-pager
-        li
-          @extend .el-pagination__common
 
 </style>

@@ -7,9 +7,10 @@
     >
       <el-col :span="7">
         <!--登录用户编辑-->
-        <router-link
+        <a
           class="user"
-          to="/"
+          href="javascript:void(0);"
+          @click="toPath"
         >
               <span class="avatar">
                 <img
@@ -19,7 +20,7 @@
                 >
               </span>
           <span class="user-name">眼已望穿</span>
-        </router-link>
+        </a>
         <router-link
           class="btn-to-writer"
           to="/writer"
@@ -141,6 +142,13 @@
       handleEnter(e) {
         if (e.code === 'Enter') {
           this._searchArticle()
+        }
+      },
+      toPath() {
+        if (this.$route.path === '/') {
+          window.location.reload()
+        } else {
+          this.$router.push('/')
         }
       },
       ...mapActions([

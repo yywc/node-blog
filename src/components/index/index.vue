@@ -6,8 +6,8 @@
         <article-item :articles="this.articles"></article-item>
       </div>
       <pagination
+        ref="pagination"
         :page="page"
-        :paginationShow="paginationShow"
         @handleCurrentChange="handleCurrentChange"
       >
       </pagination>
@@ -32,8 +32,7 @@
     data() {
       return {
         articles: [],
-        page: {},
-        paginationShow: true
+        page: {}
       }
     },
     computed: {
@@ -69,11 +68,9 @@
       }
       // 如果有翻页，则恢复到第一页
       if (this.currentPage !== 1) {
-        this.paginationShow = false
         this._getAllArticle()
-        this.$nextTick(() => {
-          this.paginationShow = true
-        })
+        // 更新 pagination 组件
+        this.$refs.pagination.$children[0].handleCurrentChange(1)
       }
     },
     methods: {
