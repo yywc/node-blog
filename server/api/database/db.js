@@ -26,7 +26,7 @@ const getAllArticle = async (ctx, next) => {
         ctx.body = resObj(1, {
           data: res[1],
           totalCount: res[0][0]['COUNT(`article_id`)'],
-          page: p,
+          currentPage: p,
           pageCount: pc
         })
       })

@@ -1,12 +1,14 @@
 <template>
-  <div class="block" v-if="totalCount > pageCount">
+  <div class="block" v-if="page.totalCount > page.pageCount">
     <el-pagination
       background
-      :page-size="pageCount"
-      :current-page="currentPage"
+      v-if="paginationShow"
+      :page-size="page.pageCount"
+      :current-page="page.currentPage"
       @current-change="handleCurrentChange"
       layout="prev, pager, next"
-      :total="totalCount">
+      :total="page.totalCount"
+    >
     </el-pagination>
   </div>
 </template>
@@ -15,27 +17,19 @@
   export default {
     name: 'Pagination',
     props: {
-      totalCount: {
-        type: Number,
-        default: () => {
-          return 0
-        }
+      page: {
+        type: Object,
+        required: true
       },
-      pageCount: {
-        type: Number,
+      paginationShow: {
+        type: Boolean,
         default: () => {
-          return 8
+          return true
         }
-      }
-    },
-    data() {
-      return {
-        currentPage: 1
       }
     },
     methods: {
       handleCurrentChange(e) {
-        this.currentPage = e
         this.$emit('handleCurrentChange', e)
       }
     }

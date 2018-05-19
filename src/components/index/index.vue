@@ -6,7 +6,8 @@
         <article-item :articles="this.articles"></article-item>
       </div>
       <pagination
-        :totalCount="totalCount"
+        :page="page"
+        :paginationShow="paginationShow"
         @handleCurrentChange="handleCurrentChange"
       >
       </pagination>
@@ -31,7 +32,8 @@
     data() {
       return {
         articles: [],
-        totalCount: 0
+        page: {},
+        paginationShow: true
       }
     },
     computed: {
@@ -67,7 +69,11 @@
       }
       // 如果有翻页，则恢复到第一页
       if (this.currentPage !== 1) {
+        this.paginationShow = false
         this._getAllArticle()
+        this.$nextTick(() => {
+          this.paginationShow = true
+        })
       }
     },
     methods: {
@@ -76,7 +82,7 @@
           .then((res) => {
             if (res.status === 1) {
               this.articles = res.data.data
-              this.totalCount = res.data.totalCount
+              this.page = res.data
             } else {
               console.error('内部错误: ' + res.data)
             }
