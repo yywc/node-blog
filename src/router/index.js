@@ -53,6 +53,16 @@ const Tech = (resolve) => {
     })
 }
 
+const Note = (resolve) => {
+  import('@/components/note/note')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
+}
+
 export default new Router({
   routes: [
     {
@@ -85,6 +95,11 @@ export default new Router({
       path: '/tech',
       name: 'Tech',
       component: Tech
+    },
+    {
+      path: '/note',
+      name: 'Note',
+      component: Note
     }
   ]
 })
