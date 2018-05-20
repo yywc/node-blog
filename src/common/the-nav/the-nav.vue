@@ -11,7 +11,7 @@
     <nav class="nav">
       <ul class="menu">
         <li class="router-item">
-          <router-link to="/">
+          <router-link to="/" exact>
             <i class="iconfont icon-home"></i>首页
           </router-link>
         </li>

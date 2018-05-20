@@ -43,6 +43,16 @@ const ArticleWriter = (resolve) => {
     })
 }
 
+const Tech = (resolve) => {
+  import('@/components/tech/tech')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
+}
+
 export default new Router({
   routes: [
     {
@@ -70,6 +80,11 @@ export default new Router({
           component: ArticleWriter
         }
       ]
+    },
+    {
+      path: '/tech',
+      name: 'Tech',
+      component: Tech
     }
   ]
 })

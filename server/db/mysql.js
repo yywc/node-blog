@@ -36,10 +36,31 @@ const login = function (loginName, password) {
 }
 
 // 获取全部文章
-const getAllArticle = function (page, pageCount) {
+const getAllArticle = function (page, pageCount, category) {
+  let allArticleSql = ''
+  let totalCountSql = ''
+  const CATEGORY_ALL = 0
+  const CATEGORY_TECH = 1
+  const CATEGORY_NOTE = 2
   page = (page - 1) * pageCount
-  const totalCountSql = 'SELECT COUNT(`article_id`) FROM `blog_article`;'
-  const allArticleSql = 'SELECT * FROM `blog_article` WHERE `article_id` <= (SELECT `article_id` FROM `blog_article` ORDER BY article_id DESC LIMIT ?, 1) ORDER BY `article_id` DESC LIMIT ?;'
+  // 是否包含分类查询
+  switch (category) {
+    case CATEGORY_ALL:
+      totalCountSql = 'SELECT COUNT(`article_id`) FROM `blog_article`;'
+      allArticleSql = 'SELECT * FROM `blog_article` WHERE `article_id` <= (SELECT `article_id` FROM `blog_article` ORDER BY article_id DESC LIMIT ?, 1) ORDER BY `article_id` DESC LIMIT ?;'
+      break
+    case CATEGORY_TECH:
+      totalCountSql = 'SELECT COUNT(`article_id`) FROM `blog_article` WHERE `category` LIKE \'%技术%\';'
+      allArticleSql = 'SELECT * FROM `blog_article` WHERE `article_id` <= (SELECT `article_id` FROM `blog_article` ORDER BY article_id DESC LIMIT ?, 1) AND `category` LIKE \'%技术%\' ORDER BY `article_id` DESC LIMIT ?;'
+      break
+    case CATEGORY_NOTE:
+      totalCountSql = 'SELECT COUNT(`article_id`) FROM `blog_article` WHERE `category` LIKE \'%杂谈%\';'
+      allArticleSql = 'SELECT * FROM `blog_article` WHERE `article_id` <= (SELECT `article_id` FROM `blog_article` ORDER BY article_id DESC LIMIT ?, 1) AND `category` LIKE \'%杂谈%\' ORDER BY `article_id` DESC LIMIT ?;'
+      break
+    default:
+      totalCountSql = 'SELECT COUNT(`article_id`) FROM `blog_article`;'
+      allArticleSql = 'SELECT * FROM `blog_article` WHERE `article_id` <= (SELECT `article_id` FROM `blog_article` ORDER BY article_id DESC LIMIT ?, 1) ORDER BY `article_id` DESC LIMIT ?;'
+  }
   const sql = totalCountSql + allArticleSql
   return query(sql, [page, pageCount])
 }

@@ -17,11 +17,12 @@ const resObj = (code, data) => {
 }
 
 const getAllArticle = async (ctx, next) => {
-  let { p, pc } = ctx.request.query
+  let { p, pc, c } = ctx.request.query
   p = p !== null && p !== undefined ? parseInt(p) : 1
   pc = pc !== null && pc !== undefined ? parseInt(pc) : config.PAGE_COUNT
+  c = c !== null && c !== undefined ? parseInt(c) : 0
   try {
-    await mysql.getAllArticle(p, pc)
+    await mysql.getAllArticle(p, pc, c)
       .then((res) => {
         ctx.body = resObj(1, {
           data: res[1],

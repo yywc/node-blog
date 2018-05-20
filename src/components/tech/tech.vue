@@ -22,8 +22,10 @@
   import { getAllArticle } from '@/api/index'
   import { mapGetters, mapActions } from 'vuex'
 
+  const CATEGORY_TECH = 1
+
   export default {
-    name: 'Index',
+    name: 'Tech',
     components: {
       ArticleItem,
       TheNav,
@@ -55,7 +57,7 @@
       }
     },
     created() {
-      this._getAllArticle(1)
+      this._getAllArticle(1, CATEGORY_TECH)
     },
     deactivated() {
       // 如果有搜索条件，则清空
@@ -64,18 +66,19 @@
           title: '',
           articles: []
         })
-        this._getAllArticle(1)
+        this._getAllArticle()
       }
       // 如果有翻页，则恢复到第一页
       if (this.page.currentPage !== 1) {
-        this._getAllArticle(1)
+        this._getAllArticle(1, CATEGORY_TECH)
         // 更新 pagination 组件
         this.$refs.pagination.$children[0].handleCurrentChange(1)
       }
     },
     methods: {
-      _getAllArticle(query) {
-        getAllArticle(query)
+      _getAllArticle(page, category) {
+        const data = { p: page, c: category }
+        getAllArticle(data)
           .then((res) => {
             if (res.status === 1) {
               this.articles = res.data.data
@@ -89,7 +92,7 @@
           })
       },
       handleCurrentChange(page) {
-        const data = { p: page }
+        const data = { p: page, c: CATEGORY_TECH }
         this._getAllArticle(data)
       },
       ...mapActions([
