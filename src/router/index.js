@@ -63,6 +63,16 @@ const Note = (resolve) => {
     })
 }
 
+const About = (resolve) => {
+  import('@/components/about/about')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
+}
+
 export default new Router({
   routes: [
     {
@@ -100,6 +110,11 @@ export default new Router({
       path: '/note',
       name: 'Note',
       component: Note
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About
     }
   ]
 })
