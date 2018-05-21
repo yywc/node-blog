@@ -213,7 +213,7 @@
 
   .main
     margin: 20px auto 0
-    width: $width = 1400px
+    width: $width = 1300px
     .el-breadcrumb
       margin-top: 30px
     .title-wrapper
@@ -265,13 +265,13 @@
         &:hover
           background: $green-300
     .article-content
-      margin: 30px 0
+      margin: 25px 0
       clear-float()
       / .passage
         float: left
         padding: 10px
         width: ($width / 2 - 10)
-        height: 700px
+        height: 650px
         font-size: $text-size-medium
         line-height: 1.8
         box-sizing: border-box

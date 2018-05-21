@@ -94,10 +94,12 @@ const deleteArticle = function (id) {
 }
 
 // 搜索一篇文章
-const searchArticle = function (title) {
+const searchArticle = function (title, page, pageCount) {
   title = `%${title}%`
-  const sql = 'SELECT * FROM `blog_article` WHERE `title` LIKE ?;'
-  return query(sql, title)
+  page = (page - 1) * pageCount
+  let sql = 'SELECT COUNT(`article_id`) FROM `blog_article` WHERE `title` LIKE ?;'
+  sql += 'SELECT * FROM `blog_article` WHERE `title` LIKE ? ORDER BY `article_id` DESC LIMIT ?,?;'
+  return query(sql, [title, title, page, pageCount])
 }
 
 module.exports = {

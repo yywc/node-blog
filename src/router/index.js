@@ -73,6 +73,16 @@ const About = (resolve) => {
     })
 }
 
+const Sort = (resolve) => {
+  import('@/components/sort/sort')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
+}
+
 export default new Router({
   routes: [
     {
@@ -115,6 +125,11 @@ export default new Router({
       path: '/about',
       name: 'About',
       component: About
+    },
+    {
+      path: '/sort',
+      name: 'Sort',
+      component: Sort
     }
   ]
 })

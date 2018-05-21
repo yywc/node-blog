@@ -15,7 +15,11 @@
         >{{ article.title }}
         </router-link>
       </h1>
-      <div class="meta"><em>点赞 23 / </em><em>阅读数 15 / </em><em>评论 12 </em></div>
+      <div class="meta">
+        <em>阅读数 {{ article.read_count }} / </em>
+        <em>评论 {{ article.comment_count }}  / </em>
+        <time :datetime="getTime(article)">{{ getTime(article) }}</time>
+      </div>
       <p class="content">{{ getContent(article) }}</p>
       <router-link
         class="img-wrapper"
@@ -56,6 +60,9 @@
           return article.content.slice(0, 300) + '...'
         }
         return article.content
+      },
+      getTime(article) {
+        return article.create_time ? article.create_time.split('T')[0] : ''
       }
     }
   }

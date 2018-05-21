@@ -37,7 +37,7 @@
 
   .main
     margin: 60px auto 50px
-    width: 1200px
+    width: 1000px
     .article-wrapper
       margin: 0 auto 50px
       width: 1000px

@@ -99,7 +99,7 @@
       },
       _searchArticle() {
         const data = {
-          title: this.articleTitle
+          title: encodeURIComponent(this.articleTitle)
         }
         if (!this.articleTitle || this.articleTitle.trim() === '') {
           // 搜索条件为空时，获取全部文章
@@ -124,10 +124,10 @@
           searchArticle(data)
             .then((res) => {
               if (res.status === 1) {
-                res.data.push(new Date().getTime())
+                res.data.data.push(new Date().getTime())
                 this.setSearchArticle({
                   title: this.articleTitle,
-                  articles: res.data
+                  articles: res.data.data
                 })
                 this.$router.push('/')
               } else {

@@ -112,21 +112,25 @@ const deleteArticle = async (ctx, next) => {
 }
 
 const searchArticle = async (ctx, next) => {
-  if (ctx.session && ctx.session.userName && ctx.session.loginName) {
-    const { title } = ctx.request.query
-    try {
-      await mysql.searchArticle(title)
-        .then((res) => {
-          ctx.body = resObj(1, res)
+  let { p, pc, title } = ctx.request.query
+  p = p !== null && p !== undefined ? parseInt(p) : 1
+  pc = pc !== null && pc !== undefined ? parseInt(pc) : config.PAGE_COUNT
+  title = decodeURIComponent(title)
+  try {
+    await mysql.searchArticle(title, p, pc)
+      .then((res) => {
+        ctx.body = resObj(1, {
+          data: res[1],
+          totalCount: res[0][0]['COUNT(`article_id`)'],
+          currentPage: p,
+          pageCount: pc
         })
-        .catch((e) => {
-          ctx.body = resObj(2, e.toString())
-        })
-    } catch (e) {
-      ctx.body = resObj(0, '数据库错误: ' + e.toString())
-    }
-  } else {
-    ctx.body = resObj(0, '未登录')
+      })
+      .catch((e) => {
+        ctx.body = resObj(2, e.toString())
+      })
+  } catch (e) {
+    ctx.body = resObj(0, '数据库错误: ' + e.toString())
   }
 }
 
