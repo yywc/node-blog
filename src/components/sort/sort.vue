@@ -21,6 +21,10 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+
+  .nav-wrapper
+    margin: 60px 0 0
+
   .main
     margin: 60px auto 50px
     width: 1000px
