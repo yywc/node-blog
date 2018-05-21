@@ -106,10 +106,12 @@
           getAllArticle()
             .then((res) => {
               if (res.status === 1) {
-                res.data.push(new Date().getTime())
+                // 操作 Index 组件里的 page，不然翻页会有问题
+                const indexComponent = this.$parent.$children[2]
+                indexComponent.page = res.data
                 this.setSearchArticle({
                   title: this.articleTitle,
-                  articles: res.data
+                  articles: res.data.data
                 })
                 this.$router.push('/')
               } else {
@@ -124,7 +126,7 @@
           searchArticle(data)
             .then((res) => {
               if (res.status === 1) {
-                res.data.data.push(new Date().getTime())
+                this.$parent.$children[2].page = res.data
                 this.setSearchArticle({
                   title: this.articleTitle,
                   articles: res.data.data
