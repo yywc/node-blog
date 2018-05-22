@@ -224,7 +224,7 @@
 
         const _handlerEnter = function (e) {
           if (e.key === 'Enter') {
-            _handlerBlur(e)
+            e.target.blur()
           }
         }
 

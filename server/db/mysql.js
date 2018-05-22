@@ -73,8 +73,8 @@ const getArticle = function (id) {
 
 // 修改某一篇文章
 const updateArticle = function (article) {
-  const { category, content, favorite_count, img, read_count, tag, title, article_id } = article
-  const value = { category, content, favorite_count, img, read_count, tag, title }
+  const { category, content, comment_count, img, read_count, tag, title, article_id } = article
+  const value = { category, content, comment_count, img, read_count, tag, title }
   const sql = 'UPDATE `blog_article` SET ? WHERE `article_id` = ?;'
   return query(sql, [value, article_id])
 }
@@ -83,7 +83,7 @@ const updateArticle = function (article) {
 const addArticle = function (article) {
   const { title, content, category, tag, img } = article
   const value = [title, content, category, tag, img]
-  const sql = 'INSERT INTO `blog_article` VALUES (NULL, ?, ?, NULL, NULL, ?, ?, ?, 0, 0);'
+  const sql = 'INSERT INTO `blog_article` VALUES (NULL, ?, ?, NULL, NULL, ?, ?, ?, 1, 1);'
   return query(sql, value)
 }
 
