@@ -197,7 +197,7 @@
           border-bottom-left-radius: 4px
           border-top-left-radius: 4px
           background: #5e5e5e
-          @extends .tag-common
+          @extend .tag-common
         .light
           padding: 0 5px
           border-bottom-right-radius: 4px
@@ -251,9 +251,6 @@
         cursor: pointer
         &:hover
           background: $green-300
-
-  .el-footer
-    background: $blue-gray-800
 
   .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover
     color: $green-400

@@ -141,6 +141,22 @@ const searchArticle = function (data) {
     })
 }
 
+/**
+ * 获取所有的分类
+ * @returns {Promise<any>}
+ */
+const getAllCategory = function () {
+  const url = config.getAllCategory
+  return axios
+    .get(url)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
 export {
   login,
   logout,
@@ -149,5 +165,6 @@ export {
   updateArticle,
   addArticle,
   deleteArticle,
-  searchArticle
+  searchArticle,
+  getAllCategory
 }

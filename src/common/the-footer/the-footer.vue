@@ -54,6 +54,7 @@
       font-size: $text-size-large
     .iconfont
       font-size: $icon-size-large-x
+      vertical-align: middle
       &:hover
         color: $green-400
 </style>

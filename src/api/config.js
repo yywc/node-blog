@@ -6,7 +6,8 @@ const config = {
   updateArticle: '/api/update-article',
   addArticle: '/api/add-article',
   deleteArticle: '/api/delete-article',
-  searchArticle: '/api/search-article'
+  searchArticle: '/api/search-article',
+  getAllCategory: '/api/get-all-category'
 }
 
 export default config

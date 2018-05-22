@@ -134,11 +134,34 @@ const searchArticle = async (ctx, next) => {
   }
 }
 
+const getAllCategory = async (ctx, next) => {
+  let resultArray = []
+  try {
+    await mysql.getAllCategory()
+      .then((res) => {
+        for (let categories of res) {
+          for (let category of categories.category.split(',')) {
+            if (!resultArray.includes(category)) {
+              resultArray.push(category)
+            }
+          }
+        }
+        ctx.body = resObj(1, resultArray)
+      })
+      .catch((e) => {
+        ctx.body = resObj(2, e.toString())
+      })
+  } catch (e) {
+    ctx.body = resObj(0, '数据库错误: ' + e.toString())
+  }
+}
+
 module.exports = {
   getAllArticle,
   getArticle,
   updateArticle,
   addArticle,
   deleteArticle,
-  searchArticle
+  searchArticle,
+  getAllCategory
 }

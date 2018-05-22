@@ -102,6 +102,12 @@ const searchArticle = function (title, page, pageCount) {
   return query(sql, [title, title, page, pageCount])
 }
 
+// 获取所有的分类
+const getAllCategory = function () {
+  const sql = 'SELECT `category` FROM `blog_article`;'
+  return query(sql)
+}
+
 module.exports = {
   login,
   getAllArticle,
@@ -109,5 +115,6 @@ module.exports = {
   updateArticle,
   addArticle,
   deleteArticle,
-  searchArticle
+  searchArticle,
+  getAllCategory
 }
