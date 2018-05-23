@@ -54,18 +54,18 @@
           <div
             class="tag-check"
             v-for="(name, index) in tagList"
-            :key="index">
+            :key="index"
+          >
             <label class="check-label" @click="checkTag">
               <input
                 class="tag-value"
                 type="checkbox"
                 :value="name"
                 v-model="tags"
-                onclick="return false"
+                disabled
               >
               <i
                 class="iconfont icon-check"
-                v-show="false"
               ></i>
               <span class="tag-name">{{ name }}</span>
             </label>
@@ -121,6 +121,15 @@
     },
     mounted() {
       this.unEditable()
+      // 显示check状态图标
+      setTimeout(() => {
+        const tagCheckBox = document.getElementsByClassName('tag-value')
+        for (let checkBox of tagCheckBox) {
+          if (checkBox.checked) {
+            checkBox.nextElementSibling.style.display = 'inline-block'
+          }
+        }
+      }, 666)
       // 改造 ui 框架样式
       this.dataV = document.getElementsByClassName('box')[0].attributes[0].name
       document.getElementsByClassName('el-input__inner')[0].setAttribute(this.dataV, '')
@@ -256,14 +265,18 @@
         e.preventDefault()
         e.stopPropagation()
         const target = e.currentTarget.getElementsByClassName('tag-value')[0]
+        const icon = target.nextElementSibling
         if (this.tags.length > 4) {
           target.checked = false
+          icon.style.display = 'none'
           this.tags = removeElementFromArray(this.tags, target.value)
         } else if (target.checked) {
           target.checked = false
+          icon.style.display = 'none'
           this.tags = removeElementFromArray(this.tags, target.value)
         } else if (!target.checked) {
           target.checked = true
+          icon.style.display = 'inline-block'
           this.tags.push(target.value)
         }
       },
@@ -338,6 +351,7 @@
       padding-left: 80px
       .tag-wrapper
         margin-top: 5px
+        overflow: auto
         @extend .list-wrapper
         clear-float()
         .tag-check
@@ -354,24 +368,25 @@
             position: relative
             cursor: pointer
             .icon-check
+              display: none
               position: absolute
               top: 0
               left: -1px
-              font-size: $text-size-large-x
+              font-size: 19px
               color: $green-400
             &:before
               position: absolute
-              top: 2px
+              top: 3px
               left: 0
-              width: 18px
-              height: 18px
+              width: 16px
+              height: 16px
               content: ''
               border-radius: 3px
               border: 1px solid $line-dark
               box-sizing: border-box
             .tag-value
               position: relative
-              left: -15px
+              left: -9999px
               margin: 0
               padding: 0
             .tag-name

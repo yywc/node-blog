@@ -84,6 +84,13 @@
         centerDialogVisible: false
       }
     },
+    watch: {
+      $route(to, from) {
+        if (to.name === 'ArticleWriter' && from.name === undefined) {
+          location.reload()
+        }
+      }
+    },
     computed: {
       getContent() {
         return this.article.content ? this.md.render(this.article.content) : ''

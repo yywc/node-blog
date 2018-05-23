@@ -2,6 +2,7 @@
   <section>
     <the-nav class="nav-wrapper"></the-nav>
     <div class="main">
+      <sub-header title="标签"></sub-header>
       <div class="tags">
         <a
           class="tag"
@@ -9,10 +10,11 @@
           v-for="(tag,index) in tags"
           :key="index"
         >
-          <em class="dark">标签</em>
+          <em class="dark">tag</em>
           <em class="light">{{tag}}</em>
         </a>
       </div>
+      <sub-header title="时间"></sub-header>
       <div class="dates">2018-7</div>
     </div>
   </section>
@@ -20,6 +22,7 @@
 
 <script type="text/ecmascript-6">
   import TheNav from '@/common/the-nav/the-nav'
+  import SubHeader from '@/common/sub-header/sub-header'
   import { getTags } from '@/api/index'
 
   export default {
@@ -30,7 +33,8 @@
       }
     },
     components: {
-      TheNav
+      TheNav,
+      SubHeader
     },
     created() {
       this._getTags()
@@ -58,10 +62,10 @@
 
   .tag-common
     display: inline-block
-    height: $height = 22px
+    height: $height = 24px
     line-height: $height
     color: $white
-    font-size: $text-size-small
+    font-size: $text-size-medium
 
   .nav-wrapper
     margin: 60px 0 0
@@ -69,21 +73,25 @@
   .main
     margin: 60px auto 50px
     width: 1000px
-    .tag
-      display: inline-block
-      margin: 10px
-      height: $height
-      font-size: 0
-      .dark
-        padding: 0 7px
-        border-bottom-left-radius: 4px
-        border-top-left-radius: 4px
-        background: #5e5e5e
-        @extend .tag-common
-      .light
-        padding: 0 5px
-        border-bottom-right-radius: 4px
-        border-top-right-radius: 4px
-        background: #6E87CA
-        @extend .tag-common
+    .sub-header
+      margin-bottom: 25px
+    .tags
+      margin-bottom: 50px
+      .tag
+        display: inline-block
+        margin: 7px 10px
+        height: 24px
+        font-size: 0
+        .dark
+          padding: 0 7px
+          border-bottom-left-radius: 4px
+          border-top-left-radius: 4px
+          background: #5e5e5e
+          @extend .tag-common
+        .light
+          padding: 0 7px
+          border-bottom-right-radius: 4px
+          border-top-right-radius: 4px
+          background: #59c441
+          @extend .tag-common
 </style>
