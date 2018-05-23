@@ -145,8 +145,8 @@ const searchArticle = function (data) {
  * 获取所有的分类
  * @returns {Promise<any>}
  */
-const getAllCategory = function () {
-  const url = config.getAllCategory
+const getTags = function () {
+  const url = config.getTags
   return axios
     .get(url)
     .then((res) => {
@@ -166,5 +166,5 @@ export {
   addArticle,
   deleteArticle,
   searchArticle,
-  getAllCategory
+  getTags
 }

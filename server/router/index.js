@@ -12,6 +12,6 @@ router.get('/logout', API.USER_LOGOUT)
 router.get('/get-all-article', API.GET_ALL_ARTICLE)
 router.get('/get-article', API.GET_ARTICLE)
 router.get('/search-article', API.SEARCH_ARTICLE)
-router.get('/get-all-category', API.GET_ALL_CATEGORY)
+router.get('/get-tags', API.GET_TAGS)
 
 module.exports = router

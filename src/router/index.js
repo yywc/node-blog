@@ -53,8 +53,8 @@ const Tech = (resolve) => {
     })
 }
 
-const Note = (resolve) => {
-  import('@/components/note/note')
+const Life = (resolve) => {
+  import('@/components/life/life')
     .then((module) => {
       resolve(module)
     })
@@ -117,9 +117,9 @@ export default new Router({
       component: Tech
     },
     {
-      path: '/note',
-      name: 'Note',
-      component: Note
+      path: '/life',
+      name: 'Life',
+      component: Life
     },
     {
       path: '/about',

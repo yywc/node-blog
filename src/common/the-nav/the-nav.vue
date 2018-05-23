@@ -21,8 +21,8 @@
           </router-link>
         </li>
         <li class="router-item">
-          <router-link to="/note">
-            <i class="iconfont icon-page"></i>杂谈
+          <router-link to="/life">
+            <i class="iconfont icon-page"></i>生活
           </router-link>
         </li>
         <li class="router-item">

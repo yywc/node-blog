@@ -2,18 +2,17 @@
   <section>
     <the-nav class="nav-wrapper"></the-nav>
     <div class="main">
-      <div class="categories">
+      <div class="tags">
         <a
-          class="category"
+          class="tag"
           href="#"
-          v-for="(category,index) in categoryList"
+          v-for="(tag,index) in tags"
           :key="index"
         >
-          <em class="dark">分类</em>
-          <em class="light">{{category}}</em>
+          <em class="dark">标签</em>
+          <em class="light">{{tag}}</em>
         </a>
       </div>
-      <div class="tags">es6</div>
       <div class="dates">2018-7</div>
     </div>
   </section>
@@ -21,27 +20,27 @@
 
 <script type="text/ecmascript-6">
   import TheNav from '@/common/the-nav/the-nav'
-  import { getAllCategory } from '@/api/index'
+  import { getTags } from '@/api/index'
 
   export default {
     name: 'Sort',
     data() {
       return {
-        categoryList: []
+        tags: []
       }
     },
     components: {
       TheNav
     },
     created() {
-      this._getAllCategory()
+      this._getTags()
     },
     methods: {
-      _getAllCategory() {
-        getAllCategory()
+      _getTags() {
+        getTags()
           .then((res) => {
             if (res.status === 1) {
-              this.categoryList = res.data
+              this.tags = res.data
             } else {
               console.error('内部错误: ' + res.data)
             }
@@ -70,7 +69,7 @@
   .main
     margin: 60px auto 50px
     width: 1000px
-    .category
+    .tag
       display: inline-block
       margin: 10px
       height: $height

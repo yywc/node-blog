@@ -25,63 +25,52 @@
           </el-option>
         </el-select>
       </p>
-      <p class="notice">最多添加 5 个分类</p>
-      <div class="category-list">
-        <input
-          type="hidden"
-          ref="categoryValue"
-          v-model="categoryList"
-        >
-        <div class="tag" v-for="(category, index) in this.categories" :key="index">
-          <span
-            class="name category-item"
-            contenteditable="false"
-          >
-            {{category}}
-          </span>
-          <i
-            class="iconfont icon-close"
-            @click="_handlerClick"
-          ></i>
-        </div>
-        <button
-          class="add-category"
-          id="addCategory"
-          @click="addCategory"
-        >
-          <i class="el-icon-plus"></i>添加分类
-        </button>
-        <!--<div class="category-wrapper"></div>-->
-      </div>
     </div>
     <div>
       <p class="label">文章标签<em class="notice-content">最多添加 5 个标签</em></p>
       <div class="tag-list">
-        <input
-          type="hidden"
-          ref="tagValue"
-          v-model="tagList"
-        >
-        <div class="tag" v-for="(tag, index) in this.tags" :key="index">
+        <div class="tag" v-for="(tag, index) in tags" :key="index">
           <span
-            class="name tag-item"
-            contenteditable="false"
+            class="name"
+            contenteditable="true"
+            @keydown="handlerEnter"
+            @blur="handlerBlur"
           >
             {{tag}}
           </span>
           <i
             class="iconfont icon-close"
-            @click="_handlerClick"
+            @click="handlerClick"
           ></i>
         </div>
         <button
           class="add-tag"
           id="addTag"
-          @click="addCategory"
+          @click="addTag"
         >
           <i class="el-icon-plus"></i>添加标签
         </button>
-        <!--<div class="tag-wrapper"></div>-->
+        <div class="tag-wrapper">
+          <div
+            class="tag-check"
+            v-for="(name, index) in tagList"
+            :key="index">
+            <label class="check-label" @click="checkTag">
+              <input
+                class="tag-value"
+                type="checkbox"
+                :value="name"
+                v-model="tags"
+                onclick="return false"
+              >
+              <i
+                class="iconfont icon-check"
+                v-show="false"
+              ></i>
+              <span class="tag-name">{{ name }}</span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
     <div class="button-wrapper">
@@ -96,8 +85,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { addClass, hasClass, removeElementFromArray } from '@/assets/js/utils'
-  import { updateArticle, addArticle } from '@/api/index'
+  import { removeElementFromArray } from '@/assets/js/utils'
+  import { updateArticle, addArticle, getTags } from '@/api/index'
   import { mapMutations } from 'vuex'
 
   export default {
@@ -112,11 +101,7 @@
     },
     data() {
       return {
-        // 存放文章原有目录和标签
-        categories: this.article.category ? this.article.category.split(',').slice(1) : [],
         tags: this.article.tag ? this.article.tag.split(',') : [],
-        // 处理新建的目录和标签
-        categoryList: [],
         tagList: [],
         options: [
           {
@@ -124,136 +109,93 @@
             label: '技术'
           },
           {
-            value: '杂谈',
-            label: '杂谈'
+            value: '生活',
+            label: '生活'
           }
         ],
         value: this.article.category ? this.article.category.split(',')[0] : ''
       }
     },
+    created() {
+      this._getTags()
+    },
     mounted() {
-      this.dataV = document.getElementsByClassName('box')[0].attributes[0].name
+      this.unEditable()
       // 改造 ui 框架样式
+      this.dataV = document.getElementsByClassName('box')[0].attributes[0].name
       document.getElementsByClassName('el-input__inner')[0].setAttribute(this.dataV, '')
     },
     methods: {
       close() {
         this.$emit('close')
       },
-      addCategory(e) {
-        const tagEl = this.buildNode()
-        const addCategory = document.getElementById('addCategory')
-        const addTag = document.getElementById('addTag')
-        if (e.target === addCategory || e.target.parentNode === addCategory) {
-          // 新增分类
-          addClass(tagEl.children[0], 'category-item')
-          const nameList = document.getElementsByClassName('category-item')
-          if ((nameList.length > 0 && nameList[nameList.length - 1].textContent === '') || nameList.length > 4) {
-            return
-          }
-          addCategory.parentNode.insertBefore(tagEl, addCategory)
-        } else if (e.target === addTag || e.target.parentNode === addTag) {
-          // 新增标签
-          addClass(tagEl.children[0], 'tag-item')
-          const nameList = document.getElementsByClassName('tag-item')
-          if ((nameList.length > 0 && nameList[nameList.length - 1].textContent.trim() === '') || nameList.length > 4) {
-            return
-          }
-          addTag.parentNode.insertBefore(tagEl, addTag)
-        }
-        tagEl.children[0].focus()
+      _getTags() {
+        getTags()
+          .then((res) => {
+            if (res.status === 1) {
+              this.tagList = res.data
+            } else {
+              console.error('内部错误: ' + res.data)
+            }
+          })
+          .catch((e) => {
+            console.error('内部错误: ' + e.toString())
+          })
       },
-      buildNode() {
-        // 构建标签元素
-        const div = document.createElement('div')
-        div.setAttribute(this.dataV, '')
-        div.setAttribute('class', 'tag')
-        const span = document.createElement('span')
-        span.setAttribute(this.dataV, '')
-        span.setAttribute('class', 'name')
-        span.setAttribute('contenteditable', 'true')
-        const i = document.createElement('i')
-        i.setAttribute(this.dataV, '')
-        i.setAttribute('class', 'iconfont icon-close')
-        div.appendChild(span)
-        div.appendChild(i)
-
-        const _this = this
-
-        // 设置方法
-        const _handlerBlur = function (e) {
-          // 失焦的时候判断是否为空，是否与之前的值有相同
-          if (e.target.textContent.trim() === '') {
-            const target = e.target.parentNode
-            target.parentNode.removeChild(target)
-          } else {
-            let nameList
-            const category = hasClass(e.target, 'category-item')
-            const tag = hasClass(e.target, 'tag-item')
-
-            // 设置为不可编辑
-            e.target.setAttribute('contenteditable', false)
-
-            if (category) {
-              nameList = document.getElementsByClassName('category-item')
-              // 如果标签重复，则移除这个标签
-              for (let i = 0, len = nameList.length - 1; i < len; i++) {
-                // 如果与之前的值有相同，则移除该元素
-                if (nameList[i].textContent.trim() === e.target.textContent.trim()) {
-                  const target = e.target.parentNode
-                  target.parentNode.removeChild(target)
-                  return
-                }
-              }
-              _this.categoryList.push(e.target.textContent.trim())
-            } else if (tag) {
-              nameList = document.getElementsByClassName('tag-item')
-              // 如果标签重复，则移除这个标签
-              for (let i = 0, len = nameList.length - 1; i < len; i++) {
-                // 如果与之前的值有相同，则移除该元素
-                if (nameList[i].textContent.trim() === e.target.textContent.trim()) {
-                  const target = e.target.parentNode
-                  target.parentNode.removeChild(target)
-                  return
-                }
-              }
-              _this.tagList.push(e.target.textContent.trim())
+      unEditable() {
+        const nameList = document.getElementsByClassName('name')
+        for (let name of nameList) {
+          name.setAttribute('contenteditable', false)
+        }
+      },
+      addTag() {
+        if (this.tags.length > 4) {
+          return
+        }
+        // 添加一个空值，使新的标签框出现
+        this.tags.push('')
+        const nameSpan = document.getElementsByClassName('name')
+        this.$nextTick(() => {
+          nameSpan[nameSpan.length - 1].focus()
+        })
+      },
+      handlerEnter(e) {
+        if (e.key === 'Enter') {
+          e.target.blur()
+        }
+      },
+      handlerClick(e) {
+        const targetChild = e.target.parentNode.children[0]
+        this.tags = removeElementFromArray(this.tags, targetChild.textContent)
+      },
+      handlerBlur(e) {
+        // 移除末尾空值
+        this.tags.pop()
+        // 使得所有的标签不可编辑
+        this.unEditable()
+        // 失焦的时候判断是否为空，是否与之前的值有相同
+        const target = e.target.parentNode
+        if (e.target.textContent.trim() === '') {
+          target.parentNode.removeChild(target)
+        } else {
+          const nameList = document.getElementsByClassName('name')
+          // 如果标签重复，则移除这个标签
+          for (let i = 0, len = nameList.length - 1; i < len; i++) {
+            // 如果与之前的值有相同，则移除该元素
+            if (nameList[i].textContent.trim() === e.target.textContent.trim()) {
+              target.parentNode.removeChild(target)
+              return
             }
           }
+          this.tags.push(e.target.textContent.trim())
         }
-
-        const _handlerEnter = function (e) {
-          if (e.key === 'Enter') {
-            e.target.blur()
-          }
-        }
-
-        span.addEventListener('blur', _handlerBlur)
-        span.addEventListener('keydown', _handlerEnter)
-        i.addEventListener('click', this._handlerClick)
-
-        return div
       },
-      _handlerClick(e) {
-        const target = e.target.parentNode
-        const targetChild = e.target.parentNode.children[0]
-        if (hasClass(targetChild, 'tag-item')) {
-          this.tagList = removeElementFromArray(this.tagList, targetChild.textContent)
-          this.tags = removeElementFromArray(this.tags, targetChild.textContent)
-        } else if (hasClass(targetChild, 'category-item')) {
-          this.categoryList = removeElementFromArray(this.categoryList, targetChild.textContent)
-          this.categories = removeElementFromArray(this.categories, targetChild.textContent)
-        }
-        target.parentNode.removeChild(target)
-      },
+      // 更新或新增文章
       submit() {
         if (this.value === '') {
           this.$message.error('请选择必须的文章分类')
           return
         }
-        const categoryArray = [...this.categories, ...this.categoryList]
-        const tagArray = [...this.tags, ...this.tagList]
-        categoryArray.unshift(this.value)
         const article = new Proxy(this.article, {
           set(trapTarget, key, value, receiver) {
             if (key === 'article_id') {
@@ -262,9 +204,9 @@
             return Reflect.set(trapTarget, key, value, receiver)
           }
         })
+        article.category = this.value
         // 转化为字符串
-        article.category = categoryArray.join()
-        article.tag = tagArray.toString() === '' ? undefined : tagArray.join()
+        article.tag = this.tags.toString() === '' ? undefined : this.tags.join()
         const data = {
           article: article
         }
@@ -310,6 +252,21 @@
             })
         }
       },
+      checkTag(e) {
+        e.preventDefault()
+        e.stopPropagation()
+        const target = e.currentTarget.getElementsByClassName('tag-value')[0]
+        if (this.tags.length > 4) {
+          target.checked = false
+          this.tags = removeElementFromArray(this.tags, target.value)
+        } else if (target.checked) {
+          target.checked = false
+          this.tags = removeElementFromArray(this.tags, target.value)
+        } else if (!target.checked) {
+          target.checked = true
+          this.tags.push(target.value)
+        }
+      },
       ...mapMutations({
         updateArticleTime: 'SET_UPDATE_ARTICLE_TIME'
       })
@@ -345,7 +302,7 @@
     top: 45%
     left: 50%
     padding: 20px
-    width: 650px
+    width: 630px
     background: $white
     border-radius: 3px
     transform: translate3d(-50%, -50%, 0)
@@ -369,18 +326,9 @@
       margin-top: 20px
       .select-category
         margin-left: 11px
-    .notice
-      margin-top: 7px
-      padding-left: 80px
-      font-size: $text-size-medium
-      color: $text-hint-dark
-    .category-list
-      padding-left: 80px
-      .category-wrapper
-        @extend .list-wrapper
-      .add-category
-        @extend .btn-add
     .label
+      display: flex
+      align-items: center
       margin-top: 20px
       .notice-content
         margin-left: 16px
@@ -389,7 +337,46 @@
     .tag-list
       padding-left: 80px
       .tag-wrapper
+        margin-top: 5px
         @extend .list-wrapper
+        clear-float()
+        .tag-check
+          display: flex
+          float: left
+          align-items: center
+          margin: 5px 10px
+          width: 220px
+          height: 22px
+          color: $text-primary-dark
+          font-size: $text-size-large
+          line-height: 22px
+          .check-label
+            position: relative
+            cursor: pointer
+            .icon-check
+              position: absolute
+              top: 0
+              left: -1px
+              font-size: $text-size-large-x
+              color: $green-400
+            &:before
+              position: absolute
+              top: 2px
+              left: 0
+              width: 18px
+              height: 18px
+              content: ''
+              border-radius: 3px
+              border: 1px solid $line-dark
+              box-sizing: border-box
+            .tag-value
+              position: relative
+              left: -15px
+              margin: 0
+              padding: 0
+            .tag-name
+              margin-left: 8px
+              no-wrap()
       .add-tag
         @extend .btn-add
     .button-wrapper

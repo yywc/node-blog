@@ -134,15 +134,17 @@ const searchArticle = async (ctx, next) => {
   }
 }
 
-const getAllCategory = async (ctx, next) => {
+const getTags = async (ctx, next) => {
   let resultArray = []
   try {
-    await mysql.getAllCategory()
+    await mysql.getTags()
       .then((res) => {
-        for (let categories of res) {
-          for (let category of categories.category.split(',')) {
-            if (!resultArray.includes(category)) {
-              resultArray.push(category)
+        for (let tags of res) {
+          if (tags.tag !== null) {
+            for (let tag of tags.tag.split(',')) {
+              if (!resultArray.includes(tag)) {
+                resultArray.push(tag)
+              }
             }
           }
         }
@@ -163,5 +165,5 @@ module.exports = {
   addArticle,
   deleteArticle,
   searchArticle,
-  getAllCategory
+  getTags
 }

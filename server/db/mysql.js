@@ -103,8 +103,8 @@ const searchArticle = function (title, page, pageCount) {
 }
 
 // 获取所有的分类
-const getAllCategory = function () {
-  const sql = 'SELECT `category` FROM `blog_article`;'
+const getTags = function () {
+  const sql = 'SELECT `tag` FROM `blog_article`;'
   return query(sql)
 }
 
@@ -116,5 +116,5 @@ module.exports = {
   addArticle,
   deleteArticle,
   searchArticle,
-  getAllCategory
+  getTags
 }
