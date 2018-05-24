@@ -135,7 +135,7 @@
       _setData(res) {
         this.setSearchArticle({
           title: this.articleTitle,
-          articles: res.data
+          data: res.data
         })
         this.$router.push('/search')
       },

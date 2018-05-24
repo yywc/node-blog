@@ -59,7 +59,7 @@
       if (this.articleTitleOfSearch !== '') {
         this.setSearchArticle({
           title: '',
-          articles: []
+          data: {}
         })
         this._getAllArticle(this.currentPage, this.category)
       }
@@ -101,7 +101,7 @@
               this.page = res.data
               this.setSearchArticle({
                 title: this.articleTitleOfSearch,
-                articles: res.data
+                data: res.data
               })
             } else {
               console.error(res.data)
