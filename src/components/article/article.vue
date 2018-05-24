@@ -14,8 +14,8 @@
       {{ article.title }}
     </h1>
     <div class="meta">
-      <span class="category" v-for="(category, index) in articleCategory" :key="index">{{category}}</span>
-      <span v-if="articleCategory.length>0">/</span>
+      <em>阅读 {{ article.read_count }} / </em>
+      <em>留言 {{ article.comment_count }}  / </em>
       <time :datetime="getTime">{{ getTime }}</time>
     </div>
     <p

@@ -16,8 +16,8 @@
         </router-link>
       </h1>
       <div class="meta">
-        <em>阅读数 {{ article.read_count }} / </em>
-        <em>评论 {{ article.comment_count }}  / </em>
+        <em>阅读 {{ article.read_count }} / </em>
+        <em>留言 {{ article.comment_count }}  / </em>
         <time :datetime="getTime(article)">{{ getTime(article) }}</time>
       </div>
       <p class="content">{{ getContent(article) }}</p>

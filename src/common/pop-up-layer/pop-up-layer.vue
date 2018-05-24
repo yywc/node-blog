@@ -32,8 +32,8 @@
         <div class="tag" v-for="(tag, index) in tags" :key="index">
           <span
             class="name"
-            contenteditable="true"
-            @keydown="handlerEnter"
+            contenteditable="false"
+            @keydown.enter="handlerEnter"
             @blur="handlerBlur"
           >
             {{tag}}
@@ -56,7 +56,7 @@
             v-for="(name, index) in tagList"
             :key="index"
           >
-            <label class="check-label" @click="checkTag">
+            <label class="check-label" @click.stop="checkTag">
               <input
                 class="tag-value"
                 type="checkbox"
@@ -66,6 +66,7 @@
               >
               <i
                 class="iconfont icon-check"
+                v-show="showCheckedIcon(name)"
               ></i>
               <span class="tag-name">{{ name }}</span>
             </label>
@@ -120,23 +121,32 @@
       this._getTags()
     },
     mounted() {
-      this.unEditable()
-      // 显示check状态图标
-      setTimeout(() => {
-        const tagCheckBox = document.getElementsByClassName('tag-value')
-        for (let checkBox of tagCheckBox) {
-          if (checkBox.checked) {
-            checkBox.nextElementSibling.style.display = 'inline-block'
-          }
-        }
-      }, 666)
       // 改造 ui 框架样式
       this.dataV = document.getElementsByClassName('box')[0].attributes[0].name
       document.getElementsByClassName('el-input__inner')[0].setAttribute(this.dataV, '')
     },
     methods: {
+      ...mapMutations({
+        updateArticleTime: 'SET_UPDATE_ARTICLE_TIME'
+      }),
       close() {
         this.$emit('close')
+      },
+      checkTag(e) {
+        const target = e.currentTarget.getElementsByClassName('tag-value')[0]
+        const icon = target.nextElementSibling
+        if (this.tags.length > 4 || target.checked) {
+          target.checked = false
+          icon.style.display = 'none'
+          this.tags = removeElementFromArray(this.tags, target.value)
+        } else if (!target.checked) {
+          target.checked = true
+          icon.style.display = 'inline-block'
+          this.tags.push(target.value)
+        }
+      },
+      showCheckedIcon(name) {
+        return this.tags.includes(name)
       },
       _getTags() {
         getTags()
@@ -151,12 +161,6 @@
             console.error('内部错误: ' + e.toString())
           })
       },
-      unEditable() {
-        const nameList = document.getElementsByClassName('name')
-        for (let name of nameList) {
-          name.setAttribute('contenteditable', false)
-        }
-      },
       addTag() {
         if (this.tags.length > 4) {
           return
@@ -165,13 +169,12 @@
         this.tags.push('')
         const nameSpan = document.getElementsByClassName('name')
         this.$nextTick(() => {
+          nameSpan[nameSpan.length - 1].setAttribute('contenteditable', 'true')
           nameSpan[nameSpan.length - 1].focus()
         })
       },
       handlerEnter(e) {
-        if (e.key === 'Enter') {
-          e.target.blur()
-        }
+        e.target.blur()
       },
       handlerClick(e) {
         const targetChild = e.target.parentNode.children[0]
@@ -180,23 +183,16 @@
       handlerBlur(e) {
         // 移除末尾空值
         this.tags.pop()
-        // 使得所有的标签不可编辑
-        this.unEditable()
+        e.target.setAttribute('contenteditable', 'false')
         // 失焦的时候判断是否为空，是否与之前的值有相同
-        const target = e.target.parentNode
-        if (e.target.textContent.trim() === '') {
-          target.parentNode.removeChild(target)
-        } else {
-          const nameList = document.getElementsByClassName('name')
-          // 如果标签重复，则移除这个标签
-          for (let i = 0, len = nameList.length - 1; i < len; i++) {
-            // 如果与之前的值有相同，则移除该元素
-            if (nameList[i].textContent.trim() === e.target.textContent.trim()) {
-              target.parentNode.removeChild(target)
+        const value = e.target.textContent.trim()
+        if (value !== '') {
+          for (let tag of this.tags) {
+            if (tag === value) {
               return
             }
           }
-          this.tags.push(e.target.textContent.trim())
+          this.tags.push(value)
         }
       },
       // 更新或新增文章
@@ -260,29 +256,7 @@
               console.error('内部错误: ' + e.toString())
             })
         }
-      },
-      checkTag(e) {
-        e.preventDefault()
-        e.stopPropagation()
-        const target = e.currentTarget.getElementsByClassName('tag-value')[0]
-        const icon = target.nextElementSibling
-        if (this.tags.length > 4) {
-          target.checked = false
-          icon.style.display = 'none'
-          this.tags = removeElementFromArray(this.tags, target.value)
-        } else if (target.checked) {
-          target.checked = false
-          icon.style.display = 'none'
-          this.tags = removeElementFromArray(this.tags, target.value)
-        } else if (!target.checked) {
-          target.checked = true
-          icon.style.display = 'inline-block'
-          this.tags.push(target.value)
-        }
-      },
-      ...mapMutations({
-        updateArticleTime: 'SET_UPDATE_ARTICLE_TIME'
-      })
+      }
     }
   }
 </script>
@@ -368,7 +342,6 @@
             position: relative
             cursor: pointer
             .icon-check
-              display: none
               position: absolute
               top: 0
               left: -1px
@@ -390,7 +363,9 @@
               margin: 0
               padding: 0
             .tag-name
+              display: inline-block
               margin-left: 8px
+              max-width: 190px
               no-wrap()
       .add-tag
         @extend .btn-add

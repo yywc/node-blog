@@ -10,7 +10,7 @@
         type="text"
         title="标题"
         ref="articleTitle"
-        v-model="article.title"
+        v-model.trim.lazy="article.title"
       >
       <button
         class="btn-delete"
@@ -29,7 +29,7 @@
           class="editor"
           title="文章内容"
           ref="textareaContent"
-          v-model="article.content"
+          v-model.trim="article.content"
         >
         </textarea>
       <p
@@ -39,8 +39,15 @@
       >
       </p>
     </div>
-    <div class="layer-wrapper" ref="layerWrapper">
-      <pop-up-layer @close="closeLayer" :article="this.article" v-if="isLoaded"></pop-up-layer>
+    <div
+      class="layer-wrapper"
+      v-show="showPopUpLayer"
+    >
+      <pop-up-layer
+        @close="closeLayer"
+        :article="this.article"
+        v-if="isLoaded">
+      </pop-up-layer>
     </div>
     <el-dialog
       title="提示"
@@ -77,6 +84,7 @@
           title: '',
           content: ''
         },
+        showPopUpLayer: false,
         isLoaded: false, // 控制获取文章后，正确传入 article 给子组件
         scrollTopPercent: 0,
         editorScrollFlag: true, // 控制添加监听事件，防止多次添加
@@ -120,6 +128,7 @@
     mounted() {
       const editor = this.$refs.textareaContent
       const content = this.$refs.markdownContent
+      // 先添加滚动事件，当某一个滚动了的时候移除另一个的滚动，之后再添加移除，防止循环滚动
       editor.addEventListener('scroll', this.scroll)
       content.addEventListener('scroll', this.scroll)
       this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
@@ -147,6 +156,7 @@
         this.scrollTop(e)
       },
       scrollTop(e) {
+        // 滚动时移除另外一边的监听事件，防止循环滚动
         const ele = e.target
         const editor = this.$refs.textareaContent
         const content = this.$refs.markdownContent
@@ -174,16 +184,16 @@
         }
       },
       submitArticle() {
-        if (this.article.title.trim() === '' || this.article.content.trim() === '') {
+        if (this.article.title === '' || this.article.content === '') {
           this.$message.error('文章标题或者内容不能为空')
           return
         }
-        this.$refs.layerWrapper.style.display = 'block'
+        this.showPopUpLayer = true
         // 强行改变 ele-ui 下拉框样式为了好看点
         document.getElementsByClassName('el-scrollbar__wrap')[0].style.marginBottom = '-16px'
       },
       closeLayer() {
-        this.$refs.layerWrapper.style.display = 'none'
+        this.showPopUpLayer = false
       },
       _deleteArticle() {
         if (this.id) {
@@ -298,7 +308,6 @@
         @extend .passage
 
   .layer-wrapper
-    display: none
     position: fixed
     top: 0
     right: 0
