@@ -38,7 +38,10 @@
         <h1 class="title">岂曰无衣 与子同袍</h1>
       </el-col>
       <el-col :span="7">
-        <input class="search-input" type="text" placeholder="搜索" v-model="articleTitle" @keydown="handleEnter">
+        <input
+          class="search-input" type="text" placeholder="搜索" v-model.trim="articleTitle"
+          @keydown.enter="handleEnter"
+        >
         <i class="iconfont icon-search" @click="_searchArticle"></i>
         <el-button
           class="logout"
@@ -98,22 +101,12 @@
         }
       },
       _searchArticle() {
-        const data = {
-          title: encodeURIComponent(this.articleTitle)
-        }
-        if (!this.articleTitle || this.articleTitle.trim() === '') {
+        if (!this.articleTitle || this.articleTitle === '') {
           // 搜索条件为空时，获取全部文章
           getAllArticle()
             .then((res) => {
               if (res.status === 1) {
-                // 操作 Index 组件里的 page，不然翻页会有问题
-                const indexComponent = this.$parent.$children[2]
-                indexComponent.page = res.data
-                this.setSearchArticle({
-                  title: this.articleTitle,
-                  articles: res.data.data
-                })
-                this.$router.push('/')
+                this._setData(res)
               } else {
                 console.error('内部错误: ' + res.data)
               }
@@ -122,16 +115,14 @@
               console.error('内部错误: ' + e.toString())
             })
         } else {
+          const data = {
+            title: encodeURIComponent(this.articleTitle)
+          }
           // 否则进行标题模糊搜索
           searchArticle(data)
             .then((res) => {
               if (res.status === 1) {
-                this.$parent.$children[2].page = res.data
-                this.setSearchArticle({
-                  title: this.articleTitle,
-                  articles: res.data.data
-                })
-                this.$router.push('/')
+                this._setData(res)
               } else {
                 console.error(res.data)
               }
@@ -141,10 +132,15 @@
             })
         }
       },
-      handleEnter(e) {
-        if (e.code === 'Enter') {
-          this._searchArticle()
-        }
+      _setData(res) {
+        this.setSearchArticle({
+          title: this.articleTitle,
+          articles: res.data
+        })
+        this.$router.push('/search')
+      },
+      handleEnter() {
+        this._searchArticle()
       },
       toPath() {
         if (this.$route.path === '/') {

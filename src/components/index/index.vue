@@ -17,8 +17,7 @@
 
 <script type="text/ecmascript-6">
   import { articleMixin } from '@/assets/js/mixin'
-  import { searchArticle } from '@/api/index'
-  import { mapActions, mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
 
   export default {
     mixins: [articleMixin],
@@ -30,9 +29,7 @@
     },
     computed: {
       ...mapGetters([
-        'updateArticleTime',
-        'articleOfSearch',
-        'articleTitleOfSearch'
+        'updateArticleTime'
       ])
     },
     watch: {
@@ -40,53 +37,7 @@
         if (newVal !== oldVal) {
           this._getAllArticle()
         }
-      },
-      articleOfSearch(newVal) {
-        this.articles = newVal
       }
-    },
-    deactivated() {
-      // 如果有搜索条件，则清空并重新获取数据
-      if (this.articleTitleOfSearch !== '') {
-        this.setSearchArticle({
-          title: '',
-          articles: []
-        })
-        this._getAllArticle(this.currentPage, this.category)
-      }
-    },
-    methods: {
-      handleCurrentChange(page) {
-        if (this.articleTitleOfSearch !== '') {
-          this._searchArticle({
-            title: this.articleTitleOfSearch,
-            p: page
-          })
-        } else {
-          this._getAllArticle(page, this.category)
-        }
-      },
-      _searchArticle(data) {
-        searchArticle(data)
-          .then((res) => {
-            if (res.status === 1) {
-              this.articles = res.data.data
-              this.page = res.data
-              this.setSearchArticle({
-                title: this.articleTitleOfSearch,
-                articles: res.data.data
-              })
-            } else {
-              console.error(res.data)
-            }
-          })
-          .catch((e) => {
-            console.error('内部错误: ' + e.toString())
-          })
-      },
-      ...mapActions([
-        'setSearchArticle'
-      ])
     }
   }
 </script>

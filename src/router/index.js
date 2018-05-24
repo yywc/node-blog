@@ -83,6 +83,16 @@ const Sort = (resolve) => {
     })
 }
 
+const Search = (resolve) => {
+  import('@/components/search/search')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
+}
+
 export default new Router({
   routes: [
     {
@@ -130,6 +140,11 @@ export default new Router({
       path: '/sort',
       name: 'Sort',
       component: Sort
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
     }
   ]
 })
