@@ -42,7 +42,7 @@
           class="search-input" type="text" placeholder="搜索" v-model.trim="articleTitle"
           @keydown.enter="handleEnter"
         >
-        <i class="iconfont icon-search" @click="_searchArticle"></i>
+        <i class="iconfont icon-search" @click="search"></i>
         <el-button
           class="logout"
           type="text"
@@ -58,8 +58,8 @@
 
 <script type="text/ecmascript-6">
   import Cookies from 'js-cookie'
-  import { logout, searchArticle, getAllArticle } from '@/api/index'
-  import { mapActions, mapGetters } from 'vuex'
+  import { logout } from '@/api/index'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'TheHeader',
@@ -70,11 +70,11 @@
     },
     computed: {
       ...mapGetters([
-        'articleOfSearch',
         'articleTitleOfSearch'
       ])
     },
     watch: {
+      // 动态改变搜索框里的内容
       articleTitleOfSearch(newVal, oldVal) {
         if (newVal !== oldVal) {
           this.articleTitle = newVal
@@ -100,47 +100,12 @@
             })
         }
       },
-      _searchArticle() {
-        if (!this.articleTitle || this.articleTitle === '') {
-          // 搜索条件为空时，获取全部文章
-          getAllArticle()
-            .then((res) => {
-              if (res.status === 1) {
-                this._setData(res)
-              } else {
-                console.error('内部错误: ' + res.data)
-              }
-            })
-            .catch((e) => {
-              console.error('内部错误: ' + e.toString())
-            })
-        } else {
-          const data = {
-            title: encodeURIComponent(this.articleTitle)
-          }
-          // 否则进行标题模糊搜索
-          searchArticle(data)
-            .then((res) => {
-              if (res.status === 1) {
-                this._setData(res)
-              } else {
-                console.error(res.data)
-              }
-            })
-            .catch((e) => {
-              console.error('内部错误: ' + e.toString())
-            })
-        }
-      },
-      _setData(res) {
-        this.setSearchArticle({
-          title: this.articleTitle,
-          data: res.data
-        })
-        this.$router.push('/search')
+      search() {
+        const url = this.articleTitle ? '/search/' + encodeURIComponent(this.articleTitle) : '/search/0'
+        this.$router.push(url)
       },
       handleEnter() {
-        this._searchArticle()
+        this.search()
       },
       toPath() {
         if (this.$route.path === '/') {
@@ -148,10 +113,7 @@
         } else {
           this.$router.push('/')
         }
-      },
-      ...mapActions([
-        'setSearchArticle'
-      ])
+      }
     }
   }
 </script>

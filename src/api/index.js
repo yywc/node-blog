@@ -157,6 +157,25 @@ const getTags = function () {
     })
 }
 
+/**
+ * 根据标签获取文章
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+const getArticlesByTag = function (data) {
+  const url = config.getArticlesByTag
+  return axios
+    .get(url, {
+      params: data
+    })
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
 export {
   login,
   logout,
@@ -166,5 +185,6 @@ export {
   addArticle,
   deleteArticle,
   searchArticle,
-  getTags
+  getTags,
+  getArticlesByTag
 }

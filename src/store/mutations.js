@@ -4,10 +4,7 @@ const mutations = {
   [types.SET_UPDATE_ARTICLE_TIME](state) {
     state.updateArticleTime = new Date().getTime()
   },
-  [types.SET_ARTICLE_OF_SEARCH](state, articles) {
-    state.articleOfSearch = articles
-  },
-  [types.SET_ARTICLETITLE_OF_SEARCH](state, title) {
+  [types.SET_ARTICLE_TITLE_OF_SEARCH](state, title) {
     state.articleTitleOfSearch = title
   }
 }

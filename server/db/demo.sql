@@ -35,11 +35,11 @@ CREATE TABLE IF NOT EXISTS blog_article (
   img            VARCHAR(255) COMMENT '图片地址',
   read_count     INT UNSIGNED NOT NULL                    DEFAULT '0'
   COMMENT '浏览数',
-  favorite_count INT UNSIGNED NOT NULL                    DEFAULT '0'
-  COMMENT '点赞数'
+  comment_count INT UNSIGNED NOT NULL                    DEFAULT '0'
+  COMMENT '评论数'
 );
 --创建一条测试文章数据
-INSERT INTO blog_article VALUES (NULL, 'test', 'test', NULL, NULL, '技术', NULL, NULL, NULL, NULL);
+INSERT INTO blog_article VALUES (NULL, 'test', 'test', NULL, NULL, '技术', NULL, NULL, 1, 0);
 
 
 --创建评论表

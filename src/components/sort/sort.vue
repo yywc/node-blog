@@ -4,15 +4,15 @@
     <div class="main">
       <sub-header title="标签"></sub-header>
       <div class="tags">
-        <a
+        <router-link
           class="tag"
-          href="#"
+          :to="{path: '/tag/' + encodeURIComponent(tag)}"
           v-for="(tag,index) in tags"
           :key="index"
         >
           <em class="dark">tag</em>
           <em class="light">{{tag}}</em>
-        </a>
+        </router-link>
       </div>
       <sub-header title="时间"></sub-header>
       <div class="dates">2018-7</div>

@@ -11,7 +11,8 @@ const API = {
   ADD_ARTICLE: db.addArticle,
   DELETE_ARTICLE: db.deleteArticle,
   SEARCH_ARTICLE: db.searchArticle,
-  GET_TAGS: db.getTags
+  GET_TAGS: db.getTags,
+  GET_ARTICLES_BY_TAG: db.getArticlesByTag
 }
 
 module.exports = API

@@ -35,7 +35,8 @@ const getAllArticle = async (ctx, next) => {
         ctx.body = resObj(2, e.toString())
       })
   } catch (e) {
-    ctx.body = resObj(0, '数据库错误: ' + e.toString())
+    ctx.body = resObj(0, '数据库连接错误')
+    console.error('数据库错误: ' + e.toString())
   }
 }
 
@@ -50,7 +51,8 @@ const getArticle = async (ctx, next) => {
         ctx.body = resObj(2, e.toString())
       })
   } catch (e) {
-    ctx.body = resObj(0, '数据库错误: ' + e.toString())
+    ctx.body = resObj(0, '数据库连接错误')
+    console.error('数据库错误: ' + e.toString())
   }
 }
 
@@ -66,7 +68,8 @@ const updateArticle = async (ctx, next) => {
           ctx.body = resObj(2, e.toString())
         })
     } catch (e) {
-      ctx.body = resObj(0, '数据库错误: ' + e.toString())
+      ctx.body = resObj(0, '数据库连接错误')
+      console.error('数据库错误: ' + e.toString())
     }
   } else {
     ctx.body = resObj(0, '未登录')
@@ -85,7 +88,8 @@ const addArticle = async (ctx, next) => {
           ctx.body = resObj(2, e.toString())
         })
     } catch (e) {
-      ctx.body = resObj(0, '数据库错误: ' + e.toString())
+      ctx.body = resObj(0, '数据库连接错误')
+      console.error('数据库错误: ' + e.toString())
     }
   } else {
     ctx.body = resObj(0, '未登录')
@@ -104,7 +108,8 @@ const deleteArticle = async (ctx, next) => {
           ctx.body = resObj(2, e.toString())
         })
     } catch (e) {
-      ctx.body = resObj(0, '数据库错误: ' + e.toString())
+      ctx.body = resObj(0, '数据库连接错误')
+      console.error('数据库错误: ' + e.toString())
     }
   } else {
     ctx.body = resObj(0, '未登录')
@@ -112,12 +117,12 @@ const deleteArticle = async (ctx, next) => {
 }
 
 const searchArticle = async (ctx, next) => {
-  let { p, pc, title } = ctx.request.query
+  let { p, pc, t } = ctx.request.query
   p = p !== null && p !== undefined ? parseInt(p) : 1
   pc = pc !== null && pc !== undefined ? parseInt(pc) : config.PAGE_COUNT
-  title = decodeURIComponent(title)
+  t = decodeURIComponent(t)
   try {
-    await mysql.searchArticle(title, p, pc)
+    await mysql.searchArticle(t, p, pc)
       .then((res) => {
         ctx.body = resObj(1, {
           data: res[1],
@@ -130,7 +135,8 @@ const searchArticle = async (ctx, next) => {
         ctx.body = resObj(2, e.toString())
       })
   } catch (e) {
-    ctx.body = resObj(0, '数据库错误: ' + e.toString())
+    ctx.body = resObj(0, '数据库连接错误')
+    console.error('数据库错误: ' + e.toString())
   }
 }
 
@@ -154,7 +160,32 @@ const getTags = async (ctx, next) => {
         ctx.body = resObj(2, e.toString())
       })
   } catch (e) {
-    ctx.body = resObj(0, '数据库错误: ' + e.toString())
+    ctx.body = resObj(0, '数据库连接错误')
+    console.error('数据库错误: ' + e.toString())
+  }
+}
+
+const getArticlesByTag = async (ctx, next) => {
+  let { p, pc, t } = ctx.request.query
+  p = p !== null && p !== undefined ? parseInt(p) : 1
+  pc = pc !== null && pc !== undefined ? parseInt(pc) : config.PAGE_COUNT
+  t = decodeURIComponent(t)
+  try {
+    await mysql.getArticlesByTag(t, p, pc)
+      .then((res) => {
+        ctx.body = resObj(1, {
+          data: res[1],
+          totalCount: res[0][0]['COUNT(`article_id`)'],
+          currentPage: p,
+          pageCount: pc
+        })
+      })
+      .catch((e) => {
+        ctx.body = resObj(2, e.toString())
+      })
+  } catch (e) {
+    ctx.body = resObj(0, '数据库连接错误')
+    console.error('数据库错误: ' + e.toString())
   }
 }
 
@@ -165,5 +196,6 @@ module.exports = {
   addArticle,
   deleteArticle,
   searchArticle,
-  getTags
+  getTags,
+  getArticlesByTag
 }

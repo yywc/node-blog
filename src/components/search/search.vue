@@ -20,8 +20,7 @@
   import TheNav from '@/common/the-nav/the-nav'
   import Pagination from '@/common/pagination/pagination'
   import { searchArticle, getAllArticle } from '@/api/index'
-
-  import { mapActions, mapGetters } from 'vuex'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: 'Search',
@@ -34,43 +33,46 @@
       return {
         articles: [],
         page: {},
-        currentPage: 1,
-        category: 0
+        category: 0,
+        title: '0'
       }
     },
-    computed: {
-      ...mapGetters([
-        'articleOfSearch',
-        'articleTitleOfSearch'
-      ])
+    created() {
+      this.getArticles()
     },
     watch: {
-      articleOfSearch(newVal) {
-        this.articles = newVal.data
-        this.page = newVal
+      '$route.params.title': {
+        handler: function (val) {
+          if (val !== '0') {
+            this.setArticleTitleOfSearch(val)
+            this._searchArticle(1, val)
+          } else {
+            this.setArticleTitleOfSearch('')
+            this._getAllArticle(1, val)
+          }
+        },
+        // 深度观察
+        deep: true
       }
     },
     activated() {
-      this.articles = this.articleOfSearch.data
-      this.page = this.articleOfSearch ? this.articleOfSearch : {}
+      this.getArticles()
     },
     deactivated() {
-      // 如果有搜索条件，则清空并重新获取数据
-      if (this.articleTitleOfSearch !== '') {
-        this.setSearchArticle({
-          title: '',
-          data: {}
-        })
-        this._getAllArticle(this.currentPage, this.category)
-      }
+      this.setArticleTitleOfSearch('')
     },
     methods: {
+      getArticles() {
+        this.title = this.$route.params.title
+        if (this.title !== '0') {
+          this._searchArticle(1, this.title)
+        } else {
+          this._getAllArticle(1, this.title)
+        }
+      },
       handleCurrentChange(page) {
-        if (this.articleTitleOfSearch !== '') {
-          this._searchArticle({
-            title: this.articleTitleOfSearch,
-            p: page
-          })
+        if (this.title !== '0') {
+          this._searchArticle(page, this.title)
         } else {
           this._getAllArticle(page, this.category)
         }
@@ -93,16 +95,16 @@
             console.error('内部错误: ' + e.toString())
           })
       },
-      _searchArticle(data) {
+      _searchArticle(page, title) {
+        const data = {
+          p: page,
+          t: title
+        }
         searchArticle(data)
           .then((res) => {
             if (res.status === 1) {
               this.articles = res.data.data
               this.page = res.data
-              this.setSearchArticle({
-                title: this.articleTitleOfSearch,
-                data: res.data
-              })
             } else {
               console.error(res.data)
             }
@@ -111,9 +113,9 @@
             console.error('内部错误: ' + e.toString())
           })
       },
-      ...mapActions([
-        'setSearchArticle'
-      ])
+      ...mapMutations({
+        setArticleTitleOfSearch: 'SET_ARTICLE_TITLE_OF_SEARCH'
+      })
     }
   }
 </script>

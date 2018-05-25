@@ -245,7 +245,7 @@
                   type: 'success'
                 })
                 setTimeout(() => {
-                  window.location.href = '/'
+                  this.$router.push('/')
                 }, 1000)
               } else {
                 this.$message.error(res.data)

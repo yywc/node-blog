@@ -93,6 +93,16 @@ const Search = (resolve) => {
     })
 }
 
+const Tag = (resolve) => {
+  import('@/components/tag/tag')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
+}
+
 export default new Router({
   routes: [
     {
@@ -142,9 +152,14 @@ export default new Router({
       component: Sort
     },
     {
-      path: '/search',
+      path: '/search/:title',
       name: 'Search',
       component: Search
+    },
+    {
+      path: '/tag/:tag',
+      name: 'Tag',
+      component: Tag
     }
   ]
 })

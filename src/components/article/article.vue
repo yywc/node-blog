@@ -15,7 +15,7 @@
     </h1>
     <div class="meta">
       <em>阅读 {{ article.read_count }} / </em>
-      <em>留言 {{ article.comment_count }}  / </em>
+      <em>留言 {{ article.comment_count }} / </em>
       <time :datetime="getTime">{{ getTime }}</time>
     </div>
     <p
@@ -27,15 +27,15 @@
       <span class="next">下一篇</span>
     </div>
     <div class="entry-tag">
-      <a
+      <router-link
         class="tag"
-        href="#"
+        :to="{path: '/tag/' + encodeURIComponent(tag)}"
         v-for="(tag,index) in articleTag"
         :key="index"
       >
         <em class="dark">tag</em>
         <em class="light">{{tag}}</em>
-      </a>
+      </router-link>
     </div>
     <div class="user-detail">
       <img

@@ -108,6 +108,15 @@ const getTags = function () {
   return query(sql)
 }
 
+// 获取指定分类的文章
+const getArticlesByTag = function (tag, page, pageCount) {
+  tag = `%${tag}%`
+  page = (page - 1) * pageCount
+  let sql = 'SELECT COUNT(`article_id`) FROM `blog_article` WHERE `tag` LIKE ?;'
+  sql += 'SELECT * FROM `blog_article` WHERE `tag` LIKE ? ORDER BY `article_id` DESC LIMIT ?,?;'
+  return query(sql, [tag, tag, page, pageCount])
+}
+
 module.exports = {
   login,
   getAllArticle,
@@ -116,5 +125,6 @@ module.exports = {
   addArticle,
   deleteArticle,
   searchArticle,
-  getTags
+  getTags,
+  getArticlesByTag
 }

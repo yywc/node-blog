@@ -13,5 +13,6 @@ router.get('/get-all-article', API.GET_ALL_ARTICLE)
 router.get('/get-article', API.GET_ARTICLE)
 router.get('/search-article', API.SEARCH_ARTICLE)
 router.get('/get-tags', API.GET_TAGS)
+router.get('/get-articles-by-tag', API.GET_ARTICLES_BY_TAG)
 
 module.exports = router
