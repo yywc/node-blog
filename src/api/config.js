@@ -8,7 +8,8 @@ const config = {
   deleteArticle: '/api/delete-article',
   searchArticle: '/api/search-article',
   getTags: '/api/get-tags',
-  getArticlesByTag: '/api/get-articles-by-tag'
+  getArticlesByTag: '/api/get-articles-by-tag',
+  getArticlesByTime: '/api/get–articles–by–time'
 }
 
 export default config
