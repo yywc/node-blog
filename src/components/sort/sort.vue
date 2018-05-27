@@ -23,13 +23,16 @@
 <script type="text/ecmascript-6">
   import TheNav from '@/common/the-nav/the-nav'
   import SubHeader from '@/common/sub-header/sub-header'
-  import { getTags } from '@/api/index'
+  import { getTags, getAllArticle } from '@/api/index'
 
   export default {
     name: 'Sort',
     data() {
       return {
-        tags: []
+        tags: [],
+        category: 0,
+        currentPage: 1,
+        pageCount: 20
       }
     },
     components: {
@@ -38,8 +41,23 @@
     },
     created() {
       this._getTags()
+      this._getAllArticle(this.currentPage, this.pageCount, this.category)
     },
     methods: {
+      _getAllArticle(page, pageCount, category) {
+        const data = {
+          p: page,
+          pc: pageCount,
+          c: category
+        }
+        getAllArticle(data)
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((e) => {
+            console.error('内部错误: ' + e.toString())
+          })
+      },
       _getTags() {
         getTags()
           .then((res) => {
