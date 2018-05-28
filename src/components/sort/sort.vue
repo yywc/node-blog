@@ -15,7 +15,14 @@
         </router-link>
       </div>
       <sub-header title="时间"></sub-header>
-      <div class="dates">2018-7</div>
+      <div class="date" v-for="(articleArray, index) in articles" :key="index">
+        <h1>
+          {{ articleArray[0].create_time.split('T')[0] }}
+        </h1>
+        <p v-for="article in articleArray" :key="article.article_id">
+          {{ article.title }}
+        </p>
+      </div>
     </div>
   </section>
 </template>
@@ -32,7 +39,8 @@
         tags: [],
         category: 0,
         currentPage: 1,
-        pageCount: 20
+        pageCount: 20,
+        articles: []
       }
     },
     components: {
@@ -52,7 +60,25 @@
         }
         getAllArticle(data)
           .then((res) => {
-            console.log(res)
+            this.articles = res.data.data
+            let times = []
+            for (let article of res.data.data) {
+              times.push(article.create_time.split('T')[0])
+            }
+            // 取得非重复时间
+            times = [...new Set(times)]
+            const articles = []
+            for (let time of times) {
+              let arr = []
+              for (let article of res.data.data) {
+                if (article.create_time.match(time)) {
+                  arr.push(article)
+                }
+              }
+              articles.push(arr)
+            }
+            // 依据非重复创建时间分组，二维数组
+            this.articles = articles
           })
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
