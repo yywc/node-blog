@@ -83,7 +83,7 @@ const updateArticle = function (article) {
 const addArticle = function (article) {
   const { title, content, category, tag, img } = article
   const value = [title, content, category, tag, img]
-  const sql = 'INSERT INTO `blog_article` VALUES (NULL, ?, ?, NULL, NULL, ?, ?, ?, 1, 1);'
+  const sql = 'INSERT INTO `blog_article` VALUES (NULL, ?, ?, NULL, NULL, ?, ?, ?, 1, 0);'
   return query(sql, value)
 }
 

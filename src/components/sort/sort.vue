@@ -15,13 +15,27 @@
         </router-link>
       </div>
       <sub-header title="时间"></sub-header>
-      <div class="date" v-for="(articleArray, index) in articles" :key="index">
-        <h1>
-          {{ articleArray[0].create_time.split('T')[0] }}
+      <div
+        class="date"
+        v-for="(articleArray, index) in articles"
+        :key="index"
+      >
+        <h1 class="date-title">
+          <em class="date-time">{{ articleArray[0].create_time.substr(0,7) }}</em>
         </h1>
-        <p v-for="article in articleArray" :key="article.article_id">
-          {{ article.title }}
-        </p>
+        <router-link
+          class="date-article"
+          v-for="article in articleArray"
+          :key="article.article_id"
+          :to="getArticlePath(article)"
+        >
+          <em class="article-time">{{ article.create_time.substr(5,5) }}</em>
+          <em class="article-title">{{ article.title }}</em>
+          <em class="article-meta">
+            阅读 {{ article.read_count }} /
+            评论 {{ article.comment_count }}
+          </em>
+        </router-link>
       </div>
     </div>
   </section>
@@ -39,7 +53,7 @@
         tags: [],
         category: 0,
         currentPage: 1,
-        pageCount: 20,
+        pageCount: 9999999999,
         articles: []
       }
     },
@@ -52,6 +66,9 @@
       this._getAllArticle(this.currentPage, this.pageCount, this.category)
     },
     methods: {
+      getArticlePath(article) {
+        return `/article/${article.article_id}`
+      },
       _getAllArticle(page, pageCount, category) {
         const data = {
           p: page,
@@ -63,7 +80,7 @@
             this.articles = res.data.data
             let times = []
             for (let article of res.data.data) {
-              times.push(article.create_time.split('T')[0])
+              times.push(article.create_time.substr(0, 7))
             }
             // 取得非重复时间
             times = [...new Set(times)]
@@ -71,7 +88,7 @@
             for (let time of times) {
               let arr = []
               for (let article of res.data.data) {
-                if (article.create_time.match(time)) {
+                if (article.create_time.substr(0, 7) === time) {
                   arr.push(article)
                 }
               }
@@ -138,4 +155,37 @@
           border-top-right-radius: 4px
           background: #59c441
           @extend .tag-common
+    .date
+      margin-bottom: 20px
+      .date-title
+        height: 30px
+        .date-time
+          padding: 7px 20px
+          color: $text-secondary-dark
+          border-radius: 3px
+          background: $green-50
+      .date-article
+        display: block
+        position: relative
+        margin: 10px 0
+        height: 30px
+        line-height: 30px
+        font-size: $text-size-large
+        color: $text-secondary-dark
+        text-indent: 11px
+        &:hover
+          color: $green-500
+        .article-time
+          display: inline-block
+          margin-right: 20px
+          vertical-align: top
+        .article-title
+          display: inline-block
+          max-width: 750px
+          no-wrap()
+        .article-meta
+          position: absolute
+          top: 0
+          right: 0
+          font-size: $text-size-large
 </style>

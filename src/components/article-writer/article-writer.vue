@@ -289,7 +289,7 @@
         padding: 10px
         width: ($width / 2 - 10)
         height: 650px
-        font-size: $text-size-medium
+        font-size: $text-size-large
         line-height: 1.8
         box-sizing: border-box
       .editor

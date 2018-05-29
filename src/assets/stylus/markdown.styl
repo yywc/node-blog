@@ -3,13 +3,14 @@
     font-weight: bold
     margin: 5px 0 10px
   h1
-    font-size: 28px
+    font-size: 26px
   h2
     font-size: 24px
   h3
-    font-size: 20px
+    font-size: 22px
   h4
-    font-size: 18px
+    font-size: 20px
+
 
   ol, ul
     padding-left: 2em
@@ -18,25 +19,56 @@
   strong
     font-weight: bold
 
+  em
+    font-style: italic
+
   p
     margin-bottom: 10px
+
+  a
+    color: #4caf50
+  a:hover
+    color: #81c784
+    text-decoration: underline
 
   pre
     margin-bottom: 10px
     font-size: 14px
 
-  blockquote, q
-    quotes: none
-
-  blockquote:before, blockquote:after,
-  q:before, q:after
-    content: ''
+  blockquote
+    margin: 0 0 20px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: #f7f7f7;
+    border-left: 6px solid #b4b4b4;
+    word-break: break-word!important;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 30px;
+  blockquote p
+    margin: 0
 
   table
+    width: 100%
+    margin-bottom: 20px
+    border: 1px solid #ddd
     border-collapse: collapse
-    border-spacing: 0
+    border-left: none
+    word-break: normal
+  table th
+    text-align: inherit
+    font-weight: 700
+  table th, table td
+    padding: 8px
+    border: 1px solid #ddd
+    line-height: 20px
+    vertical-align: middle
+  table tr:nth-of-type(even)
+    background-color: rgba(0,0%,71%,.1)
 
-
+  p code
+    padding: 8px 15px
+    background-color: #f6f6f6
 
 /* Tomorrow Comment */
 .hljs-comment,
