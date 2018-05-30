@@ -46,7 +46,8 @@
       <pop-up-layer
         @close="closeLayer"
         :article="this.article"
-        v-if="isLoaded">
+        v-if="isLoaded"
+      >
       </pop-up-layer>
     </div>
     <el-dialog
@@ -230,6 +231,7 @@
 
   .main
     margin: 20px auto 0
+    padding: 0 25px
     width: $width = 1300px
     .el-breadcrumb
       margin-top: 30px

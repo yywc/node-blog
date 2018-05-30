@@ -45,8 +45,4 @@
         line-height: 1.6
         em
           font-weight: bold
-      .name
-        padding-right: 50px
-      .name, .time
-        text-align: right
 </style>

@@ -80,7 +80,7 @@
         @click="close"
       >取消
       </button>
-      <button class="btn-submit" @click="submit">发布</button>
+      <button class="btn-submit" @click.once="submit">发布</button>
     </div>
   </div>
 </template>

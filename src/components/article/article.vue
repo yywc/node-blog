@@ -54,6 +54,7 @@
 
 <script type="text/ecmascript-6">
   import { getArticle } from '@/api/index'
+  import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
@@ -113,11 +114,15 @@
         getArticle(id)
           .then((res) => {
             this.article = res.data[0]
+            this.updateArticleTime()
           })
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
           })
-      }
+      },
+      ...mapMutations({
+        updateArticleTime: 'SET_UPDATE_ARTICLE_TIME'
+      })
     }
   }
 </script>

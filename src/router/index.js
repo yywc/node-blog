@@ -103,6 +103,16 @@ const Tag = (resolve) => {
     })
 }
 
+const Statistics = (resolve) => {
+  import('@/components/statistics/statistics')
+    .then((module) => {
+      resolve(module)
+    })
+    .catch((error) => {
+      console.error('模块加载错误: ' + error.toString())
+    })
+}
+
 export default new Router({
   routes: [
     {
@@ -160,6 +170,11 @@ export default new Router({
       path: '/tag/:tag',
       name: 'Tag',
       component: Tag
+    },
+    {
+      path: '/statistics',
+      name: 'Statistics',
+      component: Statistics
     }
   ]
 })
