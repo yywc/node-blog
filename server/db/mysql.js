@@ -67,8 +67,9 @@ const getAllArticle = function (page, pageCount, category) {
 
 // 查看某一篇文章
 const getArticle = function (id) {
-  const sql = 'SELECT * FROM `blog_article` WHERE `article_id` = ? LIMIT 1;'
-  return query(sql, id)
+  let sql = 'UPDATE `blog_article` SET `read_count` = `read_count` + 1 WHERE `article_id` = ?;'
+  sql += 'SELECT * FROM `blog_article` WHERE `article_id` = ? LIMIT 1;'
+  return query(sql, [id, id])
 }
 
 // 修改某一篇文章

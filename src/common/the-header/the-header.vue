@@ -135,6 +135,7 @@
     z-index: $z-index-medium
     ._row-bg_
       margin: 0 auto
+      padding: 0 25px
       width: 1200px
       height: $height
       .el-col:last-child

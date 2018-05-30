@@ -76,6 +76,33 @@ const removeElementFromArray = function (array, element) {
   }
   return _array
 }
+const _vendor = (function () {
+  const eleStyle = document.createElement('div').style
+  // 以 transform 为例子，只是用来判断加前缀，并不是只支持这一个属性。
+  const transformNames = {
+    webkit: 'webkitTransform',
+    Moz: 'MozTransform',
+    O: 'OTransform',
+    ms: 'msTransform',
+    standard: 'transform'
+  }
+
+  for (let key in transformNames) {
+    if (eleStyle[transformNames[key]] !== undefined) {
+      return key
+    }
+  }
+  return false
+})()
+
+const prefixStyle = function (style) {
+  if (_vendor) {
+    if (_vendor === 'standard') {
+      return style
+    }
+    return _vendor + style.charAt(0).toUpperCase() + style.substr(1)
+  }
+}
 
 export {
   isLogin,
@@ -85,5 +112,6 @@ export {
   addClass,
   removeClass,
   toggleClass,
-  removeElementFromArray
+  removeElementFromArray,
+  prefixStyle
 }

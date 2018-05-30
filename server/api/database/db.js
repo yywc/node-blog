@@ -45,7 +45,7 @@ const getArticle = async (ctx, next) => {
   try {
     await mysql.getArticle(articleId)
       .then((res) => {
-        ctx.body = resObj(1, res)
+        ctx.body = resObj(1, res[1])
       })
       .catch((e) => {
         ctx.body = resObj(2, e.toString())

@@ -42,6 +42,8 @@
     height: 100%
     .app-wrapper
       padding-top: 50px
+      min-width: 1200px
+      width: 100%
       min-height: 99%
       box-sizing: border-box
       .app-content
