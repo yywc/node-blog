@@ -176,6 +176,41 @@ const getArticlesByTag = function (data) {
     })
 }
 
+/**
+ * 获取统计数据
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+const getStatistics = function () {
+  const url = config.getStatistics
+  return axios
+    .get(url)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
+/**
+ * 获取上下翻页文章
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+const pageTurning = function (data) {
+  const url = config.pageTurning
+  return axios
+    .get(url, {
+      params: data
+    })
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
 export {
   login,
   logout,
@@ -186,5 +221,7 @@ export {
   deleteArticle,
   searchArticle,
   getTags,
-  getArticlesByTag
+  getArticlesByTag,
+  getStatistics,
+  pageTurning
 }

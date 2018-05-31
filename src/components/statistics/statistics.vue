@@ -5,12 +5,12 @@
       <sub-header title="统计"></sub-header>
       <div class="content-wrapper">
         <p><em>建站日期</em>：2018-05-20</p>
-        <p><em>运行天数</em>：{{ dateTime }}</p>
-        <p><em>分类数量</em>：gayhub、gmail、 微博在底部有链接</p>
-        <p><em>标签数量</em>：gayhub、gmail、 微博在底部有链接</p>
-        <p><em>日志数量</em>：后端 node.js，前端 vue.js，数据库 mysql</p>
-        <p><em>评论数量</em>：后端 node.js，前端 vue.js，数据库 mysql</p>
-        <p><em>最近更新</em>：后端 node.js，前端 vue.js，数据库 mysql</p>
+        <p><em>运行天数</em>：{{ dateTime }} 天</p>
+        <p><em>分类数量</em>：{{ categoryCount }} 个</p>
+        <p><em>标签数量</em>：{{ tagCount }} 个</p>
+        <p><em>日志数量</em>：{{ articleCount }} 篇</p>
+        <p><em>评论数量</em>：{{ commentCount }} 篇</p>
+        <p><em>最近更新</em>：{{ lastUpdateTime }}</p>
       </div>
     </div>
   </section>
@@ -19,6 +19,7 @@
 <script type="text/ecmascript-6">
   import TheNav from '@/common/the-nav/the-nav'
   import SubHeader from '@/common/sub-header/sub-header'
+  import { getStatistics } from '@/api/index'
 
   export default {
     name: 'Statistics',
@@ -28,7 +29,7 @@
         tagCount: 0,
         articleCount: 0,
         commentCount: 0,
-        updateTime: ''
+        lastUpdateTime: ''
       }
     },
     components: {
@@ -43,7 +44,27 @@
         return time | 0
       }
     },
+    created() {
+      this._getStatistics()
+    },
     methods: {
+      _getStatistics() {
+        getStatistics()
+          .then((res) => {
+            if (res.status === 1) {
+              this.categoryCount = res.data.categoryCount
+              this.tagCount = res.data.tagCount
+              this.commentCount = res.data.commentCount
+              this.articleCount = res.data.articleCount
+              this.lastUpdateTime = res.data.lastUpdateTime.split('T')[0]
+            } else {
+              console.error('内部错误: ' + res.data)
+            }
+          })
+          .catch((e) => {
+            console.error('内部错误: ' + e.toString())
+          })
+      }
     }
   }
 </script>
@@ -63,9 +84,11 @@
       margin-bottom: 50px
       p
         margin: 10px 0
-        padding: 0 10px
+        padding: 0 22px
         height: 30px
         line-height: 30px
         em
+          position: relative
+          top: -1px
           font-weight: bold
 </style>

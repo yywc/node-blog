@@ -41,7 +41,7 @@
       margin-bottom: 50px
       p
         margin: 10px 0
-        padding: 0 10px
+        padding: 0 22px
         line-height: 1.6
         em
           font-weight: bold

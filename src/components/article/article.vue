@@ -23,8 +23,20 @@
       v-html="getContent"
     ></p>
     <div class="page">
-      <span>上一篇</span>
-      <span class="next">下一篇</span>
+      <span
+        class="prev"
+        @click="togglePage(leftPage)"
+      >
+        <i class="iconfont icon-left-arrow"></i>
+        上一篇
+      </span>
+      <span
+        class="next"
+        @click="togglePage(rightPage)"
+      >
+        下一篇
+        <i class="iconfont icon-right-arrow"></i>
+      </span>
     </div>
     <div class="entry-tag">
       <router-link
@@ -45,7 +57,7 @@
       >
       <div class="user-info">
         <p class="user-name">眼已望穿</p>
-        <p class="user-desc">暂时不知道写什么东西</p>
+        <p class="user-desc">如月之恒，如日之升</p>
       </div>
       <button class="share">分享</button>
     </div>
@@ -53,7 +65,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { getArticle } from '@/api/index'
+  import { getArticle, pageTurning } from '@/api/index'
   import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
@@ -62,9 +74,20 @@
     name: 'Article',
     data() {
       return {
-        article: {}
+        article: {},
+        leftPage: 0,
+        rightPage: 1
       }
     },
+    // watch: {
+    //   '$route.params.id': {
+    //     handler: function (val) {
+    //       this.init()
+    //     },
+    //     // 深度观察
+    //     deep: true
+    //   }
+    // },
     computed: {
       getTime() {
         return this.article.create_time ? this.article.create_time.split('T')[0] : ''
@@ -73,36 +96,15 @@
         return this.article.content ? this.md.render(this.article.content) : ''
       },
       routerPath() {
-        return `/writer/${this.id}`
+        return `/writer/${this.$route.params.id}`
       },
       articleTag() {
         return this.article.tag ? this.article.tag.split(',') : []
-      },
-      articleCategory() {
-        if (this.article.category) {
-          const category = this.article.category.split(',')
-          category.shift()
-          return category
-        }
-        return ''
       }
     },
     created() {
-      this.md = new MarkdownIt({
-        highlight: (str, lang) => {
-          if (lang && hljs.getLanguage(lang)) {
-            try {
-              return '<pre class="hljs"><code>' +
-                hljs.highlight(lang, str, true).value +
-                '</code></pre>'
-            } catch (__) {
-            }
-          }
-          return '<pre class="hljs"><code>' + this.md.utils.escapeHtml(str) + '</code></pre>'
-        }
-      })
-      this.id = this.$route.params.id
-      this.$_getArticle({ articleId: this.id })
+      this.init()
+      this._getArticle({ articleId: this.$route.params.id })
     },
     mounted() {
       this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
@@ -110,7 +112,41 @@
       document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
     },
     methods: {
-      $_getArticle(id) {
+      init() {
+        this.md = new MarkdownIt({
+          highlight: (str, lang) => {
+            if (lang && hljs.getLanguage(lang)) {
+              try {
+                return '<pre class="hljs"><code>' +
+                  hljs.highlight(lang, str, true).value +
+                  '</code></pre>'
+              } catch (__) {
+              }
+            }
+            return '<pre class="hljs"><code>' + this.md.utils.escapeHtml(str) + '</code></pre>'
+          }
+        })
+      },
+      togglePage(direction) {
+        pageTurning({
+          id: this.$route.params.id,
+          d: direction
+        })
+          .then((res) => {
+            if (res.data.length === 0) {
+              this.$message({
+                message: '没有更多数据了.'
+              })
+            } else {
+              this.article = res.data[0]
+              this.$router.push('/article/' + res.data[0].article_id)
+            }
+          })
+          .catch((e) => {
+            console.error('内部错误: ' + e)
+          })
+      },
+      _getArticle(id) {
         getArticle(id)
           .then((res) => {
             this.article = res.data[0]
@@ -178,6 +214,11 @@
       font-size: $text-size-medium
       color: $text-secondary-dark
       border-top: 1px solid $line-dark
+      .prev, .next
+        cursor: pointer
+        font-size: $text-size-large
+        &:hover
+          color: $green-500
       .next
         position: absolute
         right: 0

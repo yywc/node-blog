@@ -54,8 +54,8 @@ const getAllArticle = function (page, pageCount, category) {
       allArticleSql = 'SELECT * FROM `blog_article` WHERE `article_id` <= (SELECT `article_id` FROM `blog_article` ORDER BY article_id DESC LIMIT ?, 1) AND `category` LIKE \'%技术%\' ORDER BY `article_id` DESC LIMIT ?;'
       break
     case CATEGORY_NOTE:
-      totalCountSql = 'SELECT COUNT(`article_id`) FROM `blog_article` WHERE `category` LIKE \'%杂谈%\';'
-      allArticleSql = 'SELECT * FROM `blog_article` WHERE `article_id` <= (SELECT `article_id` FROM `blog_article` ORDER BY article_id DESC LIMIT ?, 1) AND `category` LIKE \'%杂谈%\' ORDER BY `article_id` DESC LIMIT ?;'
+      totalCountSql = 'SELECT COUNT(`article_id`) FROM `blog_article` WHERE `category` LIKE \'%生活%\';'
+      allArticleSql = 'SELECT * FROM `blog_article` WHERE `article_id` <= (SELECT `article_id` FROM `blog_article` ORDER BY article_id DESC LIMIT ?, 1) AND `category` LIKE \'%生活%\' ORDER BY `article_id` DESC LIMIT ?;'
       break
     default:
       totalCountSql = 'SELECT COUNT(`article_id`) FROM `blog_article`;'
@@ -118,6 +118,31 @@ const getArticlesByTag = function (tag, page, pageCount) {
   return query(sql, [tag, tag, page, pageCount])
 }
 
+// 获取统计信息
+const getStatistics = function () {
+  let sql = 'SELECT `category` FROM `blog_article`;'
+  sql += 'SELECT `tag` FROM `blog_article`;'
+  sql += 'SELECT `comment_count` FROM `blog_article`;'
+  sql += 'SELECT `update_time` FROM `blog_article` ORDER BY `update_time` DESC;'
+  return query(sql)
+}
+
+// 前后翻页
+const pageTurning = function (id, direction) {
+  let sql = 'UPDATE `blog_article` SET `read_count` = `read_count` + 1 WHERE `article_id` = ?;'
+  const LEFT_PAGE = 0
+  const RIGHT_PAGE = 1
+  switch (parseInt(direction)) {
+    case LEFT_PAGE:
+      sql += 'SELECT * FROM `blog_article` WHERE `article_id` < ? ORDER BY `article_id` DESC LIMIT 1;'
+      break
+    case RIGHT_PAGE:
+      sql += 'SELECT * FROM `blog_article` WHERE `article_id` > ? LIMIT 1;'
+      break
+  }
+  return query(sql, [id, id])
+}
+
 module.exports = {
   login,
   getAllArticle,
@@ -127,5 +152,7 @@ module.exports = {
   deleteArticle,
   searchArticle,
   getTags,
-  getArticlesByTag
+  getArticlesByTag,
+  getStatistics,
+  pageTurning
 }
