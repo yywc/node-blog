@@ -4,6 +4,15 @@
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>文章编辑</el-breadcrumb-item>
     </el-breadcrumb>
+    <el-upload
+      class="upload-demo"
+      drag
+      action=""
+    >
+      <p class="el-article-theme">文章主题图</p>
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+    </el-upload>
     <div class="title-wrapper">
       <input
         class="article-title"
@@ -135,6 +144,7 @@
       this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
       // 改造 ui 框架样式
       document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
+      document.getElementsByClassName('el-upload-dragger')[0].setAttribute(this.dataV, '')
     },
     methods: {
       _getArticle(id) {
@@ -320,4 +330,20 @@
 
   .el-breadcrumb__inner.is-link:hover
     color: $green-400
+
+  .upload-demo
+    margin-top: 20px
+    .el-upload-dragger
+      margin: 0 auto
+      width: 1300px
+      height: 220px
+      &:hover
+        border-color: $green-500
+      .el-article-theme
+        margin-top: 40px
+        color: $text-secondary-dark
+      .el-icon-upload
+        margin: 25px 0 35px
+      em
+        color: $green-500
 </style>
