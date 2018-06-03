@@ -1,5 +1,6 @@
 const { login } = require('./login/login')
 const { logout } = require('./logout/logout')
+const { uploadImg } = require('./upload-img/upload-img')
 const db = require('./database/db')
 
 const API = {
@@ -14,7 +15,8 @@ const API = {
   GET_TAGS: db.getTags,
   GET_ARTICLES_BY_TAG: db.getArticlesByTag,
   GET_STATISTICS: db.getStatistics,
-  PAGE_TURNING: db.pageTurning
+  PAGE_TURNING: db.pageTurning,
+  UPLOAD_IMG: uploadImg
 }
 
 module.exports = API

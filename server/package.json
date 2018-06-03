@@ -14,7 +14,8 @@
     "koa-bodyparser": "^4.2.0",
     "koa-session-minimal": "^3.0.4",
     "koa-mysql-session": "^0.0.2",
-    "md5": "^2.2.1"
+    "md5": "^2.2.1",
+    "busboy": "^0.2.14"
   },
   "author": "",
   "license": "ISC"

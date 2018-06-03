@@ -7,12 +7,16 @@
     <el-upload
       class="upload-demo"
       drag
-      action=""
+      action="/api/upload-img"
+      :on-success="uploadSuccess"
+      :on-error="uploadFail"
+      v-show="!showImage"
     >
       <p class="el-article-theme">文章主题图</p>
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
     </el-upload>
+    <div class="upload-img" v-show="showImage" :style="styleObject"></div>
     <div class="title-wrapper">
       <input
         class="article-title"
@@ -80,6 +84,7 @@
   import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
+  import img from '/Users/gyj/work/blog/static/197715a1c24ee.jpg'
 
   const TIMER_DELAY = 233
 
@@ -94,12 +99,19 @@
           title: '',
           content: ''
         },
+        styleObject: {
+          background: `url(${img}) no-repeat center`,
+          backgroundSize: `cover`,
+          borderRadius: '3px'
+        },
         showPopUpLayer: false,
         isLoaded: false, // 控制获取文章后，正确传入 article 给子组件
         scrollTopPercent: 0,
         editorScrollFlag: true, // 控制添加监听事件，防止多次添加
         contentScrollFlag: true, // 控制添加监听事件，防止多次添加
-        centerDialogVisible: false
+        centerDialogVisible: false,
+        imgUrl: '',
+        showImage: false
       }
     },
     watch: {
@@ -147,6 +159,15 @@
       document.getElementsByClassName('el-upload-dragger')[0].setAttribute(this.dataV, '')
     },
     methods: {
+      uploadSuccess(data) {
+        if (data.success) {
+          this.imgUrl = data.pictureUrl
+          this.showImage = true
+        }
+      },
+      uploadFail(error) {
+        console.error('上传图片失败: ' + error)
+      },
       _getArticle(id) {
         getArticle(id)
           .then((res) => {
@@ -245,6 +266,9 @@
     width: $width = 1300px
     .el-breadcrumb
       margin-top: 30px
+    .upload-img
+      margin-top: 20px
+      height: 240px
     .title-wrapper
       display: flex
       margin: 30px 0 10px
@@ -336,7 +360,7 @@
     .el-upload-dragger
       margin: 0 auto
       width: 1300px
-      height: 220px
+      height: 240px
       &:hover
         border-color: $green-500
       .el-article-theme

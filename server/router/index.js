@@ -7,6 +7,7 @@ router.post('/login', API.USER_LOGIN)
 router.post('/update-article', API.UPDATE_ARTICLE)
 router.post('/add-article', API.ADD_ARTICLE)
 router.post('/delete-article', API.DELETE_ARTICLE)
+router.post('/upload-img', API.UPLOAD_IMG)
 
 router.get('/logout', API.USER_LOGOUT)
 router.get('/get-all-article', API.GET_ALL_ARTICLE)
