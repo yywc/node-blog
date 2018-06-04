@@ -7,6 +7,9 @@
     <el-upload
       class="upload-demo"
       drag
+      :show-file-list="false"
+      :multiple="false"
+      accept=".jpeg, .jpg, .png"
       action="/api/upload-img"
       :on-success="uploadSuccess"
       :on-error="uploadFail"
@@ -16,7 +19,16 @@
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
     </el-upload>
-    <div class="upload-img" v-show="showImage" :style="styleObject"></div>
+    <div class="upload-img" v-show="showImage" :style="styleObject">
+      <div class="icon-wrapper">
+        <button class="btn-upload">
+          <i class="iconfont icon-camera"></i>
+        </button>
+        <button class="btn-delete">
+          <i class="iconfont icon-delete"></i>
+        </button>
+      </div>
+    </div>
     <div class="title-wrapper">
       <input
         class="article-title"
@@ -267,11 +279,27 @@
     .el-breadcrumb
       margin-top: 30px
     .upload-img
+      position: relative
       margin-top: 20px
       height: 240px
+      .icon-wrapper
+        position: absolute
+        right: 0
+        bottom: 0
+        width: 96px
+        height: 48px
+        font-size: 0
+        .iconfont
+          font-size: $icon-size-large-x
+          color: $white
+        .btn-upload, .btn-delete
+          width: 48px
+          height: 48px
+          line-height: 48px
+          background: rgba(0, 0, 0, .75)
     .title-wrapper
       display: flex
-      margin: 30px 0 10px
+      margin: 25px 0 10px
       .article-title
         flex: auto
         padding-left: 10px
