@@ -67,7 +67,7 @@ const uploadImg = async (ctx, next) => {
         result.success = true
         result.message = '文件上传成功'
         result.data = {
-          pictureUrl: `//${ctx.host}/image/${fileName}`
+          pictureUrl: `https://${ctx.host}/image/${fileName}`
         }
         // console.log('文件上传成功！')
         resolve(result)

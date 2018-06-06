@@ -23,12 +23,12 @@
       <p class="content">{{ getContent(article) }}</p>
       <router-link
         class="img-wrapper"
-        v-if="article.avatar"
+        v-if="article.img"
         :to="getArticlePath(article)"
       >
         <img
           class="img"
-          :src="article.avatar"
+          :src="article.img"
           :alt="article.title"
         >
       </router-link>
@@ -52,7 +52,7 @@
         return `/article/${article.article_id}`
       },
       getContent(article) {
-        if (article.avatar) {
+        if (article.img) {
           if (article.content.length > 88) {
             return article.content.slice(0, 88) + '...'
           }
@@ -131,7 +131,7 @@
       .img-wrapper
         display: block
         margin: 15px auto 0
-        width: 330px
+        width: 340px
         height: 150px
         border-radius: 3px
         .img

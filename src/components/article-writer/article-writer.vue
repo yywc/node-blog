@@ -119,14 +119,15 @@
           title: '',
           content: ''
         },
-        styleObject: '',
+        styleObject: {},
         showPopUpLayer: false,
         isLoaded: false, // 控制获取文章后，正确传入 article 给子组件
         scrollTopPercent: 0,
         editorScrollFlag: true, // 控制添加监听事件，防止多次添加
         contentScrollFlag: true, // 控制添加监听事件，防止多次添加
         centerDialogVisible: false,
-        showImg: false
+        showImg: false,
+        imgUrl: ''
       }
     },
     watch: {
@@ -158,6 +159,8 @@
       this.id = this.$route.params.id
       if (this.id) {
         this._getArticle({ articleId: this.id })
+        if (this.article.img) {
+        }
       } else {
         this.isLoaded = true
       }
@@ -180,6 +183,7 @@
       },
       uploadSuccess(data) {
         if (data.success) {
+          this.imgUrl = data.data.pictureUrl
           this.styleObject = {
             background: `url(${data.data.pictureUrl}) no-repeat center / cover`,
             borderRadius: '3px'
@@ -195,6 +199,12 @@
           .then((res) => {
             this.article = res.data[0]
             this.isLoaded = true
+            this.imgUrl = res.data[0].img
+            this.styleObject = {
+              background: `url(${res.data[0].img}) no-repeat center / cover`,
+              borderRadius: '3px'
+            }
+            this.showImg = true
           })
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
@@ -241,6 +251,9 @@
         if (this.article.title === '' || this.article.content === '') {
           this.$message.error('文章标题或者内容不能为空')
           return
+        }
+        if (this.imgUrl) {
+          this.article.img = this.imgUrl
         }
         this.showPopUpLayer = true
         // 强行改变 ele-ui 下拉框样式为了好看点
