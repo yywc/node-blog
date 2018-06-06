@@ -17,5 +17,9 @@ router.get('/get-tags', API.GET_TAGS)
 router.get('/get-articles-by-tag', API.GET_ARTICLES_BY_TAG)
 router.get('/get-statistics', API.GET_STATISTICS)
 router.get('/page-turning', API.PAGE_TURNING)
+router.get('/', async (ctx, next) => {
+  ctx.response.type = 'text/html'
+  ctx.response.body = '<h1>Hello World!</h1>'
+})
 
 module.exports = router
