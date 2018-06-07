@@ -10,6 +10,11 @@
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>{{ article.title }}</el-breadcrumb-item>
     </el-breadcrumb>
+    <div
+      class="upload-img"
+      v-show="showImg"
+      :style="styleObject"
+    ></div>
     <h1 class="title">
       {{ article.title }}
     </h1>
@@ -76,7 +81,9 @@
       return {
         article: {},
         leftPage: 0,
-        rightPage: 1
+        rightPage: 1,
+        showImg: false,
+        styleObject: {}
       }
     },
     // watch: {
@@ -151,6 +158,13 @@
           .then((res) => {
             this.article = res.data[0]
             this.updateArticleTime()
+            this.showImg = !!this.article.img
+            this.styleObject = {
+              marginTop: `20px`,
+              height: `240px`,
+              background: `url(${this.article.img}) no-repeat center / cover`,
+              borderRadius: '5px'
+            }
           })
           .catch((e) => {
             console.error('内部错误: ' + e.toString())

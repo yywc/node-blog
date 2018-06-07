@@ -42,7 +42,7 @@ const uploadImg = async (ctx, next) => {
   // let res = ctx.res
   let busboy = new Busboy({ headers: req.headers })
 
-  let filePath = path.join(__dirname, 'image')
+  let filePath = path.join('/ftpfile', 'image')
   mkdirsSync(filePath)
 
   ctx.body = await new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ const uploadImg = async (ctx, next) => {
         result.success = true
         result.message = '文件上传成功'
         result.data = {
-          pictureUrl: `https://${ctx.host}/image/${fileName}`
+          pictureUrl: `https://img.${ctx.host}/image/${fileName}`
         }
         // console.log('文件上传成功！')
         resolve(result)

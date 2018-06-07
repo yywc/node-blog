@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {  //使用"/api"来代替"http://f.apiplus.c"
-        target: 'http://localhost:3000', //源地址
+        // target: 'http://localhost:3000', //本地地址
+        target: 'https://iwangshu.com/api/', //线上地址
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

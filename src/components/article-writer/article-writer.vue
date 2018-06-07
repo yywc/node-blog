@@ -186,7 +186,7 @@
           this.imgUrl = data.data.pictureUrl
           this.styleObject = {
             background: `url(${data.data.pictureUrl}) no-repeat center / cover`,
-            borderRadius: '3px'
+            borderRadius: '5px'
           }
           this.showImg = true
         }
