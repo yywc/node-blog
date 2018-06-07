@@ -123,7 +123,6 @@ const getStatistics = function () {
   let sql = 'SELECT `category` FROM `blog_article`;'
   sql += 'SELECT `tag` FROM `blog_article`;'
   sql += 'SELECT `comment_count` FROM `blog_article`;'
-  sql += 'SELECT `update_time` FROM `blog_article` ORDER BY `update_time` DESC;'
   return query(sql)
 }
 

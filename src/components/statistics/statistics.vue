@@ -10,7 +10,6 @@
         <p><em>标签数量</em>：{{ tagCount }} 个</p>
         <p><em>日志数量</em>：{{ articleCount }} 篇</p>
         <p><em>评论数量</em>：{{ commentCount }} 篇</p>
-        <p><em>最近更新</em>：{{ lastUpdateTime }}</p>
       </div>
     </div>
   </section>
@@ -28,8 +27,7 @@
         categoryCount: 0,
         tagCount: 0,
         articleCount: 0,
-        commentCount: 0,
-        lastUpdateTime: ''
+        commentCount: 0
       }
     },
     components: {
@@ -56,7 +54,6 @@
               this.tagCount = res.data.tagCount
               this.commentCount = res.data.commentCount
               this.articleCount = res.data.articleCount
-              this.lastUpdateTime = res.data.lastUpdateTime.split('T')[0]
             } else {
               console.error('内部错误: ' + res.data)
             }

@@ -199,7 +199,6 @@ const getStatistics = async (ctx, next) => {
         const categoryResult = res[0]
         const tagResult = res[1]
         const commentResult = res[2]
-        const updateTimeResult = res[3]
         for (let category of categoryResult) {
           if (category.category !== null) {
             if (!categoryArr.includes(category.category)) {
@@ -223,8 +222,7 @@ const getStatistics = async (ctx, next) => {
           categoryCount: categoryArr.length,
           tagCount: tagArr.length,
           commentCount: commentCount,
-          articleCount: categoryResult.length,
-          lastUpdateTime: updateTimeResult[0].update_time
+          articleCount: categoryResult.length
         })
       })
       .catch((e) => {
