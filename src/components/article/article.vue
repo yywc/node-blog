@@ -25,6 +25,7 @@
     </div>
     <p
       class="markdown-content"
+      id="markdownContent"
       v-html="getContent"
     ></p>
     <div class="page">
@@ -66,6 +67,9 @@
       </div>
       <button class="share">分享</button>
     </div>
+    <div class="img-large" @click="shrinkImg" v-show="showLargeImg">
+      <img id="largeImg" src="" alt="">
+    </div>
   </section>
 </template>
 
@@ -83,18 +87,10 @@
         leftPage: 0,
         rightPage: 1,
         showImg: false,
-        styleObject: {}
+        styleObject: {},
+        showLargeImg: false
       }
     },
-    // watch: {
-    //   '$route.params.id': {
-    //     handler: function (val) {
-    //       this.init()
-    //     },
-    //     // 深度观察
-    //     deep: true
-    //   }
-    // },
     computed: {
       getTime() {
         return this.article.create_time ? this.article.create_time.split('T')[0] : ''
@@ -109,6 +105,22 @@
         return this.article.tag ? this.article.tag.split(',') : []
       }
     },
+    watch: {
+      getContent(val, oldVal) {
+        if (val !== oldVal) {
+          const imgs = document.getElementById('markdownContent').getElementsByTagName('img')
+          setTimeout(() => {
+            for (let i = 0, len = imgs.length; i < len; i++) {
+              imgs[i].style.cursor = 'zoom-in'
+              imgs[i].addEventListener('click', (e) => {
+                this.showLargeImg = true
+                document.getElementById('largeImg').src = e.currentTarget.src
+              })
+            }
+          }, 17)
+        }
+      }
+    },
     created() {
       this.init()
       this._getArticle({ articleId: this.$route.params.id })
@@ -119,6 +131,10 @@
       document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
     },
     methods: {
+      shrinkImg(e) {
+        this.showLargeImg = false
+        e.currentTarget.src = ''
+      },
       init() {
         this.md = new MarkdownIt({
           highlight: (str, lang) => {
@@ -311,6 +327,24 @@
         cursor: pointer
         &:hover
           background: $green-300
+    .img-large
+      position: fixed
+      left: 0
+      right: 0
+      top: 0
+      bottom: 0
+      height: 100%
+      width: 100%
+      z-index: $z-index-top
+      background: rgba(255, 255, 255, .8)
+      img
+        position: fixed
+        top: 50%
+        left: 50%
+        min-height: 50%
+        transform: translate3d(-50%, -50%, 0)
+        cursor: zoom-out
+        z-index: $z-index-top + 1
 
   .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover
     color: $green-400

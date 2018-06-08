@@ -17,7 +17,7 @@
       </h1>
       <div class="meta">
         <em>阅读 {{ article.read_count }} / </em>
-        <em>留言 {{ article.comment_count }}  / </em>
+        <em>留言 {{ article.comment_count }} / </em>
         <time :datetime="getTime(article)">{{ getTime(article) }}</time>
       </div>
       <p class="content">{{ getContent(article) }}</p>
@@ -26,11 +26,7 @@
         v-if="article.img"
         :to="getArticlePath(article)"
       >
-        <img
-          class="img"
-          :src="article.img"
-          :alt="article.title"
-        >
+        <span class="img" :style="getBackground(article)"></span>
       </router-link>
     </article>
   </div>
@@ -48,6 +44,11 @@
       }
     },
     methods: {
+      getBackground(article) {
+        return {
+          background: `url(${article.img}) no-repeat center / cover`
+        }
+      },
       getArticlePath(article) {
         return `/article/${article.article_id}`
       },
