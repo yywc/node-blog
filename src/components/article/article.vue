@@ -67,6 +67,8 @@
       </div>
       <button class="share">分享</button>
     </div>
+    <the-comment></the-comment>
+    <!--点击放大图片-->
     <div class="img-large" @click="shrinkImg" v-show="showLargeImg">
       <img id="largeImg" src="" alt="">
     </div>
@@ -74,6 +76,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import TheComment from './the-comment'
   import { getArticle, pageTurning } from '@/api/index'
   import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
@@ -81,6 +84,9 @@
 
   export default {
     name: 'Article',
+    components: {
+      TheComment
+    },
     data() {
       return {
         article: {},
@@ -348,4 +354,5 @@
 
   .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover
     color: $green-400
+
 </style>
