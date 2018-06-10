@@ -67,7 +67,17 @@
       </div>
       <button class="share">分享</button>
     </div>
-    <the-comment></the-comment>
+    <h2 class="comment-title">
+      <i class="iconfont icon-comment"></i>
+    </h2>
+    <ol>
+      <comment-item
+        :comment-item="item"
+        v-for="(item, index) in commentList"
+        :key="index"
+      ></comment-item>
+    </ol>
+    <the-comment :articleId="articleId"></the-comment>
     <!--点击放大图片-->
     <div class="img-large" @click="shrinkImg" v-show="showLargeImg">
       <img id="largeImg" src="" alt="">
@@ -77,6 +87,7 @@
 
 <script type="text/ecmascript-6">
   import TheComment from './the-comment'
+  import CommentItem from './comment-item'
   import { getArticle, pageTurning } from '@/api/index'
   import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
@@ -85,27 +96,30 @@
   export default {
     name: 'Article',
     components: {
-      TheComment
+      TheComment,
+      CommentItem
     },
     data() {
       return {
         article: {},
+        articleId: -1,
         leftPage: 0,
         rightPage: 1,
         showImg: false,
         styleObject: {},
-        showLargeImg: false
+        showLargeImg: false,
+        commentList: []
       }
     },
     computed: {
       getTime() {
-        return this.article.create_time ? this.article.create_time.split('T')[0] : ''
+        return this.article.create_time ? this.article.create_time.split(' ')[0] : ''
       },
       getContent() {
         return this.article.content ? this.md.render(this.article.content) : ''
       },
       routerPath() {
-        return `/writer/${this.$route.params.id}`
+        return `/writer/${this.articleId}`
       },
       articleTag() {
         return this.article.tag ? this.article.tag.split(',') : []
@@ -128,8 +142,9 @@
       }
     },
     created() {
+      this.articleId = parseInt(this.$route.params.id)
       this.init()
-      this._getArticle({ articleId: this.$route.params.id })
+      this._getArticle({ articleId: this.articleId })
     },
     mounted() {
       this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
@@ -158,7 +173,7 @@
       },
       togglePage(direction) {
         pageTurning({
-          id: this.$route.params.id,
+          id: this.articleId,
           d: direction
         })
           .then((res) => {
@@ -168,6 +183,7 @@
               })
             } else {
               this.article = res.data[0]
+              this.commentList = res.data
               this.$router.push('/article/' + res.data[0].article_id)
             }
           })
@@ -180,6 +196,7 @@
           .then((res) => {
             this.article = res.data[0]
             this.updateArticleTime()
+            this.commentList = res.data
             this.showImg = !!this.article.img
             this.styleObject = {
               marginTop: `20px`,
@@ -289,7 +306,7 @@
     .user-detail
       display: flex
       align-items: center
-      margin: 0 auto 20px
+      margin: 0 auto 70px
       padding: 30px 40px
       width: 680px
       height: 126px
@@ -333,6 +350,27 @@
         cursor: pointer
         &:hover
           background: $green-300
+    .comment-title
+      position: relative
+      text-align: center
+      &:before
+        position: absolute
+        top: 12px
+        left: 0
+        width: 380px
+        border-top: 1px solid $line-dark
+        content: ''
+      &:after
+        position: absolute
+        top: 12px
+        right: 0
+        width: 380px
+        border-top: 1px solid $line-dark
+        content: ''
+      .icon-comment
+        color: $text-hint-dark
+        font-size: $icon-size-large-x
+        background: $white
     .img-large
       position: fixed
       left: 0

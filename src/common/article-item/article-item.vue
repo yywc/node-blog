@@ -63,7 +63,7 @@
         return article.content
       },
       getTime(article) {
-        return article.create_time ? article.create_time.split('T')[0] : ''
+        return article.create_time ? article.create_time.split(' ')[0] : ''
       }
     }
   }

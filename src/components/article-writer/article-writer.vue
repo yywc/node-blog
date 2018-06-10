@@ -100,7 +100,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import PopUpLayer from '@/common/pop-up-layer/pop-up-layer'
+  import PopUpLayer from './pop-up-layer'
   import { getArticle, deleteArticle } from '@/api/index'
   import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'

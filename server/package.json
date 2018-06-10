@@ -15,7 +15,8 @@
     "koa-session-minimal": "^3.0.4",
     "koa-mysql-session": "^0.0.2",
     "md5": "^2.2.1",
-    "busboy": "^0.2.14"
+    "busboy": "^0.2.14",
+    "ipware": "^1.0.0"
   },
   "author": "",
   "license": "ISC"

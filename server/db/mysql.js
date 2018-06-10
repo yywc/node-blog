@@ -7,7 +7,8 @@ const pool = mysql.createPool({
   user: config.DATABASE_CONFIG.USERNAME,
   password: config.DATABASE_CONFIG.PASSWORD,
   database: config.DATABASE_CONFIG.DATABASE,
-  multipleStatements: config.DATABASE_CONFIG.MULTIPLE_STATEMENTS
+  multipleStatements: config.DATABASE_CONFIG.MULTIPLE_STATEMENTS,
+  dateStrings: config.DATABASE_CONFIG.DATE_STRINGS
 })
 
 const query = function (sql, values) {
@@ -68,7 +69,10 @@ const getAllArticle = function (page, pageCount, category) {
 // 查看某一篇文章
 const getArticle = function (id) {
   let sql = 'UPDATE `blog_article` SET `read_count` = `read_count` + 1 WHERE `article_id` = ?;'
-  sql += 'SELECT * FROM `blog_article` WHERE `article_id` = ? LIMIT 1;'
+  sql += 'SELECT * FROM `blog_article`' +
+    'INNER JOIN `blog_comment`' +
+    'ON blog_article.article_id = blog_comment.article_id WHERE blog_article.article_id= ?' +
+    'ORDER BY `create_comment_time` DESC;'
   return query(sql, [id, id])
 }
 
@@ -142,6 +146,26 @@ const pageTurning = function (id, direction) {
   return query(sql, [id, id])
 }
 
+// 插入评论
+const addComment = function (comment) {
+  const { articleId, userId, nickname, contact, content, targetUserId } = comment
+  let sql = 'INSERT INTO `blog_comment` VALUES (NULL, ?, ?, ?, ?, ?, ?, NULL);'
+  sql += 'UPDATE blog_article SET `comment_count` = `comment_count` + 1 WHERE `article_id`= ?;'
+  return query(sql, [articleId, userId, nickname, contact, content, targetUserId, articleId])
+}
+
+// 插入临时用户
+const addUser = function (nickname, contact, ipAddress) {
+  const sql = 'INSERT INTO `blog_user` VALUES (NULL, NULL, NULL, ?, ?, ?, NULL, NULL);'
+  return query(sql, [nickname, contact, ipAddress])
+}
+
+// 查询用户
+const searchUser = function (ipAddress) {
+  const sql = 'SELECT * FROM `blog_user` WHERE `ip_address` = ? LIMIT 1'
+  return query(sql, [ipAddress])
+}
+
 module.exports = {
   login,
   getAllArticle,
@@ -153,5 +177,8 @@ module.exports = {
   getTags,
   getArticlesByTag,
   getStatistics,
-  pageTurning
+  pageTurning,
+  addComment,
+  addUser,
+  searchUser
 }

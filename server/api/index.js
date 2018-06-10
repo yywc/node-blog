@@ -16,7 +16,10 @@ const API = {
   GET_ARTICLES_BY_TAG: db.getArticlesByTag,
   GET_STATISTICS: db.getStatistics,
   PAGE_TURNING: db.pageTurning,
-  UPLOAD_IMG: uploadImg
+  UPLOAD_IMG: uploadImg,
+  ADD_COMMENT: db.addComment,
+  GET_COMMENT: db.getComment,
+  SEARCH_USER: db.searchUser
 }
 
 module.exports = API

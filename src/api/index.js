@@ -211,6 +211,30 @@ const pageTurning = function (data) {
     })
 }
 
+const addComment = function (data) {
+  const url = config.addComment
+  return axios
+    .post(url, data)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
+const checkUser = function () {
+  const url = config.checkUser
+  return axios
+    .get(url)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
 export {
   login,
   logout,
@@ -223,5 +247,7 @@ export {
   getTags,
   getArticlesByTag,
   getStatistics,
-  pageTurning
+  pageTurning,
+  addComment,
+  checkUser
 }

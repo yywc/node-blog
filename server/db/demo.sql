@@ -67,3 +67,7 @@ UPDATE `blog_article` SET `title`='new title' WHERE `article_id` = 1;
 
 --删除文章
 DELETE FROM `blog_article` WHERE `article_id` = 1;
+
+--发表评论
+INSERT INTO `blog_comment`` VALUES (NULL, 57, 1, '长夜无梦', '12423534@qq.com', 'mark一下，以后写 markdown 用得上。', NULL, NULL);
+

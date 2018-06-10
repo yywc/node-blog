@@ -10,7 +10,9 @@ const config = {
   getTags: '/api/get-tags',
   getArticlesByTag: '/api/get-articles-by-tag',
   getStatistics: '/api/get-statistics',
-  pageTurning: '/api/page-turning'
+  pageTurning: '/api/page-turning',
+  addComment: '/api/add-comment',
+  checkUser: '/api/check-user'
 }
 
 export default config

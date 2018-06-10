@@ -9,7 +9,8 @@ const config = {
     PASSWORD: 'guo5664332',
     PORT: '3306',
     HOST: '119.29.101.186',
-    MULTIPLE_STATEMENTS: true
+    MULTIPLE_STATEMENTS: true,
+    DATE_STRINGS: true
   }
 }
 

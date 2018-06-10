@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const mysql = require('../../db/mysql')
 const config = require('../../config/config')
+const getIp = require('ipware')().get_ip
 
 /**
  * 返回值
@@ -250,6 +251,51 @@ const pageTurning = async (ctx, next) => {
   }
 }
 
+const addComment = async (ctx, next) => {
+  if (ctx.session && ctx.session.userName && ctx.session.loginName) {
+    console.log('已登录')
+  } else {
+    const comment = ctx.request.body
+    const ipAddress = getIp(ctx.request).clientIp.split(':')[3]
+    let result = await mysql.searchUser(ipAddress)
+    let user_id = result[0].uid
+    if (result.length === 0) {
+      await mysql.addUser(comment.nickname, comment.contact, ipAddress)
+      result = await mysql.searchUser(ipAddress)
+      user_id = result[0].uid
+    }
+    comment.user_id = user_id
+    try {
+      await mysql.addComment(comment)
+        .then(() => {
+          ctx.body = resObj(1, '评论成功')
+        })
+        .catch((e) => {
+          ctx.body = resObj(2, e.toString())
+        })
+    } catch (e) {
+      ctx.body = resObj(0, '数据库连接错误')
+      console.error('数据库错误: ' + e.toString())
+    }
+  }
+}
+
+const searchUser = async (ctx, next) => {
+  const ipAddress = getIp(ctx.request).clientIp.split(':')[3]
+  try {
+    await mysql.searchUser(ipAddress)
+      .then((res) => {
+        ctx.body = resObj(1, res)
+      })
+      .catch((e) => {
+        ctx.body = resObj(2, e.toString())
+      })
+  } catch (e) {
+    ctx.body = resObj(0, '数据库连接错误')
+    console.error('数据库错误: ' + e.toString())
+  }
+}
+
 module.exports = {
   getAllArticle,
   getArticle,
@@ -260,5 +306,7 @@ module.exports = {
   getTags,
   getArticlesByTag,
   getStatistics,
-  pageTurning
+  pageTurning,
+  addComment,
+  searchUser
 }

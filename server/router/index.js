@@ -8,6 +8,7 @@ router.post('/update-article', API.UPDATE_ARTICLE)
 router.post('/add-article', API.ADD_ARTICLE)
 router.post('/delete-article', API.DELETE_ARTICLE)
 router.post('/upload-img', API.UPLOAD_IMG)
+router.post('/add-comment', API.ADD_COMMENT)
 
 router.get('/logout', API.USER_LOGOUT)
 router.get('/get-all-article', API.GET_ALL_ARTICLE)
@@ -17,6 +18,7 @@ router.get('/get-tags', API.GET_TAGS)
 router.get('/get-articles-by-tag', API.GET_ARTICLES_BY_TAG)
 router.get('/get-statistics', API.GET_STATISTICS)
 router.get('/page-turning', API.PAGE_TURNING)
+router.get('/check-user', API.SEARCH_USER)
 router.get('/', async (ctx, next) => {
   ctx.response.type = 'text/html'
   ctx.response.body = '<h1>Hello World!</h1>'
