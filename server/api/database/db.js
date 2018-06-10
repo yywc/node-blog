@@ -258,13 +258,15 @@ const addComment = async (ctx, next) => {
     const comment = ctx.request.body
     const ipAddress = getIp(ctx.request).clientIp.split(':')[3]
     let result = await mysql.searchUser(ipAddress)
-    let user_id = result[0].uid
+    let userId = -1
     if (result.length === 0) {
       await mysql.addUser(comment.nickname, comment.contact, ipAddress)
       result = await mysql.searchUser(ipAddress)
-      user_id = result[0].uid
+      userId = result[0].uid
+    } else {
+      userId = result[0].uid
     }
-    comment.user_id = user_id
+    comment.userId = userId
     try {
       await mysql.addComment(comment)
         .then(() => {

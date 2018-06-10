@@ -75,7 +75,8 @@
         :comment-item="item"
         v-for="(item, index) in commentList"
         :key="index"
-      ></comment-item>
+      >
+      </comment-item>
     </ol>
     <the-comment :articleId="articleId"></the-comment>
     <!--点击放大图片-->
@@ -371,6 +372,20 @@
         color: $text-hint-dark
         font-size: $icon-size-large-x
         background: $white
+    .comment-item
+      padding-right: 40px
+      counter-reset: comment-floor
+      &:before
+        content: counter(comment-floor, decimal)
+        counter-increment: comment-floor
+        font-size: 48px
+        position: absolute
+        top: 50%
+        right: 0
+        color: rgba(0, 0, 0, .05)
+        font-style: italic
+        font-weight: bold
+        transform: translate3d(0, -50%, 0)
     .img-large
       position: fixed
       left: 0

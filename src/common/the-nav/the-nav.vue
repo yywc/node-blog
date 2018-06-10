@@ -31,11 +31,6 @@
           </router-link>
         </li>
         <li class="router-item">
-          <router-link to="/message">
-            <i class="iconfont icon-message"></i>留言
-          </router-link>
-        </li>
-        <li class="router-item">
           <router-link to="/statistics">
             <i class="iconfont icon-statistics"></i>统计
           </router-link>

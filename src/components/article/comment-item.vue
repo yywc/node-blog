@@ -24,6 +24,7 @@
   @import "~@/assets/stylus/mixin"
 
   .comment-item
+    position: relative
     padding: 40px 0
     border-bottom: 1px solid $line-dark
     &:last-of-type
