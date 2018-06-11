@@ -32,6 +32,8 @@
     .user
       color: $green-500
     .date
-      margin: 5px 0 10px
+      margin: 7px 0 10px
       color: $text-secondary-dark
+    .content
+      line-height: 1.2
 </style>

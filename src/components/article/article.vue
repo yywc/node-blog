@@ -70,7 +70,7 @@
     <h2 class="comment-title">
       <i class="iconfont icon-comment"></i>
     </h2>
-    <ol>
+    <ol class="item-wrapper">
       <comment-item
         :comment-item="item"
         v-for="(item, index) in commentList"
@@ -129,8 +129,8 @@
     watch: {
       getContent(val, oldVal) {
         if (val !== oldVal) {
-          const imgs = document.getElementById('markdownContent').getElementsByTagName('img')
-          setTimeout(() => {
+          this.$nextTick(() => {
+            const imgs = document.getElementById('markdownContent').getElementsByTagName('img')
             for (let i = 0, len = imgs.length; i < len; i++) {
               imgs[i].style.cursor = 'zoom-in'
               imgs[i].addEventListener('click', (e) => {
@@ -138,7 +138,7 @@
                 document.getElementById('largeImg').src = e.currentTarget.src
               })
             }
-          }, 17)
+          })
         }
       }
     },
@@ -372,20 +372,21 @@
         color: $text-hint-dark
         font-size: $icon-size-large-x
         background: $white
-    .comment-item
-      padding-right: 40px
+    .item-wrapper
       counter-reset: comment-floor
-      &:before
-        content: counter(comment-floor, decimal)
-        counter-increment: comment-floor
-        font-size: 48px
-        position: absolute
-        top: 50%
-        right: 0
-        color: rgba(0, 0, 0, .05)
-        font-style: italic
-        font-weight: bold
-        transform: translate3d(0, -50%, 0)
+      .comment-item
+        padding-right: 40px
+        &:before
+          content: counter(comment-floor, decimal)
+          counter-increment: comment-floor
+          font-size: 48px
+          position: absolute
+          top: 50%
+          right: 10px
+          color: $line-dark
+          font-style: italic
+          font-weight: bold
+          transform: translate3d(0, -50%, 0)
     .img-large
       position: fixed
       left: 0
