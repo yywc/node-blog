@@ -12,7 +12,8 @@ const config = {
   getStatistics: '/api/get-statistics',
   pageTurning: '/api/page-turning',
   addComment: '/api/add-comment',
-  checkUser: '/api/check-user'
+  checkUser: '/api/check-user',
+  updateCommentCount: '/api/update-comment-count'
 }
 
 export default config

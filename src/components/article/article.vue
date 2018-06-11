@@ -67,20 +67,37 @@
       </div>
       <button class="share">分享</button>
     </div>
-    <h2 class="comment-title">
-      <i class="iconfont icon-comment"></i>
-    </h2>
-    <ol class="item-wrapper">
-      <comment-item
-        :comment-item="item"
-        v-for="(item, index) in commentList"
-        :key="index"
-      >
-      </comment-item>
-    </ol>
-    <the-comment :articleId="articleId"></the-comment>
+    <div v-if="showComment">
+      <h2 class="comment-title">
+        <i class="iconfont icon-comment"></i>
+      </h2>
+      <ol class="item-wrapper">
+        <comment-item
+          :comment-item="item"
+          v-for="(item, index) in commentList"
+          :key="index"
+        >
+        </comment-item>
+      </ol>
+      <div class="pagination-wrapper">
+        <pagination
+          :page="page"
+          @handleCurrentChange="handleCurrentChange"
+        >
+        </pagination>
+      </div>
+    </div>
+    <the-comment
+      v-if="!$isLogin"
+      :articleId="articleId"
+    >
+    </the-comment>
     <!--点击放大图片-->
-    <div class="img-large" @click="shrinkImg" v-show="showLargeImg">
+    <div
+      class="img-large"
+      @click="shrinkImg"
+      v-show="showLargeImg"
+    >
       <img id="largeImg" src="" alt="">
     </div>
   </section>
@@ -89,7 +106,8 @@
 <script type="text/ecmascript-6">
   import TheComment from './the-comment'
   import CommentItem from './comment-item'
-  import { getArticle, pageTurning } from '@/api/index'
+  import Pagination from '@/common/pagination/pagination'
+  import { getArticle, pageTurning, updateCommentCount } from '@/api/index'
   import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
@@ -98,7 +116,8 @@
     name: 'Article',
     components: {
       TheComment,
-      CommentItem
+      CommentItem,
+      Pagination
     },
     data() {
       return {
@@ -109,7 +128,9 @@
         showImg: false,
         styleObject: {},
         showLargeImg: false,
-        commentList: []
+        commentList: [],
+        page: {},
+        showComment: false
       }
     },
     computed: {
@@ -145,7 +166,14 @@
     created() {
       this.articleId = parseInt(this.$route.params.id)
       this.init()
-      this._getArticle({ articleId: this.articleId })
+      this._getArticle({
+        articleId: this.articleId,
+        p: 1,
+        pc: 10
+      })
+      this._updateCommentCount({
+        articleId: this.articleId
+      })
     },
     mounted() {
       this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
@@ -153,6 +181,20 @@
       document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
     },
     methods: {
+      _updateCommentCount(data) {
+        updateCommentCount(data)
+          .then()
+          .catch((e) => {
+            console.error('内部错误: ' + e)
+          })
+      },
+      handleCurrentChange(e) {
+        this._getArticle({
+          articleId: this.articleId,
+          p: e,
+          pc: 10
+        })
+      },
       shrinkImg(e) {
         this.showLargeImg = false
         e.currentTarget.src = ''
@@ -183,8 +225,12 @@
                 message: '没有更多数据了.'
               })
             } else {
-              this.article = res.data[0]
-              this.commentList = res.data
+              this.article = res.data.data[0]
+              if (res.data.data.length > 1) {
+                this.showComment = true
+                this.commentList = res.data.data
+              }
+              this.page = res.data
               this.$router.push('/article/' + res.data[0].article_id)
             }
           })
@@ -192,12 +238,16 @@
             console.error('内部错误: ' + e)
           })
       },
-      _getArticle(id) {
-        getArticle(id)
+      _getArticle(data) {
+        getArticle(data)
           .then((res) => {
-            this.article = res.data[0]
+            this.article = res.data.data[0]
             this.updateArticleTime()
-            this.commentList = res.data
+            if (res.data.data.length > 1) {
+              this.showComment = true
+              this.commentList = res.data.data
+            }
+            this.page = res.data
             this.showImg = !!this.article.img
             this.styleObject = {
               marginTop: `20px`,
@@ -405,6 +455,8 @@
         transform: translate3d(-50%, -50%, 0)
         cursor: zoom-out
         z-index: $z-index-top + 1
+    .pagination-wrapper
+      margin: 30px 0 40px
 
   .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover
     color: $green-400

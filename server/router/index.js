@@ -9,6 +9,7 @@ router.post('/add-article', API.ADD_ARTICLE)
 router.post('/delete-article', API.DELETE_ARTICLE)
 router.post('/upload-img', API.UPLOAD_IMG)
 router.post('/add-comment', API.ADD_COMMENT)
+router.post('/update-comment-count', API.UPDATE_COMMENT_COUNT)
 
 router.get('/logout', API.USER_LOGOUT)
 router.get('/get-all-article', API.GET_ALL_ARTICLE)

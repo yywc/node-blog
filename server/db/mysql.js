@@ -67,13 +67,14 @@ const getAllArticle = function (page, pageCount, category) {
 }
 
 // 查看某一篇文章
-const getArticle = function (id) {
-  let sql = 'UPDATE `blog_article` SET `read_count` = `read_count` + 1 WHERE `article_id` = ?;'
-  sql += 'SELECT * FROM `blog_article`' +
-    'INNER JOIN `blog_comment`' +
-    'ON blog_article.article_id = blog_comment.article_id WHERE blog_article.article_id= ?' +
-    'ORDER BY `create_comment_time` DESC;'
-  return query(sql, [id, id])
+const getArticle = function (id, page, pageCount) {
+  page = (page - 1) * pageCount
+  let sql = 'SELECT * FROM `blog_article`' +
+    'LEFT OUTER JOIN `blog_comment`' +
+    'ON blog_article.article_id = blog_comment.article_id WHERE blog_article.article_id=?' +
+    'ORDER BY `create_comment_time` ASC LIMIT ?,?;'
+  sql += 'SELECT COUNT(`article_id`) FROM `blog_comment` WHERE `article_id`=?;'
+  return query(sql, [id, page, pageCount, id])
 }
 
 // 修改某一篇文章
@@ -166,6 +167,12 @@ const searchUser = function (ipAddress) {
   return query(sql, [ipAddress])
 }
 
+// 更新阅读数
+const updateCommentCount = function (id) {
+  let sql = 'UPDATE `blog_article` SET `read_count` = `read_count` + 1 WHERE `article_id`=?;'
+  return query(sql, [id])
+}
+
 module.exports = {
   login,
   getAllArticle,
@@ -180,5 +187,6 @@ module.exports = {
   pageTurning,
   addComment,
   addUser,
-  searchUser
+  searchUser,
+  updateCommentCount
 }

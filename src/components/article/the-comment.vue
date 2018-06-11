@@ -100,7 +100,9 @@
       }
     },
     created() {
-      this._checkUser()
+      if (!this.$isLogin) {
+        this._checkUser()
+      }
     },
     methods: {
       _checkUser() {

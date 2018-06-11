@@ -19,7 +19,8 @@ const API = {
   UPLOAD_IMG: uploadImg,
   ADD_COMMENT: db.addComment,
   GET_COMMENT: db.getComment,
-  SEARCH_USER: db.searchUser
+  SEARCH_USER: db.searchUser,
+  UPDATE_COMMENT_COUNT: db.updateCommentCount
 }
 
 module.exports = API

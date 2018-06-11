@@ -42,11 +42,18 @@ const getAllArticle = async (ctx, next) => {
 }
 
 const getArticle = async (ctx, next) => {
-  const { articleId } = ctx.request.query
+  let { articleId, p, pc } = ctx.request.query
+  p = p !== null && p !== undefined ? parseInt(p) : 1
+  pc = pc !== null && pc !== undefined ? parseInt(pc) : config.PAGE_COUNT + 2
   try {
-    await mysql.getArticle(articleId)
+    await mysql.getArticle(articleId, p, pc)
       .then((res) => {
-        ctx.body = resObj(1, res[1])
+        ctx.body = resObj(1, {
+          data: res[0],
+          totalCount: res[1][0]['COUNT(`article_id`)'],
+          currentPage: p,
+          pageCount: pc
+        })
       })
       .catch((e) => {
         ctx.body = resObj(2, e.toString())
@@ -298,6 +305,22 @@ const searchUser = async (ctx, next) => {
   }
 }
 
+const updateCommentCount = async (ctx, next) => {
+  const { articleId } = ctx.request.body
+  try {
+    await mysql.updateCommentCount(articleId)
+      .then(() => {
+        ctx.body = resObj(1, 'success')
+      })
+      .catch((e) => {
+        ctx.body = resObj(2, e.toString())
+      })
+  } catch (e) {
+    ctx.body = resObj(0, '数据库连接错误')
+    console.error('数据库错误: ' + e.toString())
+  }
+}
+
 module.exports = {
   getAllArticle,
   getArticle,
@@ -310,5 +333,6 @@ module.exports = {
   getStatistics,
   pageTurning,
   addComment,
-  searchUser
+  searchUser,
+  updateCommentCount
 }

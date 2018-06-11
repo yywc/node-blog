@@ -235,6 +235,18 @@ const checkUser = function () {
     })
 }
 
+const updateCommentCount = function (data) {
+  const url = config.updateCommentCount
+  return axios
+    .post(url, data)
+    .then((res) => {
+      return Promise.resolve(res.data)
+    })
+    .catch((error) => {
+      console.error('内部错误: ' + error)
+    })
+}
+
 export {
   login,
   logout,
@@ -249,5 +261,6 @@ export {
   getStatistics,
   pageTurning,
   addComment,
-  checkUser
+  checkUser,
+  updateCommentCount
 }
