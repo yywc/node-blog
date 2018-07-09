@@ -90,7 +90,7 @@
             .then((res) => {
               console.log(res)
               if (res.code === 0) {
-                Cookies.remove('TOKEN')
+                Cookies.remove('user')
                 window.location.reload()
               } else {
                 console.error(res.data.msg)

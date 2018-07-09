@@ -18,7 +18,7 @@ const config = {
     path: '/', // 写cookie所在的路径
     domain: '', // 写cookie所在的域名
     httpOnly: true, // 是否只用于http请求中获取
-    // overwrite: true // 是否允许重写
+    overwrite: true // 是否允许重写
     // signed: true,
     // secure: true
   }
