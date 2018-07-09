@@ -5,7 +5,7 @@ const mysql = require('../../database/mysql')
 const debug = require('debug')('blog-server:add-article')
 
 module.exports = async (ctx) => {
-  if (ctx.session && ctx.session.userName && ctx.session.loginName) {
+  if (ctx.user) {
     const { article } = ctx.request.body
     try {
       await mysql.addArticle(article)

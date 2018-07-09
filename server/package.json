@@ -18,7 +18,9 @@
     "busboy": "^0.2.14",
     "ipware": "^1.0.0",
     "debug": "^3.1.0",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.10",
+    "jsonwebtoken": "^8.3.0",
+    "koa-jwt": "^3.3.2"
   },
   "author": "",
   "license": "ISC"

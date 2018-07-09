@@ -103,9 +103,21 @@
             .then((res) => {
               const data = res.data
               if (data.code === 0) {
+                this.$message({
+                  message: data.data.msg,
+                  type: 'success'
+                })
                 const maxAge = data.data.maxAge / (24 * 60 * 60 * 1000)
-                Cookies.set('TOKEN', res.headers['x-auth-token'], { expires: maxAge })
-                window.location.href = window.location.href.split('#')[0]
+                const uid = data.data.uid
+                const nickname = data.data.nickname
+                const domain = data.data.domain
+                Cookies.set('user', {
+                  uid: encodeURIComponent(uid),
+                  nickname: encodeURIComponent(nickname)
+                }, { expires: maxAge, domain })
+                setTimeout(() => {
+                  window.location.href = window.location.href.split('#')[0]
+                }, 1500)
               } else {
                 alert(data.data.msg)
               }

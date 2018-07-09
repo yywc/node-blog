@@ -1,6 +1,6 @@
-module.exports = async (ctx, next) => {
-  if (ctx.session && ctx.session.userName && ctx.session.loginName) {
-    ctx.session = null
+module.exports = async (ctx) => {
+  if (ctx.user) {
+    ctx.user = false
     ctx.state = {
       code: 0,
       data: {

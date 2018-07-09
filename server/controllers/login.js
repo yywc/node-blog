@@ -1,7 +1,7 @@
-const md5 = require('md5')
 const config = require('../config/config')
 const mysql = require('../database/mysql')
 const debug = require('debug')('blog-server:login')
+const jwt = require('jsonwebtoken')
 
 module.exports = async (ctx) => {
   const { loginName, password } = ctx.request.body
@@ -26,18 +26,21 @@ module.exports = async (ctx) => {
   }
   try {
     const res = await mysql.login(loginName, password)
-    if (Array.isArray(res) && res.length > 0) {
-      // 设置 session
-      const userName = res[0].nickname
-      ctx.session.loginName = loginName
-      ctx.session.userName = userName
+    if (res.length > 0) {
+      const nickname = res[0].nickname
+      const uid = res[0].uid
+      const payload = {
+        uid,
+        nickname
+      }
+      const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '24h' }) // token签名 有效期为1小时
+      ctx.cookies.set('auth-token', token, config.COOKIES)
       ctx.state.data = {
         msg: '登录成功',
-        userName,
+        nickname,
+        uid,
         maxAge: config.MAX_AGE
       }
-      // md5 加密设置 response header
-      ctx.set('x-auth-token', md5('gyjYYwc.1993'))
     } else {
       ctx.state = {
         code: -1,

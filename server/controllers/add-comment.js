@@ -6,7 +6,7 @@ const getIp = require('ipware')().get_ip
 const debug = require('debug')('blog-server:add-comment')
 
 module.exports = async (ctx) => {
-  if (ctx.session && ctx.session.userName && ctx.session.loginName) {
+  if (ctx.user) {
     debug(`已登录`)
   } else {
     const comment = ctx.request.body

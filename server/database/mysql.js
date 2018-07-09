@@ -36,6 +36,12 @@ const login = function (loginName, password) {
   return query(sql, [loginName, password])
 }
 
+// jwt 检验用户是否登录
+const checkLogin = function (uid, nickname) {
+  const sql = 'SELECT * FROM `blog_user` WHERE `uid` = ? AND `nickname` = ? LIMIT 1;'
+  return query(sql, [uid, nickname])
+}
+
 // 获取全部文章
 const getAllArticle = function (page, pageCount, category) {
   let allArticleSql = ''
@@ -175,6 +181,7 @@ const updateCommentCount = function (id) {
 
 module.exports = {
   login,
+  checkLogin,
   getAllArticle,
   getArticle,
   updateArticle,

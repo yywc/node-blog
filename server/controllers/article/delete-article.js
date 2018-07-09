@@ -6,7 +6,7 @@ const mysql = require('../../database/mysql')
 const debug = require('debug')('blog-server:delete-article')
 
 module.exports = async (ctx) => {
-  if (ctx.session && ctx.session.userName && ctx.session.loginName) {
+  if (ctx.user) {
     const { article_id } = ctx.request.body
     try {
       await mysql.deleteArticle(article_id)

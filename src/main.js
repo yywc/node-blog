@@ -7,13 +7,13 @@ import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import ElementUI from 'element-ui'
 import NProgress from 'nprogress'
-import { isLogin } from '@/assets/js/utils'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'nprogress/nprogress.css'
 import '@/assets/stylus/index.styl'
 import axios from 'axios'
 import api from '@/api/config'
 import store from './store'
+import Cookies from 'js-cookie'
 
 Vue.config.productionTip = false
 
@@ -73,9 +73,8 @@ Vue.use(VueLazyLoad, {
   loading: require('@/assets/imgs/default.png'),
   error: require('@/assets/imgs/error.png')
 })
-
 // 校验是否登录
-Vue.prototype.$isLogin = isLogin
+Vue.prototype.$isLogin = !!Cookies.get('user')
 
 /* eslint-disable no-new */
 new Vue({
