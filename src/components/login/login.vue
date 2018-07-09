@@ -102,12 +102,12 @@
           login(data)
             .then((res) => {
               const data = res.data
-              if (data.status === 1) {
+              if (data.code === 0) {
                 const maxAge = data.data.maxAge / (24 * 60 * 60 * 1000)
                 Cookies.set('TOKEN', res.headers['x-auth-token'], { expires: maxAge })
                 window.location.href = window.location.href.split('#')[0]
               } else {
-                alert(data.msg)
+                alert(data.data.msg)
               }
             })
             .catch((error) => {

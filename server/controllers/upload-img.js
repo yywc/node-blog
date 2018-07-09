@@ -1,9 +1,7 @@
-// const inspect = require('util').inspect
 const path = require('path')
-// const os = require('os')
 const fs = require('fs')
 const Busboy = require('busboy')
-// const md5 = require('md5')
+const debug = require('debug')('blog-server:upload-img')
 
 /**
  * 同步创建文件目录
@@ -37,16 +35,15 @@ const getSuffixName = function (fileName) {
  * @param  {object} options 文件上传参数 fileType文件类型， path文件存放路径
  * @return {Promise<any>}
  */
-const uploadImg = async (ctx, next) => {
+module.exports = async (ctx) => {
   let req = ctx.req
-  // let res = ctx.res
   let busboy = new Busboy({ headers: req.headers })
 
   let filePath = path.join('/ftpfile', 'image')
   mkdirsSync(filePath)
 
   ctx.body = await new Promise((resolve, reject) => {
-    // console.log('文件上传中...')
+    debug('文件上传中...')
     let result = {
       success: false,
       message: '',
@@ -69,27 +66,23 @@ const uploadImg = async (ctx, next) => {
         result.data = {
           pictureUrl: `https://img.${ctx.host}/image/${fileName}`
         }
-        // console.log('文件上传成功！')
+        debug('文件上传成功...')
         resolve(result)
       })
     })
 
     // 解析结束事件
     busboy.on('finish', () => {
-      // console.log('文件上结束')
+      debug('文件上传结束...')
       resolve(result)
     })
 
     // 解析错误事件
     busboy.on('error', () => {
-      // console.log('文件上出错: ' + err)
+      debug('文件上传出错...')
       reject(result)
     })
 
     req.pipe(busboy)
   })
-}
-
-module.exports = {
-  uploadImg
 }

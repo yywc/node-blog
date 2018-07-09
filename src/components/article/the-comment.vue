@@ -108,7 +108,7 @@
       _checkUser() {
         checkUser()
           .then((res) => {
-            if (res.status === 1 && res.data.length !== 0) {
+            if (res.code === 0 && res.data.length !== 0) {
               this.validateForm.nickname = res.data[0].nickname
               this.validateForm.contact = res.data[0].contact
             }
@@ -129,7 +129,7 @@
             }
             addComment(comment)
               .then((res) => {
-                if (res.status === 1) {
+                if (res.code === 0) {
                   location.reload()
                 } else {
                   console.error('评论失败, 请稍后再试')

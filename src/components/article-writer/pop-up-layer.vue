@@ -151,10 +151,10 @@
       _getTags() {
         getTags()
           .then((res) => {
-            if (res.status === 1) {
+            if (res.code === 0) {
               this.tagList = res.data
             } else {
-              console.error('内部错误: ' + res.data)
+              console.error('内部错误: ' + res.data.msg)
             }
           })
           .catch((e) => {
@@ -218,18 +218,18 @@
         if (article.article_id) {
           updateArticle(data)
             .then((res) => {
-              if (res.status === 1) {
+              if (res.code === 0) {
                 this.updateArticleTime()
                 this.$message({
-                  message: res.data,
+                  message: res.data.msg,
                   type: 'success'
                 })
                 setTimeout(() => {
                   this.$router.push(`/article/${article.article_id}`)
                 }, 1000)
               } else {
-                this.$message.error(res.data)
-                console.error('内部错误: ' + res.data)
+                this.$message.error(res.data.msg)
+                console.error('内部错误: ' + res.data.msg)
               }
             })
             .catch((e) => {
@@ -238,18 +238,18 @@
         } else {
           addArticle(data)
             .then((res) => {
-              if (res.status === 1) {
+              if (res.code === 0) {
                 this.updateArticleTime()
                 this.$message({
-                  message: res.data,
+                  message: res.data.msg,
                   type: 'success'
                 })
                 setTimeout(() => {
                   this.$router.push('/')
                 }, 1000)
               } else {
-                this.$message.error(res.data)
-                console.error('内部错误: ' + res.data)
+                this.$message.error(res.data.msg)
+                console.error('内部错误: ' + res.data.msg)
               }
             })
             .catch((e) => {

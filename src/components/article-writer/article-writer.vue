@@ -197,11 +197,11 @@
       _getArticle(id) {
         getArticle(id)
           .then((res) => {
-            this.article = res.data[0]
+            this.article = res.data.data[0]
             this.isLoaded = true
-            this.imgUrl = res.data[0].img
+            this.imgUrl = res.data.data[0].img
             this.styleObject = {
-              background: `url(${res.data[0].img}) no-repeat center / cover`,
+              background: `url(${res.data.data[0].img}) no-repeat center / cover`,
               borderRadius: '3px'
             }
             this.showImg = true
@@ -266,17 +266,17 @@
         if (this.id) {
           deleteArticle({ article_id: this.id })
             .then((res) => {
-              if (res.status === 1) {
+              if (res.code === 0) {
                 this.updateArticleTime()
                 this.$message({
-                  message: res.data,
+                  message: res.data.msg,
                   type: 'success'
                 })
                 setTimeout(() => {
                   window.location.href = '/'
                 }, 1000)
               } else {
-                console.error('内部错误: ' + res.data)
+                console.error('内部错误: ' + res.data.msg)
               }
             })
             .catch((e) => {

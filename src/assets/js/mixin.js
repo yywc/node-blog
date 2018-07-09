@@ -35,7 +35,7 @@ const articleMixin = {
       }
       getAllArticle(data)
         .then((res) => {
-          if (res.status === 1) {
+          if (res.code === 0) {
             this.articles = res.data.data
             this.page = res.data
           } else {

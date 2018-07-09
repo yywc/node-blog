@@ -88,11 +88,12 @@
         } else {
           logout()
             .then((res) => {
-              if (res.status === 1) {
+              console.log(res)
+              if (res.code === 0) {
                 Cookies.remove('TOKEN')
                 window.location.reload()
               } else {
-                console.error(res.msg)
+                console.error(res.data.msg)
               }
             })
             .catch((error) => {

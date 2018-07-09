@@ -66,7 +66,7 @@ const getAllArticle = function (page, pageCount, category) {
   return query(sql, [page, pageCount])
 }
 
-// 查看某一篇文章
+// 查看某一篇文章以及评论
 const getArticle = function (id, page, pageCount) {
   page = (page - 1) * pageCount
   let sql = 'SELECT * FROM `blog_article`' +

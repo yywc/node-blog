@@ -84,11 +84,11 @@
         }
         getAllArticle(data)
           .then((res) => {
-            if (res.status === 1) {
+            if (res.code === 0) {
               this.articles = res.data.data
               this.page = res.data
             } else {
-              console.error('内部错误: ' + res.data)
+              console.error('内部错误: ' + res.data.msg)
             }
           })
           .catch((e) => {
@@ -102,11 +102,11 @@
         }
         searchArticle(data)
           .then((res) => {
-            if (res.status === 1) {
+            if (res.code === 0) {
               this.articles = res.data.data
               this.page = res.data
             } else {
-              console.error(res.data)
+              console.error(res.data.msg)
             }
           })
           .catch((e) => {

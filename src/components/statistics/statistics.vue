@@ -49,13 +49,13 @@
       _getStatistics() {
         getStatistics()
           .then((res) => {
-            if (res.status === 1) {
+            if (res.code === 0) {
               this.categoryCount = res.data.categoryCount
               this.tagCount = res.data.tagCount
               this.commentCount = res.data.commentCount
               this.articleCount = res.data.articleCount
             } else {
-              console.error('内部错误: ' + res.data)
+              console.error('内部错误: ' + res.data.msg)
             }
           })
           .catch((e) => {

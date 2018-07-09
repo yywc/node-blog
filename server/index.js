@@ -4,6 +4,8 @@ const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
 const config = require('./config/config')
 const router = require('./router/index')
+const debug = require('debug')('blog-server')
+const response = require('./middlewares/response')
 
 const app = new Koa()
 
@@ -36,11 +38,15 @@ app.use(session({
   cookie: cookie
 }))
 
+// 使用响应处理中间件
+app.use(response)
+
+// 解析请求体
+app.use(bodyParser())
+
 // 加载路由中间件
 app
   .use(router.routes())
   .use(router.allowedMethods())
 
-app.listen(config.PORT, () => {
-  console.log('Listening at http://localhost:' + config.PORT + '\n')
-})
+app.listen(config.PORT, debug(`listening on port ${config.PORT}`))

@@ -1,26 +1,31 @@
+/* eslint-disable no-undef,space-infix-ops */
 const Router = require('koa-router')
-const API = require('../api/index')
+const controllers = require('../controllers')
 
 const router = new Router()
 
-router.post('/login', API.USER_LOGIN)
-router.post('/update-article', API.UPDATE_ARTICLE)
-router.post('/add-article', API.ADD_ARTICLE)
-router.post('/delete-article', API.DELETE_ARTICLE)
-router.post('/upload-img', API.UPLOAD_IMG)
-router.post('/add-comment', API.ADD_COMMENT)
-router.post('/update-comment-count', API.UPDATE_COMMENT_COUNT)
+// post 请求
+router.post('/login', controllers.login)
+router.post('/update-article', controllers.article.updateArticle)
+router.post('/add-article', controllers.article.addArticle)
+router.post('/delete-article', controllers.article.deleteArticle)
+router.post('/upload-img', controllers.uploadImg)
+router.post('/add-comment', controllers.addComment)
+router.post('/update-comment-count', controllers.updateCommentCount)
 
-router.get('/logout', API.USER_LOGOUT)
-router.get('/get-all-article', API.GET_ALL_ARTICLE)
-router.get('/get-article', API.GET_ARTICLE)
-router.get('/search-article', API.SEARCH_ARTICLE)
-router.get('/get-tags', API.GET_TAGS)
-router.get('/get-articles-by-tag', API.GET_ARTICLES_BY_TAG)
-router.get('/get-statistics', API.GET_STATISTICS)
-router.get('/page-turning', API.PAGE_TURNING)
-router.get('/check-user', API.SEARCH_USER)
-router.get('/', async (ctx, next) => {
+// get 请求
+router.get('/logout', controllers.logout)
+router.get('/get-all-article', controllers.article.getAllArticle)
+router.get('/get-article', controllers.article.getArticle)
+router.get('/search-article', controllers.article.searchArticle)
+router.get('/get-tags', controllers.getTags)
+router.get('/get-articles-by-tag', controllers.article.getArticlesByTag)
+router.get('/get-statistics', controllers.getStatistics)
+router.get('/page-turning', controllers.turnPage)
+router.get('/check-user', controllers.searchUser)
+
+// 测试页面
+router.get('/', async (ctx) => {
   ctx.response.type = 'text/html'
   ctx.response.body = '<h1>Hello World!</h1>'
 })
