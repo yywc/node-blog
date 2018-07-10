@@ -5,6 +5,11 @@ const mysql = require('../../database/mysql')
 const config = require('../../config/config')
 const debug = require('debug')('blog-server:get-article-by-tag')
 
+/**
+ * p 页码
+ * pc 每页显示条数
+ * t 标签名
+ */
 module.exports = async (ctx) => {
   let { p, pc, t } = ctx.request.query
   p = p !== null && p !== undefined ? parseInt(p) : 1

@@ -4,6 +4,10 @@
 const mysql = require('../database/mysql')
 const debug = require('debug')('blog-server:turn-page')
 
+/**
+ * id 文章ID
+ * d 翻页顺序(左翻还是右翻)
+ */
 module.exports = async (ctx) => {
   let { id, d } = ctx.request.query
   try {

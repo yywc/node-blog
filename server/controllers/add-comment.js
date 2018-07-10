@@ -5,6 +5,10 @@ const mysql = require('../database/mysql')
 const getIp = require('ipware')().get_ip
 const debug = require('debug')('blog-server:add-comment')
 
+/**
+ * comment 评论对象
+ * ipAddress 评论用户的 ip 地址
+ */
 module.exports = async (ctx) => {
   if (ctx.user) {
     debug(`已登录`)
