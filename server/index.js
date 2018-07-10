@@ -5,17 +5,21 @@ const router = require('./router/index')
 const debug = require('debug')('blog-server')
 const response = require('./middlewares/response')
 const checkLogin = require('./middlewares/check-login')
+const helmet = require('./middlewares/helmet')
 
 const app = new Koa()
 
-// 使用响应处理中间件
+// 响应处理中间件
 app.use(response)
+
+// 安全
+app.use(helmet)
 
 // 解析请求体
 app.use(bodyParser())
 
 // 判断是否登录
-app.use(checkLogin())
+app.use(checkLogin)
 
 // app.use(jwt({ secret: 'todoList' }).unless({ path: [/^\/login/] }))
 

@@ -39,7 +39,7 @@ module.exports = async (ctx) => {
         msg: '登录成功',
         nickname,
         uid,
-        maxAge: config.MAX_AGE
+        maxAge: config.COOKIES.maxAge
       }
     } else {
       ctx.state = {

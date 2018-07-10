@@ -84,14 +84,14 @@
     methods: {
       _logout() {
         if (!this.$isLogin) {
-          window.location.reload()
+          location.href = '/'
         } else {
           logout()
             .then((res) => {
               console.log(res)
               if (res.code === 0) {
                 Cookies.remove('user')
-                window.location.reload()
+                location.href = '/'
               } else {
                 console.error(res.data.msg)
               }

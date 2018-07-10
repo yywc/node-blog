@@ -4,7 +4,8 @@
   "description": "node-blog server",
   "main": "index.js",
   "scripts": {
-    "start": "supervisor index.js ",
+    "dev": "supervisor index.js",
+    "start": "DEBUG=blog-server,blog-server:* NODE_ENV=development npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -12,15 +13,13 @@
     "koa-router": "^7.4.0",
     "mysql": "^2.15.0",
     "koa-bodyparser": "^4.2.0",
-    "koa-session-minimal": "^3.0.4",
-    "koa-mysql-session": "^0.0.2",
-    "md5": "^2.2.1",
     "busboy": "^0.2.14",
     "ipware": "^1.0.0",
     "debug": "^3.1.0",
     "lodash": "^4.17.10",
     "jsonwebtoken": "^8.3.0",
-    "koa-jwt": "^3.3.2"
+    "supervisor": "^0.12.0",
+    "koa-helmet": "^4.0.0"
   },
   "author": "",
   "license": "ISC"

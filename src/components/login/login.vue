@@ -102,6 +102,7 @@
           login(data)
             .then((res) => {
               const data = res.data
+              console.log(data)
               if (data.code === 0) {
                 this.$message({
                   message: data.data.msg,

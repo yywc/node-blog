@@ -25,7 +25,7 @@ module.exports = async (ctx) => {
     ctx.state = {
       code: -1,
       data: {
-        msg: '未登录'
+        msg: '更新文章失败,请先登录或重新登录'
       }
     }
   }
