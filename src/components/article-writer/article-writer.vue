@@ -204,7 +204,9 @@
               background: `url(${res.data.data[0].img}) no-repeat center / cover`,
               borderRadius: '3px'
             }
-            this.showImg = true
+            if (this.imgUrl) {
+              this.showImg = true
+            }
           })
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
