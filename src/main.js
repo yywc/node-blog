@@ -13,77 +13,83 @@ import '@/assets/stylus/index.styl'
 import axios from 'axios'
 import api from '@/api/config'
 import store from './store'
-import Cookies from 'js-cookie'
 
-Vue.config.productionTip = false
+const init = function () {
+  Vue.config.productionTip = false
 
-NProgress.configure({
-  showSpinner: false,
-  minimum: 0.2,
-  trickleRate: 0.05,
-  trickleSpeed: 500,
-  easing: 'ease',
-  speed: 500
-})
-
-fastclick.attach(document.body)
-Vue.use(ElementUI)
-
-// 未登录拦截
-router.beforeEach((to, from, next) => {
-  NProgress.start()
-  if (to.name === 'ArticleWriter' && !Vue.prototype.$isLogin) {
-    next({
-      path: '/'
-    })
-  } else {
-    next()
-  }
-})
-
-router.afterEach((to, from) => {
-  NProgress.done()
-})
-
-axios.interceptors.request.use(function (config) {
-  config.headers = Object.assign(config.headers, {
+  NProgress.configure({
+    showSpinner: false,
+    minimum: 0.2,
+    trickleRate: 0.05,
+    trickleSpeed: 500,
+    easing: 'ease',
+    speed: 500
   })
-  console.log(config)
-  NProgress.start()
-  if ((
-      config.url === api.updateArticle ||
-      config.url === api.addArticle ||
-      config.url === api.deleteArticle
-    ) &&
-    !Vue.prototype.$isLogin) {
-    return Promise.reject(new Error('未登录'))
-  }
-  return config
-}, function (error) {
-  NProgress.done()
-  return Promise.reject(error)
-})
 
-axios.interceptors.response.use(function (response) {
-  NProgress.done()
-  return response
-}, function (error) {
-  NProgress.done()
-  return Promise.reject(error)
-})
+  fastclick.attach(document.body)
+  Vue.use(ElementUI)
 
-Vue.use(VueLazyLoad, {
-  loading: require('@/assets/imgs/default.png'),
-  error: require('@/assets/imgs/error.png')
-})
+  // 未登录拦截
+  router.beforeEach((to, from, next) => {
+    NProgress.start()
+    if (to.name === 'ArticleWriter' && !Vue.prototype.$isLogin) {
+      next({
+        path: '/'
+      })
+    } else {
+      next()
+    }
+  })
+
+  router.afterEach((to, from) => {
+    NProgress.done()
+  })
+
+  axios.interceptors.request.use(function (config) {
+    NProgress.start()
+    if ((
+        config.url === api.updateArticle ||
+        config.url === api.addArticle ||
+        config.url === api.deleteArticle
+      ) &&
+      !Vue.prototype.$isLogin) {
+      return Promise.reject(new Error('未登录'))
+    }
+    return config
+  }, function (error) {
+    NProgress.done()
+    return Promise.reject(error)
+  })
+
+  axios.interceptors.response.use(function (response) {
+    NProgress.done()
+    return response
+  }, function (error) {
+    NProgress.done()
+    return Promise.reject(error)
+  })
+
+  Vue.use(VueLazyLoad, {
+    loading: require('@/assets/imgs/default.png'),
+    error: require('@/assets/imgs/error.png')
+  })
+
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    components: { App },
+    template: '<App/>'
+  })
+}
+
 // 校验是否登录
-Vue.prototype.$isLogin = !!Cookies.get('sessionId')
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>'
-})
+axios.get('api/check-login')
+  .then((res) => {
+    Vue.prototype.$isLogin = res.data.data.isLogin
+    init()
+  })
+  .catch((error) => {
+    console.error('内部错误: ' + error)
+  })

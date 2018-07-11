@@ -33,13 +33,8 @@ module.exports = async (ctx) => {
         uid,
         nickname
       }
-      // 两个 token，一个是前端调用判断是否登录而显示不同 ui，确保 token 不被篡改
-      const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '24h' }) // token签名 有效期为1小时
-      const sessionId = jwt.sign(payload, config.USER_SECRET, { expiresIn: config.COOKIES.maxAge }) // sessionId 签名
+      const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: config.COOKIES.maxAge }) // token签名 有效期为1小时
       ctx.cookies.set('token', token, config.COOKIES)
-      ctx.cookies.set('sessionId', sessionId, Object.assign(config.COOKIES, {
-        httpOnly: false
-      }))
       ctx.state.data = {
         msg: '登录成功'
       }
