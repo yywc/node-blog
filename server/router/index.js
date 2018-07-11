@@ -23,6 +23,7 @@ router.get('/get-articles-by-tag', controllers.article.getArticlesByTag)
 router.get('/get-statistics', controllers.getStatistics)
 router.get('/page-turning', controllers.turnPage)
 router.get('/check-user', controllers.searchUser)
+router.get('/check-login', controllers.check)
 
 // 测试页面
 router.get('/', async (ctx) => {

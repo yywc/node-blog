@@ -46,6 +46,9 @@ router.afterEach((to, from) => {
 })
 
 axios.interceptors.request.use(function (config) {
+  config.headers = Object.assign(config.headers, {
+  })
+  console.log(config)
   NProgress.start()
   if ((
       config.url === api.updateArticle ||
@@ -74,7 +77,7 @@ Vue.use(VueLazyLoad, {
   error: require('@/assets/imgs/error.png')
 })
 // 校验是否登录
-Vue.prototype.$isLogin = !!Cookies.get('user')
+Vue.prototype.$isLogin = !!Cookies.get('sessionId')
 
 /* eslint-disable no-new */
 new Vue({

@@ -5,15 +5,11 @@ const router = require('./router/index')
 const debug = require('debug')('blog-server')
 const response = require('./middlewares/response')
 const checkLogin = require('./middlewares/check-login')
-const helmet = require('./middlewares/helmet')
 
 const app = new Koa()
 
 // 响应处理中间件
 app.use(response)
-
-// 安全
-app.use(helmet)
 
 // 解析请求体
 app.use(bodyParser())

@@ -9,32 +9,34 @@ const mysql = require('../database/mysql')
  * 检查是否登录
  */
 module.exports = async (ctx, next) => {
+  let tokenPayload
+  let sessionIdPayload
   try {
-    const token = ctx.cookies.get('auth-token') // 获取jwt
+    const token = ctx.cookies.get('token') // 获取jwt
+    const sessionId = ctx.cookies.get('sessionId') // 获取jwt
+    let sUid
+    let sNickname
+    if (sessionId) {
+      sessionIdPayload = await verify(sessionId, config.USER_SECRET) // 解密payload，获取用户名和ID
+      sUid = sessionIdPayload.uid
+      sNickname = sessionIdPayload.nickname
+    }
     if (token) {
-      let payload
       try {
-        payload = await verify(token, config.JWT_SECRET) // 解密payload，获取用户名和ID
-        const uid = payload.uid
-        const nickname = payload.nickname
+        tokenPayload = await verify(token, config.JWT_SECRET) // 解密payload，获取用户名和ID
+        const uid = tokenPayload.uid
+        const nickname = tokenPayload.nickname
         const res = await mysql.checkLogin(uid, nickname)
         if (res.length > 0) {
           ctx.user = true
         }
       } catch (err) {
         // 如果 token 过期，但是用户还是登录状态，则更新 token
-        const user = JSON.parse(decodeURIComponent(ctx.cookies.get('user'))) // 获取用户
-        const uid = decodeURIComponent(user.uid)
-        const nickname = decodeURIComponent(user.nickname)
-        payload = {
-          uid,
-          nickname
-        }
-        const res = await mysql.checkLogin(uid, nickname)
+        const res = await mysql.checkLogin(sUid, sNickname)
         if (res.length > 0) {
           ctx.user = true
-          const newToken = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '24h' }) // token签名 有效期为24小时
-          ctx.cookies.set('auth-token', newToken, config.COOKIES)
+          const newToken = jwt.sign(tokenPayload, config.JWT_SECRET, { expiresIn: '24h' }) // token签名 有效期为24小时
+          ctx.cookies.set('token', newToken, config.COOKIES)
         }
         debug(`token verify fail: ${err}`)
       }

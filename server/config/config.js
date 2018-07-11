@@ -3,7 +3,8 @@ const production = (process.env.NODE_ENV ? process.env.NODE_ENV : 'production') 
 const config = {
   PORT: 3000,
   PAGE_COUNT: 8,
-  JWT_SECRET: 'GyjYywc.1993',
+  JWT_SECRET: '?GyjYywc.1993$',
+  USER_SECRET: '!@dsfdsg::[~32WW',
   // 数据库配置
   DATABASE_CONFIG: {
     DATABASE: production ? '' : 'nodeblog',
@@ -22,7 +23,7 @@ const config = {
     httpOnly: true, // 是否只用于http请求中获取
     overwrite: true, // 是否允许重写
     secure: production ? true : '',
-    sameSite: production ? 'Lax' : '',
+    sameSite: production ? 'Strict' : '',
     signed: ''
   }
 }
