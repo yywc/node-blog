@@ -33,7 +33,7 @@ module.exports = async (ctx) => {
         uid,
         nickname
       }
-      const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: config.COOKIES.maxAge }) // token签名 有效期为1小时
+      const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: config.COOKIES.maxAge }) // token签名 有效期
       ctx.cookies.set('token', token, config.COOKIES)
       ctx.state.data = {
         msg: '登录成功'

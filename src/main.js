@@ -91,5 +91,5 @@ axios.get('api/check-login')
     init()
   })
   .catch((error) => {
-    console.error('内部错误: ' + error)
+    console.error('检验用户失败: ' + error)
   })

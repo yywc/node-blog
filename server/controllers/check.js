@@ -28,15 +28,17 @@ module.exports = async (ctx) => {
       ctx.state = {
         code: -1,
         data: {
-          msg: '查询用户失败'
-        },
-        isLogin: false
+          isLogin: false
+        }
       }
-      debug(`查询用户失败: ${e.toString()}`)
+      debug(`未登录: ${e.toString()}`)
     }
   } else {
-    ctx.state.data = {
-      isLogin: false
+    ctx.state = {
+      code: -1,
+      data: {
+        isLogin: false
+      }
     }
   }
 }

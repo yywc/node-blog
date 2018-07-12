@@ -1,9 +1,12 @@
 const production = (process.env.NODE_ENV ? process.env.NODE_ENV : 'production') === 'production'
 
 const config = {
+  ENV: production,
   PORT: 3000,
   PAGE_COUNT: 8,
   JWT_SECRET: '?GyjYywc.1993$',
+  AUTH_SECRET: '@!asfg.;]13',
+  DOMAIN: production ? 'iwangshu.com' : 'localhost',
   // 数据库配置
   DATABASE_CONFIG: {
     DATABASE: production ? '' : 'nodeblog',

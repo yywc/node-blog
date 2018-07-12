@@ -39,7 +39,7 @@ const articleMixin = {
             this.articles = res.data.data
             this.page = res.data
           } else {
-            console.error('内部错误: ' + res.data)
+            console.error('内部错误: ' + res.data.msg)
           }
         })
         .catch((e) => {
