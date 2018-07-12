@@ -3,11 +3,16 @@ import config from './config'
 
 /**
  * 用户登录
- * @param data
+ * @param loginName 账号
+ * @param password 密码
  * @returns {Promise<AxiosResponse<any>>}
  */
-const login = function (data) {
+const login = function (loginName, password) {
   const url = config.login
+  const data = {
+    loginName,
+    password
+  }
   return axios
     .post(url, data)
     .then((res) => {

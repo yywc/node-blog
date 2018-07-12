@@ -83,22 +83,18 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            const data = {
-              loginName: this.loginForm.loginName,
-              password: this.loginForm.password
-            }
-            this._login(data)
+            this._login(this.loginForm.loginName, this.loginForm.password)
           } else {
             console.error('请检查数据.')
             return false
           }
         })
       },
-      _login(data) {
+      _login(loginName, password) {
         if (this.$isLogin) {
           this.$router.push('/')
         } else {
-          login(data)
+          login(loginName, password)
             .then((res) => {
               const data = res.data
               if (data.code === 0) {
