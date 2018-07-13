@@ -42,11 +42,7 @@
     },
     methods: {
       _getArticlesByTag(page, tag) {
-        const data = {
-          p: page,
-          t: tag
-        }
-        getArticlesByTag(data)
+        getArticlesByTag(page, tag)
           .then((res) => {
             this.articles = res.data.data
             this.page = res.data

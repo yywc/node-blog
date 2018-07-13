@@ -19,7 +19,7 @@ const login = function (loginName, password) {
       return Promise.resolve(res)
     })
     .catch((error) => {
-      console.error('内部错误: ' + error)
+      console.error('登陆失败: ' + error)
     })
 }
 
@@ -35,16 +35,24 @@ const logout = function () {
       return Promise.resolve(res.data)
     })
     .catch((error) => {
-      console.error('内部错误: ' + error)
+      console.error('登出失败: ' + error)
     })
 }
 
 /**
  * 获取所有文章列表
+ * @param page 页码，默认第一页
+ * @param category 分类，默认全部
+ * @param pageCount 每页数量，默认是8
  * @returns {Promise<AxiosResponse<any>>}
  */
-const getAllArticle = function (data) {
+const getAllArticle = function (page, category, pageCount) {
   const url = config.getAllArticle
+  const data = {
+    p: page,
+    c: category,
+    pc: pageCount
+  }
   return axios
     .get(url, {
       params: data
@@ -53,17 +61,24 @@ const getAllArticle = function (data) {
       return Promise.resolve(res.data)
     })
     .catch((error) => {
-      console.error('内部错误: ' + error)
+      console.error('获取所有文章失败: ' + error)
     })
 }
 
 /**
- * 获取某一篇文章
- * @param data
+ * 获取某一篇文章以及评论
+ * @param articleId 文章ID
+ * @param page 评论页码
+ * @param pageCount 评论每页显示条数
  * @returns {Promise<AxiosResponse<any>>}
  */
-const getArticle = function (data) {
+const getArticle = function (articleId, page, pageCount) {
   const url = config.getArticle
+  const data = {
+    articleId,
+    p: page,
+    pc: pageCount
+  }
   return axios
     .get(url, {
       params: data
@@ -78,11 +93,14 @@ const getArticle = function (data) {
 
 /**
  * 更新某一篇文章
- * @param data
+ * @param article 文章对象
  * @returns {Promise<AxiosResponse<any>>}
  */
-const updateArticle = function (data) {
+const updateArticle = function (article) {
   const url = config.updateArticle
+  const data = {
+    article: article
+  }
   return axios
     .post(url, data)
     .then((res) => {
@@ -95,11 +113,14 @@ const updateArticle = function (data) {
 
 /**
  * 新建一篇文章
- * @param data
+ * @param article 文章实体
  * @returns {Promise<AxiosResponse<any>>}
  */
-const addArticle = function (data) {
+const addArticle = function (article) {
   const url = config.addArticle
+  const data = {
+    article: article
+  }
   return axios
     .post(url, data)
     .then((res) => {
@@ -112,11 +133,14 @@ const addArticle = function (data) {
 
 /**
  * 删除一篇文章
- * @param data
+ * @param articleId 文章ID
  * @returns {Promise<AxiosResponse<any>>}
  */
-const deleteArticle = function (data) {
+const deleteArticle = function (articleId) {
   const url = config.deleteArticle
+  const data = {
+    articleId
+  }
   return axios
     .post(url, data)
     .then((res) => {
@@ -129,11 +153,16 @@ const deleteArticle = function (data) {
 
 /**
  * 搜索文章
- * @param data
+ * @param page 页码
+ * @param title 文章标题
  * @returns {Promise<any>}
  */
-const searchArticle = function (data) {
+const searchArticle = function (page, title) {
   const url = config.searchArticle
+  const data = {
+    p: page,
+    t: title
+  }
   return axios
     .get(url, {
       params: data
@@ -164,11 +193,16 @@ const getTags = function () {
 
 /**
  * 根据标签获取文章
- * @param data
+ * @param page 页码
+ * @param tag 标签名
  * @returns {Promise<AxiosResponse<any>>}
  */
-const getArticlesByTag = function (data) {
+const getArticlesByTag = function (page, tag) {
   const url = config.getArticlesByTag
+  const data = {
+    p: page,
+    t: tag
+  }
   return axios
     .get(url, {
       params: data
@@ -199,11 +233,16 @@ const getStatistics = function () {
 
 /**
  * 获取上下翻页文章
- * @param data
+ * @param articleId 文章ID
+ * @param direction 翻页方向 0左 1右
  * @returns {Promise<AxiosResponse<any>>}
  */
-const pageTurning = function (data) {
+const pageTurning = function (articleId, direction) {
   const url = config.pageTurning
+  const data = {
+    id: articleId,
+    d: direction
+  }
   return axios
     .get(url, {
       params: data
@@ -216,10 +255,15 @@ const pageTurning = function (data) {
     })
 }
 
-const addComment = function (data) {
+/**
+ * 新增评论
+ * @param comment 评论对象
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+const addComment = function (comment) {
   const url = config.addComment
   return axios
-    .post(url, data)
+    .post(url, comment)
     .then((res) => {
       return Promise.resolve(res.data)
     })
@@ -228,6 +272,10 @@ const addComment = function (data) {
     })
 }
 
+/**
+ * 检验匿名用户是否存在
+ * @returns {Promise<AxiosResponse<any>>}
+ */
 const checkUser = function () {
   const url = config.checkUser
   return axios
@@ -240,8 +288,16 @@ const checkUser = function () {
     })
 }
 
-const updateCommentCount = function (data) {
+/**
+ * 更新文章评论数
+ * @param articleId 文章ID
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+const updateCommentCount = function (articleId) {
   const url = config.updateCommentCount
+  const data = {
+    articleId
+  }
   return axios
     .post(url, data)
     .then((res) => {

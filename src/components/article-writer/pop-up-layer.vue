@@ -212,11 +212,8 @@
         article.category = this.value
         // 转化为字符串
         article.tag = this.tags.toString() === '' ? undefined : this.tags.join()
-        const data = {
-          article: article
-        }
         if (article.article_id) {
-          updateArticle(data)
+          updateArticle(article)
             .then((res) => {
               if (res.code === 0) {
                 this.updateArticleTime()
@@ -236,7 +233,7 @@
               console.error('内部错误: ' + e.toString())
             })
         } else {
-          addArticle(data)
+          addArticle(article)
             .then((res) => {
               if (res.code === 0) {
                 this.updateArticleTime()

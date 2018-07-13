@@ -105,7 +105,7 @@ const deleteArticle = function (id) {
   return query(sql, id)
 }
 
-// 搜索一篇文章
+// 搜索文章
 const searchArticle = function (title, page, pageCount) {
   title = `%${title}%`
   page = (page - 1) * pageCount

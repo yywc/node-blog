@@ -78,11 +78,7 @@
         }
       },
       _getAllArticle(page, category) {
-        const data = {
-          p: page,
-          c: category
-        }
-        getAllArticle(data)
+        getAllArticle(page, category)
           .then((res) => {
             if (res.code === 0) {
               this.articles = res.data.data
@@ -96,11 +92,7 @@
           })
       },
       _searchArticle(page, title) {
-        const data = {
-          p: page,
-          t: title
-        }
-        searchArticle(data)
+        searchArticle(page, title)
           .then((res) => {
             if (res.code === 0) {
               this.articles = res.data.data
