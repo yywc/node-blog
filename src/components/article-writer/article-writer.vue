@@ -197,9 +197,9 @@
       _getArticle(id) {
         getArticle(id)
           .then((res) => {
-            this.article = res.data.data[0]
+            this.article = res.data.data.article
             this.isLoaded = true
-            this.imgUrl = res.data.data[0].img
+            this.imgUrl = this.article.img
             this.styleObject = {
               background: `url(${res.data.data[0].img}) no-repeat center / cover`,
               borderRadius: '3px'

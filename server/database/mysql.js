@@ -100,10 +100,11 @@ const addArticle = function (article) {
   return query(sql, value)
 }
 
-// 删除一篇文章
+// 删除一篇文章及其评论
 const deleteArticle = function (id) {
-  const sql = 'DELETE FROM `blog_article` WHERE `article_id` = ?;'
-  return query(sql, id)
+  let sql = 'DELETE FROM `blog_article` WHERE `article_id` = ?;'
+  sql += 'DELETE FROM `blog_comment` WHERE `article_id` = ?'
+  return query(sql, [id, id])
 }
 
 // 搜索文章

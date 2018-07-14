@@ -223,11 +223,11 @@
       _getArticle(articleId, page, pageCount) {
         getArticle(articleId, page, pageCount)
           .then((res) => {
-            this.article = res.data.data[0]
+            this.article = res.data.data.article
             this.updateArticleTime()
-            if (res.data.data.length > 1) {
+            if (res.data.data.comment.length > 0) {
               this.showComment = true
-              this.commentList = res.data.data
+              this.commentList = res.data.data.comment
             }
             this.page = res.data
             this.showImg = !!this.article.img

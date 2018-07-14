@@ -18,8 +18,11 @@ module.exports = async (ctx) => {
     const res = await mysql.getArticle(articleId, p, pc)
     debug(res)
     ctx.state.data = {
-      data: res[0],
-      totalCount: res[1][0]['COUNT(`article_id`)'],
+      data: {
+        article: res[0][0],
+        comment: res[1]
+      },
+      totalCount: res[2][0]['COUNT(`article_id`)'],
       currentPage: p,
       pageCount: pc
     }
