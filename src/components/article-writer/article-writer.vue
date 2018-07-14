@@ -158,7 +158,7 @@
       })
       this.id = this.$route.params.id
       if (this.id) {
-        this._getArticle({ articleId: this.id })
+        this._getArticle(this.id)
         if (this.article.img) {
         }
       } else {
@@ -266,7 +266,7 @@
       },
       _deleteArticle() {
         if (this.id) {
-          deleteArticle({ article_id: this.id })
+          deleteArticle(this.id)
             .then((res) => {
               if (res.code === 0) {
                 this.updateArticleTime()

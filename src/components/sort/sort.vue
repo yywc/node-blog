@@ -81,7 +81,7 @@
     },
     created() {
       this._getTags()
-      this._getAllArticle(this.currentPage, this.pageCount, this.category)
+      this._getAllArticle(this.currentPage, this.category, this.pageCount)
     },
     methods: {
       toggleFold(index) {
@@ -153,13 +153,8 @@
       getArticlePath(article) {
         return `/article/${article.article_id}`
       },
-      _getAllArticle(page, pageCount, category) {
-        const data = {
-          p: page,
-          pc: pageCount,
-          c: category
-        }
-        getAllArticle(data)
+      _getAllArticle(page, category, pageCount) {
+        getAllArticle(page, category, pageCount)
           .then((res) => {
             this.articles = res.data.data
             for (let article of res.data.data) {

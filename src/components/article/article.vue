@@ -112,6 +112,8 @@
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
 
+  const PAGE_COUNT = 10
+
   export default {
     name: 'Article',
     components: {
@@ -166,14 +168,8 @@
     created() {
       this.articleId = parseInt(this.$route.params.id)
       this.init()
-      this._getArticle({
-        articleId: this.articleId,
-        p: 1,
-        pc: 10
-      })
-      this._updateCommentCount({
-        articleId: this.articleId
-      })
+      this._getArticle(this.articleId, 1, PAGE_COUNT)
+      updateCommentCount(this.articleId).then()
     },
     mounted() {
       this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
@@ -181,19 +177,8 @@
       document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
     },
     methods: {
-      _updateCommentCount(data) {
-        updateCommentCount(data)
-          .then()
-          .catch((e) => {
-            console.error('内部错误: ' + e)
-          })
-      },
       handleCurrentChange(e) {
-        this._getArticle({
-          articleId: this.articleId,
-          p: e,
-          pc: 10
-        })
+        this._getArticle(this.articleId, e, PAGE_COUNT)
       },
       shrinkImg(e) {
         this.showLargeImg = false
@@ -215,10 +200,7 @@
         })
       },
       togglePage(direction) {
-        pageTurning({
-          id: this.articleId,
-          d: direction
-        })
+        pageTurning(this.articleId, direction)
           .then((res) => {
             if (res.data.length === 0) {
               this.$message({
@@ -238,8 +220,8 @@
             console.error('内部错误: ' + e)
           })
       },
-      _getArticle(data) {
-        getArticle(data)
+      _getArticle(articleId, page, pageCount) {
+        getArticle(articleId, page, pageCount)
           .then((res) => {
             this.article = res.data.data[0]
             this.updateArticleTime()

@@ -7,9 +7,9 @@ const debug = require('debug')('blog-server:delete-article')
 
 module.exports = async (ctx) => {
   if (ctx.user) {
-    const { article_id } = ctx.request.body
+    const { articleId } = ctx.request.body
     try {
-      await mysql.deleteArticle(article_id)
+      await mysql.deleteArticle(articleId)
       ctx.state.data = {
         msg: '删除文章成功'
       }

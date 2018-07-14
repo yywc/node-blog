@@ -29,11 +29,7 @@ const articleMixin = {
   },
   methods: {
     _getAllArticle(page, category) {
-      const data = {
-        p: page,
-        c: category
-      }
-      getAllArticle(data)
+      getAllArticle(page, category)
         .then((res) => {
           if (res.code === 0) {
             this.articles = res.data.data
