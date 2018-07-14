@@ -16,6 +16,7 @@ module.exports = async (ctx) => {
   pc = pc !== null && pc !== undefined ? parseInt(pc) : config.PAGE_COUNT + 2
   try {
     const res = await mysql.getArticle(articleId, p, pc)
+    debug(res)
     ctx.state.data = {
       data: res[0],
       totalCount: res[1][0]['COUNT(`article_id`)'],
