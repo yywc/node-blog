@@ -1,5 +1,6 @@
 <template>
   <el-pagination
+    id="pagination"
     v-if="page.totalCount > page.pageCount"
     background
     :page-size="page.pageCount"
@@ -12,12 +13,23 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { setDataV } from '@/assets/js/util'
+
   export default {
     name: 'Pagination',
     props: {
       page: {
         type: Object,
         required: true
+      }
+    },
+    watch: {
+      page(newVal) {
+        if (newVal.totalCount > newVal.pageCount) {
+          this.$nextTick(() => {
+            setDataV(document.getElementById('pagination'))
+          })
+        }
       }
     },
     methods: {
@@ -28,7 +40,7 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "~@/assets/stylus/mixin"
 
   html

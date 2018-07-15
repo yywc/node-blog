@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div>
     <the-nav class="nav-wrapper"></the-nav>
     <div class="main">
       <div class="article-wrapper">
@@ -10,11 +10,11 @@
         @handleCurrentChange="handleCurrentChange">
       </pagination>
     </div>
-  </section>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import { articleMixin } from '@/assets/js/mixin'
+  import { articleMixin } from '@/assets/js/mixin/mixin'
   import { mapGetters } from 'vuex'
 
   export default {

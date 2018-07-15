@@ -71,6 +71,7 @@ const removeElementFromArray = function (array, element) {
   }
   return _array
 }
+
 const _vendor = (function () {
   const eleStyle = document.createElement('div').style
   // 以 transform 为例子，只是用来判断加前缀，并不是只支持这一个属性。
@@ -89,13 +90,21 @@ const _vendor = (function () {
   }
   return false
 })()
-
 const prefixStyle = function (style) {
   if (_vendor) {
     if (_vendor === 'standard') {
       return style
     }
     return _vendor + style.charAt(0).toUpperCase() + style.substr(1)
+  }
+}
+
+// 给 eleme-ui 组件设置 scoped 标志
+const setDataV = function (element) {
+  const dataV = element.attributes[0].name
+  const elements = element.getElementsByTagName('*')
+  for (let element of elements) {
+    element.setAttribute(dataV, '')
   }
 }
 
@@ -107,5 +116,6 @@ export {
   removeClass,
   toggleClass,
   removeElementFromArray,
-  prefixStyle
+  prefixStyle,
+  setDataV
 }

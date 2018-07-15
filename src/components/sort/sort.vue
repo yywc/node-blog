@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div>
     <the-nav class="nav-wrapper"></the-nav>
     <div class="main">
       <sub-header title="标签"></sub-header>
@@ -45,7 +45,7 @@
         </transition-group>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">

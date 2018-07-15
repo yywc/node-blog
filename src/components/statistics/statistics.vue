@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div>
     <the-nav class="nav-wrapper"></the-nav>
     <div class="main">
       <sub-header title="统计"></sub-header>
@@ -12,7 +12,7 @@
         <p><em>评论数量</em>：{{ commentCount }} 篇</p>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">

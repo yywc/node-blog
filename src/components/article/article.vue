@@ -1,5 +1,5 @@
 <template>
-  <section class="main">
+  <div class="main" id="main">
     <router-link
       class="edit"
       v-if="$isLogin"
@@ -92,7 +92,7 @@
       v-show="showLargeImg">
       <img id="largeImg">
     </div>
-  </section>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -103,6 +103,7 @@
   import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
+  import { setDataV } from '@/assets/js/util'
 
   const PAGE_COUNT = 10
 
@@ -162,11 +163,9 @@
       this.init()
       this._getArticle(this.articleId, 1, PAGE_COUNT)
       updateCommentCount(this.articleId).then()
-    },
-    mounted() {
-      this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
-      // 改造 ui 框架样式
-      document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
+      this.$nextTick(() => {
+        setDataV(document.getElementById('main'))
+      })
     },
     methods: {
       handleCurrentChange(e) {

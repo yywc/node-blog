@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box" id="box">
     <h1 class="title">
       <em>发布博客</em>
       <i class="iconfont icon-close" @click="close"></i>
@@ -69,7 +69,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { removeElementFromArray } from '@/assets/js/util'
+  import { removeElementFromArray, setDataV } from '@/assets/js/util'
   import { updateArticle, addArticle, getTags } from '@/api/index'
   import { mapMutations } from 'vuex'
 
@@ -102,11 +102,9 @@
     },
     created() {
       this._getTags()
-    },
-    mounted() {
-      // 改造 ui 框架样式
-      this.dataV = document.getElementsByClassName('box')[0].attributes[0].name
-      document.getElementsByClassName('el-input__inner')[0].setAttribute(this.dataV, '')
+      this.$nextTick(() => {
+        setDataV(document.getElementById('box'))
+      })
     },
     methods: {
       ...mapMutations({

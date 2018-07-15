@@ -1,6 +1,6 @@
 <!--按标签查看文章页面-->
 <template>
-  <section>
+  <div>
     <the-nav class="nav-wrapper"></the-nav>
     <div class="main">
       <div class="article-wrapper">
@@ -10,7 +10,7 @@
         @handleCurrentChange="handleCurrentChange">
       </pagination>
     </div>
-  </section>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">

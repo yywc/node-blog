@@ -7,7 +7,6 @@ import axios from 'axios'
 // import fastclick from 'fastclick'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'nprogress/nprogress.css'
-import '@/assets/stylus/index.styl'
 import api from '@/api/config'
 
 export default function (Vue, router) {

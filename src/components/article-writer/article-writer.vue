@@ -1,5 +1,5 @@
 <template>
-  <section class="main">
+  <div class="main" id="main">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>文章编辑</el-breadcrumb-item>
@@ -86,7 +86,7 @@
         <el-button type="primary" @click="_deleteArticle">确 定</el-button>
       </span>
     </el-dialog>
-  </section>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -95,6 +95,7 @@
   import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
+  import { setDataV } from '@/assets/js/util'
 
   const TIMER_DELAY = 233
 
@@ -154,6 +155,9 @@
       } else {
         this.isLoaded = true
       }
+      this.$nextTick(() => {
+        setDataV(document.getElementById('main'))
+      })
     },
     mounted() {
       const editor = this.$refs.textareaContent
@@ -161,10 +165,6 @@
       // 先添加滚动事件，当某一个滚动了的时候移除另一个的滚动，之后再添加移除，防止循环滚动
       editor.addEventListener('scroll', this.scroll)
       content.addEventListener('scroll', this.scroll)
-      this.dataV = document.getElementsByClassName('main')[0].attributes[0].name
-      // 改造 ui 框架样式
-      document.getElementsByClassName('el-breadcrumb__inner')[0].setAttribute(this.dataV, '')
-      document.getElementsByClassName('el-upload-dragger')[0].setAttribute(this.dataV, '')
     },
     methods: {
       deleteUploadImg() {

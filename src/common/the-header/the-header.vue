@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header" id="header">
     <el-row
       class="row-bg _row-bg_"
       type="flex"
@@ -56,6 +56,7 @@
   import Cookies from 'js-cookie'
   import { logout } from '@/api/index'
   import { mapGetters } from 'vuex'
+  import { setDataV } from '@/assets/js/util'
 
   export default {
     name: 'TheHeader',
@@ -68,6 +69,11 @@
       ...mapGetters([
         'articleTitleOfSearch'
       ])
+    },
+    created() {
+      this.$nextTick(() => {
+        setDataV(document.getElementById('header'))
+      })
     },
     watch: {
       // 动态改变搜索框里的内容
@@ -115,7 +121,7 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "~@/assets/stylus/mixin"
 
   .header
