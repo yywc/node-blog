@@ -8,8 +8,7 @@
           class="tag"
           :to="{path: '/tag/' + encodeURIComponent(tag)}"
           v-for="(tag,index) in tags"
-          :key="index"
-        >
+          :key="index">
           <em class="dark">tag</em>
           <em class="light">{{tag}}</em>
         </router-link>
@@ -18,8 +17,7 @@
       <div
         class="date"
         v-for="(articleArray, index) in articles"
-        :key="index"
-      >
+        :key="index">
         <button
           class="date-title"
           @click="toggleFold(index)">
@@ -31,14 +29,12 @@
           @enter="enter"
           @after-enter="afterEnter"
           @leave="leave"
-          @after-leave="afterLeave"
-        >
+          @after-leave="afterLeave">
           <router-link
             class="date-article"
             v-for="article in articleArray"
             :key="article.article_id"
-            :to="getArticlePath(article)"
-          >
+            :to="getArticlePath(article)">
             <em class="article-time">{{ article.create_time.substr(5,5) }}</em>
             <em class="article-title">{{ article.title }}</em>
             <em class="article-meta">
@@ -57,7 +53,7 @@
   import SubHeader from '@/common/sub-header/sub-header'
   import { getTags, getAllArticle } from '@/api/index'
   import animations from 'create-keyframe-animation'
-  import { prefixStyle, removeClass, hasClass, addClass } from '@/assets/js/utils'
+  import { prefixStyle, removeClass, hasClass, addClass } from '@/assets/js/util'
 
   const transform = prefixStyle('transform')
 

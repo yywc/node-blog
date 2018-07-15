@@ -3,33 +3,28 @@
     <el-row
       class="row-bg _row-bg_"
       type="flex"
-      align="middle"
-    >
+      align="middle">
       <el-col :span="7">
         <!--登录用户编辑-->
         <a
           class="user"
           href="javascript:void(0);"
-          @click="toPath"
-        >
+          @click="toPath">
               <span class="avatar">
                 <img
                   class="avatar-pic"
                   src="@/assets/imgs/avatar.jpg"
-                  alt="眼已望穿"
-                >
+                  alt="眼已望穿">
               </span>
           <span class="user-name">眼已望穿</span>
         </a>
         <router-link
           class="btn-to-writer"
           to="/writer"
-          v-if="$isLogin"
-        >
+          v-if="$isLogin">
           <el-button
             round
-            type="success"
-          >
+            type="success">
             写文章
           </el-button>
         </router-link>
@@ -39,16 +34,17 @@
       </el-col>
       <el-col :span="7">
         <input
-          class="search-input" type="text" placeholder="搜索" v-model.trim="articleTitle"
-          @keydown.enter="handleEnter"
-        >
+          class="search-input"
+          type="text"
+          placeholder="搜索"
+          v-model.trim="articleTitle"
+          @keydown.enter="handleEnter">
         <i class="iconfont icon-search" @click="search"></i>
         <el-button
           class="logout"
           type="text"
           v-if="$isLogin"
-          @click="_logout"
-        >
+          @click="_logout">
           <i class="iconfont icon-logout"></i>退出
         </el-button>
       </el-col>

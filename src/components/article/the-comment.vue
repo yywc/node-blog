@@ -4,50 +4,47 @@
     ref="validateForm"
     label-width="85px"
     class="comment-ruleForm"
-    label-position="left"
-  >
+    label-position="left">
     <el-form-item
       label="昵称"
       prop="nickname"
-      :rules="rules.nickname"
-    >
+      :rules="rules.nickname">
       <el-input
         type="contact"
         v-model="validateForm.nickname"
         auto-complete="off"
         placeholder="请输入您的称呼"
-        style="width: 200px;"
-      >
+        style="width: 200px;">
       </el-input>
     </el-form-item>
     <el-form-item
       label="联系方式"
       prop="contact"
-      :rules="rules.contact"
-    >
+      :rules="rules.contact">
       <el-input
         type="nickname"
         v-model="validateForm.contact"
         auto-complete="off"
         placeholder="请输入您的联系方式(手机/QQ/微信/邮箱)"
-        style="width: 300px;"
-      >
+        style="width: 300px;">
       </el-input>
     </el-form-item>
     <el-form-item
       label="评论内容"
       prop="comment"
-      :rules="rules.comment"
-    >
+      :rules="rules.comment">
       <el-input
         type="textarea"
         v-model="validateForm.comment"
-        auto-complete="off"
-      >
+        auto-complete="off">
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="success" @click="submitForm('validateForm')">发表评论</el-button>
+      <el-button
+        type="success"
+        @click="submitForm('validateForm')">
+        发表评论
+      </el-button>
     </el-form-item>
   </el-form>
 </template>

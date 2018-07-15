@@ -14,8 +14,7 @@
         :multiple="false"
         :on-success="uploadSuccess"
         :on-error="uploadFail"
-        :class="{narrow: showImg}"
-      >
+        :class="{narrow: showImg}">
         <p class="el-article-theme">文章主题图</p>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -23,16 +22,14 @@
       <div
         class="upload-img"
         v-show="showImg"
-        :style="styleObject"
-      >
+        :style="styleObject">
         <div class="icon-wrapper">
           <button class="btn-upload">
             <i class="iconfont icon-camera"></i>
           </button>
           <button
             class="btn-delete"
-            @click="deleteUploadImg"
-          >
+            @click="deleteUploadImg">
             <i class="iconfont icon-delete"></i>
           </button>
         </div>
@@ -44,17 +41,15 @@
         type="text"
         title="标题"
         ref="articleTitle"
-        v-model.trim.lazy="article.title"
-      >
-      <button
-        class="btn-delete"
-      >
-        <el-button type="text" @click="centerDialogVisible = true">删除</el-button>
+        v-model.trim.lazy="article.title">
+      <button class="btn-delete">
+        <el-button
+          type="text"
+          @click="centerDialogVisible = true">
+          删除
+        </el-button>
       </button>
-      <button
-        class="btn-submit"
-        @click="submitArticle"
-      >
+      <button class="btn-submit" @click="submitArticle">
         发布
       </button>
     </div>
@@ -63,33 +58,28 @@
           class="editor"
           title="文章内容"
           ref="textareaContent"
-          v-model.trim="article.content"
-        >
+          v-model.trim="article.content">
         </textarea>
       <p
         class="markdown-content"
         ref="markdownContent"
-        v-html="getContent"
-      >
+        v-html="getContent">
       </p>
     </div>
     <div
       class="layer-wrapper"
-      v-show="showPopUpLayer"
-    >
+      v-show="showPopUpLayer">
       <pop-up-layer
         @close="closeLayer"
         :article="this.article"
-        v-if="isLoaded"
-      >
+        v-if="isLoaded">
       </pop-up-layer>
     </div>
     <el-dialog
       title="提示"
       :visible.sync="centerDialogVisible"
       width="30%"
-      center
-    >
+      center>
       <span>确定要删除该文章吗?</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>

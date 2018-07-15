@@ -5,8 +5,7 @@
         class="bg"
         src="~@/assets/imgs/header.png"
         alt="无欲则刚"
-        @click="extraScene"
-      >
+        @click="extraScene">
     </div>
     <nav class="nav">
       <ul class="menu">

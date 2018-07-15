@@ -6,10 +6,8 @@
         <article-item :articles="this.articles"></article-item>
       </div>
       <pagination
-        ref="pagination"
-        :page="page"
-        @handleCurrentChange="handleCurrentChange"
-      >
+        ref="pagination" :page="page"
+        @handleCurrentChange="handleCurrentChange">
       </pagination>
     </div>
   </section>

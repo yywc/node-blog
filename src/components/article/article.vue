@@ -3,8 +3,8 @@
     <router-link
       class="edit"
       v-if="$isLogin"
-      :to="routerPath"
-    >编辑
+      :to="routerPath">
+      编辑
     </router-link>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -13,8 +13,8 @@
     <div
       class="upload-img"
       v-show="showImg"
-      :style="styleObject"
-    ></div>
+      :style="styleObject">
+    </div>
     <h1 class="title">
       {{ article.title }}
     </h1>
@@ -26,20 +26,18 @@
     <p
       class="markdown-content"
       id="markdownContent"
-      v-html="getContent"
-    ></p>
+      v-html="getContent">
+    </p>
     <div class="page">
       <span
         class="prev"
-        @click="togglePage(leftPage)"
-      >
+        @click="togglePage(leftPage)">
         <i class="iconfont icon-left-arrow"></i>
         上一篇
       </span>
       <span
         class="next"
-        @click="togglePage(rightPage)"
-      >
+        @click="togglePage(rightPage)">
         下一篇
         <i class="iconfont icon-right-arrow"></i>
       </span>
@@ -49,8 +47,7 @@
         class="tag"
         :to="{path: '/tag/' + encodeURIComponent(tag)}"
         v-for="(tag,index) in articleTag"
-        :key="index"
-      >
+        :key="index">
         <em class="dark">tag</em>
         <em class="light">{{tag}}</em>
       </router-link>
@@ -59,8 +56,7 @@
       <img
         class="user-avatar"
         src="~@/assets/imgs/avatar.jpg"
-        alt="眼已望穿"
-      >
+        alt="眼已望穿">
       <div class="user-info">
         <p class="user-name">眼已望穿</p>
         <p class="user-desc">如月之恒，如日之升</p>
@@ -75,30 +71,26 @@
         <comment-item
           :comment-item="item"
           v-for="(item, index) in commentList"
-          :key="index"
-        >
+          :key="index">
         </comment-item>
       </ol>
       <div class="pagination-wrapper">
         <pagination
           :page="page"
-          @handleCurrentChange="handleCurrentChange"
-        >
+          @handleCurrentChange="handleCurrentChange">
         </pagination>
       </div>
     </div>
     <the-comment
       v-if="!$isLogin"
-      :articleId="articleId"
-    >
+      :articleId="articleId">
     </the-comment>
     <!--点击放大图片-->
     <div
       class="img-large"
       @click="shrinkImg"
-      v-show="showLargeImg"
-    >
-      <img id="largeImg" src="" alt="">
+      v-show="showLargeImg">
+      <img id="largeImg">
     </div>
   </section>
 </template>

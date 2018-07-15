@@ -6,22 +6,19 @@
     <span class="dividing">|</span>
     <a
       href="https://github.com/yywc"
-      target="_blank"
-    >
+      target="_blank">
       <i class="iconfont icon-github"></i>
     </a>
     <span class="dividing">|</span>
     <a
       href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=gyjyywc@gmail.com"
-      target="_blank"
-    >
+      target="_blank">
       <i class="iconfont icon-email"></i>
     </a>
     <span class="dividing">|</span>
     <a
       href="https://weibo.com/u/3294217170"
-      target="_blank"
-    >
+      target="_blank">
       <i class="iconfont icon-microblog"></i>
     </a>
   </footer>

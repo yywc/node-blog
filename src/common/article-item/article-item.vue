@@ -3,16 +3,15 @@
     <article
       class="article"
       v-for="article in articles"
-      :key="article.id"
-    >
+      :key="article.id">
       <header class="line">
         <i class="iconfont icon-book"></i>
       </header>
       <h1 class="title">
         <router-link
           class="title-router"
-          :to="getArticlePath(article)"
-        >{{ article.title }}
+          :to="getArticlePath(article)">
+          {{ article.title }}
         </router-link>
       </h1>
       <div class="meta">
@@ -24,8 +23,7 @@
       <router-link
         class="img-wrapper"
         v-if="article.img"
-        :to="getArticlePath(article)"
-      >
+        :to="getArticlePath(article)">
         <span class="img" :style="getBackground(article)"></span>
       </router-link>
     </article>

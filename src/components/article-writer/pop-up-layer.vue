@@ -2,11 +2,7 @@
   <div class="box">
     <h1 class="title">
       <em>发布博客</em>
-      <i
-        class="iconfont icon-close"
-        @click="close"
-      >
-      </i>
+      <i class="iconfont icon-close" @click="close"></i>
     </h1>
     <div>
       <p class="category">
@@ -14,14 +10,12 @@
         <el-select
           class="select-category"
           v-model="value"
-          placeholder="请选择"
-        >
+          placeholder="请选择">
           <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
-            :value="item.value"
-          >
+            :value="item.value">
           </el-option>
         </el-select>
       </p>
@@ -34,40 +28,31 @@
             class="name"
             contenteditable="false"
             @keydown.enter="handlerEnter"
-            @blur="handlerBlur"
-          >
+            @blur="handlerBlur">
             {{tag}}
           </span>
-          <i
-            class="iconfont icon-close"
-            @click="handlerClick"
-          ></i>
+          <i class="iconfont icon-close" @click="handlerClick"></i>
         </div>
         <button
           class="add-tag"
           id="addTag"
-          @click="addTag"
-        >
-          <i class="el-icon-plus"></i>添加标签
+          @click="addTag">
+          <i class="el-icon-plus"></i>
+          添加标签
         </button>
         <div class="tag-wrapper">
           <div
             class="tag-check"
             v-for="(name, index) in tagList"
-            :key="index"
-          >
+            :key="index">
             <label class="check-label" @click.stop="checkTag">
               <input
                 class="tag-value"
                 type="checkbox"
                 :value="name"
                 v-model="tags"
-                disabled
-              >
-              <i
-                class="iconfont icon-check"
-                v-show="showCheckedIcon(name)"
-              ></i>
+                disabled>
+              <i class="iconfont icon-check" v-show="showCheckedIcon(name)"></i>
               <span class="tag-name">{{ name }}</span>
             </label>
           </div>
@@ -75,10 +60,8 @@
       </div>
     </div>
     <div class="button-wrapper">
-      <button
-        class="btn-cancel"
-        @click="close"
-      >取消
+      <button class="btn-cancel" @click="close">
+        取消
       </button>
       <button class="btn-submit" @click.once="submit">发布</button>
     </div>
@@ -86,7 +69,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { removeElementFromArray } from '@/assets/js/utils'
+  import { removeElementFromArray } from '@/assets/js/util'
   import { updateArticle, addArticle, getTags } from '@/api/index'
   import { mapMutations } from 'vuex'
 

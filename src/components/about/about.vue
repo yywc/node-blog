@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div>
     <the-nav class="nav-wrapper"></the-nav>
     <div class="main">
       <sub-header title="简介"></sub-header>
@@ -10,7 +10,7 @@
         <p><em>技术</em>：后端 node.js，前端 vue.js，数据库 mysql</p>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
