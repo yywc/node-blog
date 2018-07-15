@@ -32,13 +32,13 @@ const query = function (sql, values) {
 
 // 用户登录
 const login = function (loginName, password) {
-  const sql = 'SELECT * FROM `blog_user` WHERE `name` = ? AND `password` = ? LIMIT 1;'
+  const sql = 'SELECT `uid` FROM `blog_user` WHERE `name` = ? AND `password` = ? LIMIT 1;'
   return query(sql, [loginName, password])
 }
 
 // jwt 检验用户是否登录
 const checkLogin = function (uid, nickname) {
-  const sql = 'SELECT * FROM `blog_user` WHERE `uid` = ? AND `nickname` = ? LIMIT 1;'
+  const sql = 'SELECT `uid` FROM `blog_user` WHERE `uid` = ? AND `nickname` = ? LIMIT 1;'
   return query(sql, [uid, nickname])
 }
 
@@ -76,9 +76,7 @@ const getAllArticle = function (page, pageCount, category) {
 const getArticle = function (id, page, pageCount) {
   page = (page - 1) * pageCount
   let sql = 'SELECT * FROM `blog_article` WHERE article_id=?;'
-  sql += 'SELECT * FROM `blog_comment` ' +
-    'LEFT OUTER JOIN `blog_article`' +
-    'ON blog_article.article_id = blog_comment.article_id WHERE blog_comment.article_id=? ' +
+  sql += 'SELECT * FROM `blog_comment` WHERE article_id=? ' +
     'ORDER BY `create_comment_time` ASC LIMIT ?,?;'
   sql += 'SELECT COUNT(`article_id`) FROM `blog_comment` WHERE `article_id`=?;'
   return query(sql, [id, id, page, pageCount, id])
@@ -171,7 +169,7 @@ const addUser = function (nickname, contact, ipAddress) {
 
 // 查询用户
 const searchUser = function (ipAddress) {
-  const sql = 'SELECT * FROM `blog_user` WHERE `ip_address` = ? LIMIT 1'
+  const sql = 'SELECT `uid` FROM `blog_user` WHERE `ip_address` = ? LIMIT 1'
   return query(sql, [ipAddress])
 }
 
