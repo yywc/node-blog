@@ -24,6 +24,9 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  externals: {
+    'element-ui': 'ElementUI'
+  },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
