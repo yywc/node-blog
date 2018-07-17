@@ -4,14 +4,14 @@ const config = {
   ENV: production,
   PORT: 3000,
   PAGE_COUNT: 8,
-  JWT_SECRET: '?GyjYywc.1993$',
+  JWT_SECRET: '?asdDGF46%521$',
   AUTH_SECRET: '@!asfg.;]13',
   DOMAIN: production ? 'iwangshu.com' : 'localhost',
   // 数据库配置
   DATABASE_CONFIG: {
-    DATABASE: production ? '' : 'nodeblog',
-    USERNAME: production ? '' : 'bloguser',
-    PASSWORD: production ? '' : 'guo5664332',
+    DATABASE: production ? 'nodeblog' : 'nodeblog',
+    USERNAME: production ? 'bloguser' : 'bloguser',
+    PASSWORD: production ? '123456' : '123456',
     PORT: '3306',
     HOST: production ? '' : '119.29.101.186',
     MULTIPLE_STATEMENTS: true,
