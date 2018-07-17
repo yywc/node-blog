@@ -11,7 +11,7 @@ import init from './assets/js/init'
 Vue.config.productionTip = false
 
 // 校验是否登录
-axios.get('api/check-login')
+axios.get('/api/check-login')
   .then((res) => {
     // 全局挂载登录与否状态
     Vue.prototype.$isLogin = res.data.data.isLogin

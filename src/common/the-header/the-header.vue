@@ -53,7 +53,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Cookies from 'js-cookie'
   import { logout } from '@/api/index'
   import { mapGetters } from 'vuex'
   import { setDataV } from '@/assets/js/util'
@@ -92,7 +91,6 @@
             .then((res) => {
               console.log(res)
               if (res.code === 0) {
-                Cookies.remove('user')
                 location.href = '/'
               } else {
                 console.error(res.data.msg)

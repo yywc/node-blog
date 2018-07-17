@@ -32,13 +32,13 @@ const query = function (sql, values) {
 
 // 用户登录
 const login = function (loginName, password) {
-  const sql = 'SELECT `uid` FROM `blog_user` WHERE `name` = ? AND `password` = ? LIMIT 1;'
+  const sql = 'SELECT * FROM `blog_user` WHERE `name` = ? AND `password` = ? LIMIT 1;'
   return query(sql, [loginName, password])
 }
 
 // jwt 检验用户是否登录
 const checkLogin = function (uid, nickname) {
-  const sql = 'SELECT `uid` FROM `blog_user` WHERE `uid` = ? AND `nickname` = ? LIMIT 1;'
+  const sql = 'SELECT * FROM `blog_user` WHERE `uid` = ? AND `nickname` = ? LIMIT 1;'
   return query(sql, [uid, nickname])
 }
 
@@ -169,7 +169,7 @@ const addUser = function (nickname, contact, ipAddress) {
 
 // 查询用户
 const searchUser = function (ipAddress) {
-  const sql = 'SELECT `uid` FROM `blog_user` WHERE `ip_address` = ? LIMIT 1'
+  const sql = 'SELECT * FROM `blog_user` WHERE `ip_address` = ? LIMIT 1'
   return query(sql, [ipAddress])
 }
 

@@ -101,10 +101,12 @@ const prefixStyle = function (style) {
 
 // 给 eleme-ui 组件设置 scoped 标志
 const setDataV = function (element) {
-  const dataV = element.attributes[0].name
-  const elements = element.getElementsByTagName('*')
-  for (let element of elements) {
-    element.setAttribute(dataV, '')
+  if (element) {
+    const dataV = element.attributes[0].name
+    const elements = element.getElementsByTagName('*')
+    for (let element of elements) {
+      element.setAttribute(dataV, '')
+    }
   }
 }
 

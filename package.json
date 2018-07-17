@@ -12,9 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "element-ui": "^2.3.3",
     "fastclick": "^1.0.6",
-    "vue": "^2.5.2",
     "vue-lazyload": "^1.2.2",
     "vue-router": "^3.0.1",
     "markdown-it": "^8.4.1",

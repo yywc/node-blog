@@ -1,5 +1,6 @@
 <template>
   <el-form
+    id="ruleForm"
     :model="validateForm"
     ref="validateForm"
     label-width="85px"
@@ -51,6 +52,7 @@
 
 <script type="text/ecmascript-6">
   import { addComment, checkUser } from '@/api/index'
+  import { setDataV } from '@/assets/js/util'
 
   export default {
     name: 'TheComment',
@@ -100,6 +102,9 @@
       if (!this.$isLogin) {
         this._checkUser()
       }
+      this.$nextTick(() => {
+        setDataV(document.getElementById('ruleForm'))
+      })
     },
     methods: {
       _checkUser() {

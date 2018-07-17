@@ -5,7 +5,7 @@ import ElementUI from 'element-ui'
 import NProgress from 'nprogress'
 import axios from 'axios'
 // import fastclick from 'fastclick'
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 import 'nprogress/nprogress.css'
 import api from '@/api/config'
 

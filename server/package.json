@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "supervisor index.js",
     "start": "cross-env DEBUG=blog-server,blog-server:* NODE_ENV=development npm run dev",
+    "production": "pm2 start index.js --watch",
+    "pro": "cross-env DEBUG=blog-server,blog-server:* NODE_ENV=production npm run production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -19,7 +21,8 @@
     "lodash": "^4.17.10",
     "jsonwebtoken": "^8.3.0",
     "supervisor": "^0.12.0",
-    "cross-env": "^5.2.0"
+    "cross-env": "^5.2.0",
+    "koa-sslify": "^2.1.2"
   },
   "author": "",
   "license": "ISC"

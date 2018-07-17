@@ -6,7 +6,7 @@
       :to="routerPath">
       编辑
     </router-link>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb id="breadcrumb" separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>{{ article.title }}</el-breadcrumb-item>
     </el-breadcrumb>
@@ -164,7 +164,7 @@
       this._getArticle(this.articleId, 1, PAGE_COUNT)
       updateCommentCount(this.articleId).then()
       this.$nextTick(() => {
-        setDataV(document.getElementById('main'))
+        setDataV(document.getElementById('breadcrumb'))
       })
     },
     methods: {

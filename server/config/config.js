@@ -13,7 +13,7 @@ const config = {
     USERNAME: production ? 'bloguser' : 'bloguser',
     PASSWORD: production ? '123456' : '123456',
     PORT: '3306',
-    HOST: production ? '' : '119.29.101.186',
+    HOST: production ? '119.29.101.186' : '119.29.101.186',
     MULTIPLE_STATEMENTS: true,
     DATE_STRINGS: true
   },
@@ -24,7 +24,7 @@ const config = {
     domain: production ? 'iwangshu.com' : '', // 写cookie所在的域名
     httpOnly: true, // 是否只用于http请求中获取
     overwrite: true, // 是否允许重写
-    secure: production ? true : '',
+    secure: production ? '' : '',
     sameSite: production ? 'Strict' : '',
     signed: ''
   }
