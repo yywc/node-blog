@@ -15,6 +15,7 @@
         v-model="validateForm.nickname"
         auto-complete="off"
         placeholder="请输入您的称呼"
+        :disabled="disabledFlag"
         style="width: 200px;">
       </el-input>
     </el-form-item>
@@ -26,6 +27,7 @@
         type="nickname"
         v-model="validateForm.contact"
         auto-complete="off"
+        :disabled="disabledFlag"
         placeholder="请输入您的联系方式(手机/QQ/微信/邮箱)"
         style="width: 300px;">
       </el-input>
@@ -95,7 +97,8 @@
           nickname: '',
           contact: '',
           comment: ''
-        }
+        },
+        disabledFlag: false
       }
     },
     created() {
@@ -113,6 +116,7 @@
             if (res.code === 0 && res.data.length !== 0) {
               this.validateForm.nickname = res.data[0].nickname
               this.validateForm.contact = res.data[0].contact
+              this.disabledFlag = true
             }
           })
           .catch((e) => {
