@@ -72,12 +72,13 @@ const getAllArticle = function (page, category, pageCount) {
  * @param pageCount 评论每页显示条数
  * @returns {Promise<AxiosResponse<any>>}
  */
-const getArticle = function (articleId, page, pageCount) {
+const getArticle = function (articleId, page, pageCount, direction) {
   const url = config.getArticle
   const data = {
     articleId,
     p: page,
-    pc: pageCount
+    pc: pageCount,
+    direction
   }
   return axios
     .get(url, {

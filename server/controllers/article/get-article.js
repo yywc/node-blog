@@ -11,11 +11,11 @@ const debug = require('debug')('blog-server:get-article')
  * pc 每页显示条数
  */
 module.exports = async (ctx) => {
-  let { articleId, p, pc } = ctx.request.query
+  let { articleId, p, pc, direction } = ctx.request.query
   p = p !== null && p !== undefined ? parseInt(p) : 1
   pc = pc !== null && pc !== undefined ? parseInt(pc) : config.PAGE_COUNT + 2
   try {
-    const res = await mysql.getArticle(articleId, p, pc)
+    const res = await mysql.getArticle(articleId, p, pc, direction)
     ctx.state.data = {
       data: {
         article: res[0][0],

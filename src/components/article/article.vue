@@ -31,13 +31,13 @@
     <div class="page">
       <span
         class="prev"
-        @click="togglePage(leftPage)">
+        @click="_getArticle(articleId, 1, 10, leftPage)">
         <i class="iconfont icon-left-arrow"></i>
         上一篇
       </span>
       <span
         class="next"
-        @click="togglePage(rightPage)">
+        @click="_getArticle(articleId, 1, 10, rightPage)">
         下一篇
         <i class="iconfont icon-right-arrow"></i>
       </span>
@@ -99,7 +99,7 @@
   import TheComment from './the-comment'
   import CommentItem from './comment-item'
   import Pagination from '@/common/pagination/pagination'
-  import { getArticle, pageTurning, updateCommentCount } from '@/api/index'
+  import { getArticle, updateCommentCount } from '@/api/index'
   import { mapMutations } from 'vuex'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
@@ -118,8 +118,8 @@
       return {
         article: {},
         articleId: -1,
-        leftPage: 0,
-        rightPage: 1,
+        leftPage: 1,
+        rightPage: 2,
         showImg: false,
         styleObject: {},
         showLargeImg: false,
@@ -190,29 +190,8 @@
           }
         })
       },
-      togglePage(direction) {
-        pageTurning(this.articleId, direction)
-          .then((res) => {
-            if (res.data.length === 0) {
-              this.$message({
-                message: '没有更多数据了.'
-              })
-            } else {
-              this.article = res.data.data[0]
-              if (res.data.data.length > 1) {
-                this.showComment = true
-                this.commentList = res.data.data
-              }
-              this.page = res.data
-              this.$router.push('/article/' + res.data[0].article_id)
-            }
-          })
-          .catch((e) => {
-            console.error('内部错误: ' + e)
-          })
-      },
-      _getArticle(articleId, page, pageCount) {
-        getArticle(articleId, page, pageCount)
+      _getArticle(articleId, page, pageCount, direction) {
+        getArticle(articleId, page, pageCount, direction)
           .then((res) => {
             this.article = res.data.data.article
             this.updateArticleTime()
@@ -227,6 +206,9 @@
               height: `240px`,
               background: `url(${this.article.img}) no-repeat center / cover`,
               borderRadius: '5px'
+            }
+            if (direction) {
+              this.$router.push('/article/' + this.article.article_id)
             }
           })
           .catch((e) => {

@@ -73,9 +73,23 @@ const getAllArticle = function (page, pageCount, category) {
 }
 
 // 查看某一篇文章以及评论
-const getArticle = function (id, page, pageCount) {
+const getArticle = function (id, page, pageCount, direction) {
   page = (page - 1) * pageCount
-  let sql = 'SELECT * FROM `blog_article` WHERE article_id=?;'
+  let sql
+  if (direction) {
+    const LEFT_PAGE = 1
+    const RIGHT_PAGE = 2
+    switch (parseInt(direction)) {
+      case LEFT_PAGE:
+        sql = 'SELECT * FROM `blog_article` WHERE `article_id` < ? ORDER BY `article_id` DESC LIMIT 1;'
+        break
+      case RIGHT_PAGE:
+        sql = 'SELECT * FROM `blog_article` WHERE `article_id` > ? LIMIT 1;'
+        break
+    }
+  } else {
+    sql = 'SELECT * FROM `blog_article` WHERE article_id=?;'
+  }
   sql += 'SELECT * FROM `blog_comment` WHERE article_id=? ' +
     'ORDER BY `create_comment_time` ASC LIMIT ?,?;'
   sql += 'SELECT COUNT(`article_id`) FROM `blog_comment` WHERE `article_id`=?;'
@@ -139,7 +153,8 @@ const getStatistics = function () {
 
 // 前后翻页
 const pageTurning = function (id, direction) {
-  let sql = 'UPDATE `blog_article` SET `read_count` = `read_count` + 1 WHERE `article_id` = ?;'
+  let sql = 'SELECT * FROM `blog_comment` WHERE article_id=? ' +
+    'ORDER BY `create_comment_time` ASC LIMIT ?,?;'
   const LEFT_PAGE = 0
   const RIGHT_PAGE = 1
   switch (parseInt(direction)) {
@@ -150,6 +165,8 @@ const pageTurning = function (id, direction) {
       sql += 'SELECT * FROM `blog_article` WHERE `article_id` > ? LIMIT 1;'
       break
   }
+  sql += 'SELECT COUNT(`article_id`) FROM `blog_comment` WHERE `article_id`=?;'
+  sql += 'UPDATE `blog_article` SET `read_count` = `read_count` + 1 WHERE `article_id` = ?;'
   return query(sql, [id, id])
 }
 
