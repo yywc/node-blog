@@ -1,5 +1,6 @@
 -- 创建用户表
-CREATE TABLE IF NOT EXISTS blog_user (
+DROP TABLE IF EXISTS `blog_user`;
+CREATE TABLE `blog_user` (
   uid         INT UNSIGNED AUTO_INCREMENT
   COMMENT '自增ID'
     PRIMARY KEY,
@@ -22,11 +23,13 @@ CREATE TABLE IF NOT EXISTS blog_user (
   UNIQUE (contact)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户信息';
 -- 新增用户
-INSERT INTO blog_user VALUES (NULL, 'admin', '123456', '测试用户', NULL, NULL);
+INSERT INTO blog_user VALUES (NULL, 'admin', '123456', '测试用户', NULL, NULL, NULL, NULL);
+
 
 
 -- 创建文章表
-CREATE TABLE IF NOT EXISTS blog_article (
+DROP TABLE IF EXISTS `blog_article`;
+CREATE TABLE `blog_article` (
   article_id    INT UNSIGNED AUTO_INCREMENT
   COMMENT '文章ID'
     PRIMARY KEY,
@@ -49,7 +52,8 @@ CREATE TABLE IF NOT EXISTS blog_article (
 
 
 -- 创建评论表
-CREATE TABLE IF NOT EXISTS blog_comment (
+DROP TABLE IF EXISTS `blog_comment`;
+CREATE TABLE `blog_comment` (
   id                  INT UNSIGNED AUTO_INCREMENT
   COMMENT '自增ID'
     PRIMARY KEY,
