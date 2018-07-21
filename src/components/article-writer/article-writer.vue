@@ -191,7 +191,7 @@
             this.isLoaded = true
             this.imgUrl = this.article.img
             this.styleObject = {
-              background: `url(${res.data.data[0].img}) no-repeat center / cover`,
+              background: `url(${this.article.img}) no-repeat center / cover`,
               borderRadius: '3px'
             }
             if (this.imgUrl) {

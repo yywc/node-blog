@@ -34,9 +34,6 @@
         title: '0'
       }
     },
-    created() {
-      this.getArticles()
-    },
     watch: {
       '$route.params.title': {
         handler: function (val) {

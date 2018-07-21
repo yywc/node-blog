@@ -10,10 +10,10 @@ const config = {
   // 数据库配置
   DATABASE_CONFIG: {
     DATABASE: production ? 'nodeblog' : 'nodeblog',
-    USERNAME: production ? 'bloguser' : 'bloguser',
-    PASSWORD: production ? '123456' : '123456',
+    USERNAME: production ? 'bloguser' : 'root',
+    PASSWORD: production ? '123456' : '1234',
     PORT: '3306',
-    HOST: production ? '119.29.101.186' : '119.29.101.186',
+    HOST: production ? '119.29.101.186' : 'localhost',
     MULTIPLE_STATEMENTS: true,
     DATE_STRINGS: true
   },

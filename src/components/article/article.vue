@@ -99,8 +99,7 @@
   import TheComment from './the-comment'
   import CommentItem from './comment-item'
   import Pagination from '@/common/pagination/pagination'
-  import { getArticle, updateCommentCount } from '@/api/index'
-  import { mapMutations } from 'vuex'
+  import { getArticle } from '@/api/index'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
   import { setDataV } from '@/assets/js/util'
@@ -156,13 +155,20 @@
             }
           })
         }
+      },
+      '$route.params.id': {
+        handler: function (val, oldVal) {
+          if (val && val !== oldVal) {
+            this.init()
+          }
+        },
+        // 深度观察
+        deep: true
       }
     },
     created() {
-      this.articleId = parseInt(this.$route.params.id)
       this.init()
-      this._getArticle(this.articleId, 1, PAGE_COUNT)
-      updateCommentCount(this.articleId).then()
+      // updateCommentCount(this.articleId).then()
       this.$nextTick(() => {
         setDataV(document.getElementById('breadcrumb'))
       })
@@ -176,6 +182,8 @@
         e.currentTarget.src = ''
       },
       init() {
+        this.articleId = parseInt(this.$route.params.id)
+        this._getArticle(this.articleId, 1, PAGE_COUNT)
         this.md = new MarkdownIt({
           highlight: (str, lang) => {
             if (lang && hljs.getLanguage(lang)) {
@@ -193,31 +201,34 @@
       _getArticle(articleId, page, pageCount, direction) {
         getArticle(articleId, page, pageCount, direction)
           .then((res) => {
-            this.article = res.data.data.article
-            this.updateArticleTime()
-            if (res.data.data.comment.length > 0) {
-              this.showComment = true
+            if (res.data.data.article) {
+              this.article = res.data.data.article
+              if (direction) {
+                // 只需要得到上下文章的ID就可以了
+                this.$router.push('/article/' + this.article.article_id)
+                return
+              }
+              this.showComment = !!res.data.data.comment.length
               this.commentList = res.data.data.comment
-            }
-            this.page = res.data
-            this.showImg = !!this.article.img
-            this.styleObject = {
-              marginTop: `20px`,
-              height: `240px`,
-              background: `url(${this.article.img}) no-repeat center / cover`,
-              borderRadius: '5px'
-            }
-            if (direction) {
-              this.$router.push('/article/' + this.article.article_id)
+              this.page = res.data
+              this.showImg = !!this.article.img
+              this.styleObject = {
+                marginTop: `20px`,
+                height: `240px`,
+                background: `url(${this.article.img}) no-repeat center / cover`,
+                borderRadius: '5px'
+              }
+            } else {
+              this.$message({
+                message: '没有更多文章了',
+                type: 'info'
+              })
             }
           })
           .catch((e) => {
             console.error('内部错误: ' + e.toString())
           })
-      },
-      ...mapMutations({
-        updateArticleTime: 'SET_UPDATE_ARTICLE_TIME'
-      })
+      }
     }
   }
 </script>

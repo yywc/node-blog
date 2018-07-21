@@ -75,7 +75,7 @@
       TheNav,
       SubHeader
     },
-    created() {
+    activated() {
       this._getTags()
       this._getAllArticle(this.currentPage, this.category, this.pageCount)
     },

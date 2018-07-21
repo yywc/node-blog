@@ -2,7 +2,7 @@
   <div id="app">
     <the-header v-if="login"></the-header>
     <div class="app-wrapper">
-      <keep-alive exclude="ArticleWriter,Article">
+      <keep-alive exclude="ArticleWriter">
         <router-view class="app-content"></router-view>
       </keep-alive>
     </div>

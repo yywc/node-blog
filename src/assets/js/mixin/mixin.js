@@ -16,13 +16,12 @@ const articleMixin = {
       currentPage: 1
     }
   },
-  created() {
+  activated() {
     this._getAllArticle(this.currentPage, this.category)
   },
   deactivated() {
     // 如果有翻页，则恢复到第一页并重新获取数据
     if (this.page.currentPage !== 1) {
-      this._getAllArticle(this.currentPage, this.category)
       // 更新 pagination 组件
       this.$refs.pagination.$children[0].handleCurrentChange(this.currentPage, this.category)
     }

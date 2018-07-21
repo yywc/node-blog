@@ -42,7 +42,7 @@
         return time | 0
       }
     },
-    created() {
+    activated() {
       this._getStatistics()
     },
     methods: {

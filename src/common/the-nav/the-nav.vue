@@ -47,8 +47,10 @@
 <script type="text/ecmascript-6">
   export default {
     name: 'TheNav',
-    created() {
-      this.extraSceneTrigger = 0
+    data() {
+      return {
+        extraSceneTrigger: 0
+      }
     },
     methods: {
       extraScene() {
@@ -57,9 +59,7 @@
           this.$alert('将子无怒，秋以为期', '眼已望穿', {
             showConfirmButton: false,
             center: true,
-            lockScroll: false,
-            callback: () => {
-            }
+            lockScroll: false
           })
         } else if (!this.extraSceneTimer) {
           this.extraSceneTimer = setTimeout(() => {

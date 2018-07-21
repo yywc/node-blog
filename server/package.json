@@ -4,10 +4,10 @@
   "description": "node-blog server",
   "main": "index.js",
   "scripts": {
-    "dev": "supervisor index.js",
     "start": "cross-env DEBUG=blog-server,blog-server:* NODE_ENV=development npm run dev",
-    "production": "pm2 start index.js --watch",
     "pro": "cross-env DEBUG=blog-server,blog-server:* NODE_ENV=production npm run production",
+    "dev": "supervisor index.js",
+    "production": "pm2 start index.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
