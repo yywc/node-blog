@@ -89,7 +89,6 @@
         } else {
           logout()
             .then((res) => {
-              console.log(res)
               if (res.code === 0) {
                 location.href = '/'
               } else {

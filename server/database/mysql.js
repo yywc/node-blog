@@ -191,7 +191,7 @@ const searchUser = function (ipAddress) {
 }
 
 // 更新阅读数
-const updateCommentCount = function (id) {
+const updateReadCount = function (id) {
   let sql = 'UPDATE `blog_article` SET `read_count` = `read_count` + 1 WHERE `article_id`=?;'
   return query(sql, [id])
 }
@@ -212,5 +212,5 @@ module.exports = {
   addComment,
   addUser,
   searchUser,
-  updateCommentCount
+  updateReadCount
 }

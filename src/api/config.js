@@ -13,7 +13,7 @@ const config = {
   pageTurning: '/api/page-turning',
   addComment: '/api/add-comment',
   checkUser: '/api/check-user',
-  updateCommentCount: '/api/update-comment-count'
+  updateCommentCount: '/api/update-read-count'
 }
 
 export default config

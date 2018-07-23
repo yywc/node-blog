@@ -11,7 +11,7 @@ router.post('/add-article', controllers.article.addArticle)
 router.post('/delete-article', controllers.article.deleteArticle)
 router.post('/upload-img', controllers.uploadImg)
 router.post('/add-comment', controllers.addComment)
-router.post('/update-comment-count', controllers.updateCommentCount)
+router.post('/update-read-count', controllers.updateReadCount)
 
 // get 请求
 router.get('/logout', controllers.logout)

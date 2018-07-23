@@ -290,11 +290,11 @@ const checkUser = function () {
 }
 
 /**
- * 更新文章评论数
+ * 更新文章阅读数
  * @param articleId 文章ID
  * @returns {Promise<AxiosResponse<any>>}
  */
-const updateCommentCount = function (articleId) {
+const updateReadCount = function (articleId) {
   const url = config.updateCommentCount
   const data = {
     articleId
@@ -324,5 +324,5 @@ export {
   pageTurning,
   addComment,
   checkUser,
-  updateCommentCount
+  updateReadCount
 }

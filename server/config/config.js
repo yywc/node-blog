@@ -24,7 +24,7 @@ const config = {
     domain: production ? 'iwangshu.com' : '', // 写cookie所在的域名
     httpOnly: true, // 是否只用于http请求中获取
     overwrite: true, // 是否允许重写
-    secure: production ? '' : '',
+    secure: production ? true : '',
     sameSite: production ? 'Strict' : '',
     signed: ''
   }

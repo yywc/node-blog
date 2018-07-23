@@ -7,7 +7,7 @@ const debug = require('debug')('blog-server:update-comment-count')
 module.exports = async (ctx) => {
   const { articleId } = ctx.request.body
   try {
-    await mysql.updateCommentCount(articleId)
+    await mysql.updateReadCount(articleId)
     ctx.state.data = {
       msg: '更新评论数量成功'
     }

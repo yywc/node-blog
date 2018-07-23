@@ -99,7 +99,7 @@
   import TheComment from './the-comment'
   import CommentItem from './comment-item'
   import Pagination from '@/common/pagination/pagination'
-  import { getArticle } from '@/api/index'
+  import { getArticle, updateReadCount } from '@/api/index'
   import MarkdownIt from 'markdown-it'
   import hljs from 'highlight.js'
   import { setDataV } from '@/assets/js/util'
@@ -183,6 +183,8 @@
       },
       init() {
         this.articleId = parseInt(this.$route.params.id)
+        // 每次进入文章页更新当前文章ID的阅读量
+        updateReadCount(this.articleId).then()
         this._getArticle(this.articleId, 1, PAGE_COUNT)
         this.md = new MarkdownIt({
           highlight: (str, lang) => {
@@ -212,11 +214,13 @@
               this.commentList = res.data.data.comment
               this.page = res.data
               this.showImg = !!this.article.img
-              this.styleObject = {
-                marginTop: `20px`,
-                height: `240px`,
-                background: `url(${this.article.img}) no-repeat center / cover`,
-                borderRadius: '5px'
+              if (this.showImg) {
+                this.styleObject = {
+                  marginTop: `20px`,
+                  height: `240px`,
+                  background: `url(${this.article.img}) no-repeat center / cover`,
+                  borderRadius: '5px'
+                }
               }
             } else {
               this.$message({
