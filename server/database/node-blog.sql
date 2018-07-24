@@ -33,7 +33,7 @@ CREATE TABLE `blog_article` (
   article_id    INT UNSIGNED AUTO_INCREMENT
   COMMENT '文章ID'
     PRIMARY KEY,
-  title         VARCHAR(32)                         NOT NULL
+  title         VARCHAR(100)                         NOT NULL
   COMMENT '文章标题',
   content       TEXT                                NOT NULL
   COMMENT '文章内容',

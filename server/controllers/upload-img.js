@@ -39,7 +39,8 @@ module.exports = async (ctx) => {
   let req = ctx.req
   let busboy = new Busboy({ headers: req.headers })
 
-  let filePath = path.join('/ftpfile', 'image')
+  const relativePath = 'blog-img/' + new Date().getFullYear() + (new Date().getMonth() + 1).toString().padStart(2, '0')
+  let filePath = path.join('/ftpfile', relativePath)
   mkdirsSync(filePath)
 
   ctx.body = await new Promise((resolve, reject) => {
@@ -52,7 +53,14 @@ module.exports = async (ctx) => {
 
     // 解析请求文件事件
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-      let fileName = Math.random().toString(16).substr(2) + '.' + getSuffixName(filename)
+      const date = new Date()
+      const theFileName = (date.getMonth() + 1).toString().padStart(2, '0') +
+        date.getDate() +
+        date.getHours().toString().padStart(2, '0') +
+        date.getMinutes() +
+        date.getSeconds().toString().padStart(2, '0') +
+        date.getMilliseconds() + ''
+      let fileName = theFileName + '.' + getSuffixName(filename)
       let _uploadFilePath = path.join(filePath, fileName)
       let saveTo = path.join(_uploadFilePath)
 
@@ -64,7 +72,7 @@ module.exports = async (ctx) => {
         result.success = true
         result.message = '文件上传成功'
         result.data = {
-          pictureUrl: `https://img.${ctx.host}/image/${fileName}`
+          pictureUrl: `https://img.${ctx.host}/${relativePath}/${fileName}`
         }
         debug('文件上传成功...')
         resolve(result)

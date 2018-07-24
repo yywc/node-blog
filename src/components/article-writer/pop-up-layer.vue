@@ -40,7 +40,7 @@
           <i class="el-icon-plus"></i>
           添加标签
         </button>
-        <div class="tag-wrapper">
+        <div class="tag-wrapper" v-if="tagList.length > 0">
           <div
             class="tag-check"
             v-for="(name, index) in tagList"
