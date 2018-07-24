@@ -298,7 +298,7 @@
       .upload-img
         position: relative
         margin-top: 20px
-        height: 240px
+        height: 290px
         .icon-wrapper
           position: absolute
           right: 0

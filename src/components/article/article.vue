@@ -217,7 +217,7 @@
               if (this.showImg) {
                 this.styleObject = {
                   marginTop: `20px`,
-                  height: `240px`,
+                  height: `290px`,
                   background: `url(${this.article.img}) no-repeat center / cover`,
                   borderRadius: '5px'
                 }
