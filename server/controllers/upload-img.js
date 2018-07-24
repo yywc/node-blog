@@ -55,9 +55,9 @@ module.exports = async (ctx) => {
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
       const date = new Date()
       const theFileName = (date.getMonth() + 1).toString().padStart(2, '0') +
-        date.getDate() +
+        date.getDate().toString().padStart(2, '0') +
         date.getHours().toString().padStart(2, '0') +
-        date.getMinutes() +
+        date.getMinutes().toString().padStart(2, '0') +
         date.getSeconds().toString().padStart(2, '0') +
         date.getMilliseconds() + ''
       let fileName = theFileName + '.' + getSuffixName(filename)
