@@ -80,10 +80,22 @@
           }
         }
       }
+      const validateNickname = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('昵称不能为空'))
+        } else {
+          if (value.length < 16) {
+            callback()
+          } else {
+            callback(new Error('昵称长度不能超过16个字符'))
+          }
+        }
+      }
       return {
         rules: {
           nickname: [
-            { required: true, message: '昵称不能为空' }
+            { required: true, message: '昵称不能为空' },
+            { validator: validateNickname, trigger: 'blur' }
           ],
           contact: [
             { required: true, message: '联系方式不能为空' },

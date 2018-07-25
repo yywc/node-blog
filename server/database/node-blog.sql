@@ -8,7 +8,7 @@ CREATE TABLE `blog_user` (
   COMMENT '登录名',
   password    VARCHAR(16)                         NULL
   COMMENT '登录密码',
-  nickname    VARCHAR(8)                          NOT NULL
+  nickname    VARCHAR(16)                          NOT NULL
   COMMENT '用户昵称',
   contact     VARCHAR(20)                         NULL,
   ip_address  VARCHAR(16)                         NULL
