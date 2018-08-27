@@ -1,5 +1,5 @@
 # node-blog
-浅入深出 vue + node.js + koa2 + mysql 搭建前后端分离单人博客项目。[预览地址](iwangshu.com)
+浅入深出 vue + node.js + koa2 + mysql 搭建前后端分离单人博客项目。[预览地址](https://iwangshu.com)
 
 # 使用方式
 
