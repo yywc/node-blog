@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    // 允许从没有默认导出的模块中默认导入
+    "allowSyntheticDefaultImports": true,
+    // 指定设置编译后的js代码使用的模块规范
+    "baseUrl": "./",
+    // 当前语言
+    "module": "commonjs",
+    // 报错时不生成输出文件
+    "noEmitOnError": true,
+    // 若有未使用的局部变量则抛错
+    "noUnusedLocals": true,
+    // 若有未使用的参数则抛错
+    "noUnusedParameters": true,
+    // 生成文件放入 dist 目录
+    "outDir": "./dist",
+    // 模块名到基于 baseUrl的路径映射的列表
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    // 移除注释
+    "removeComments": true,
+    // 生成相应的 .map文件
+    "sourceMap": true,
+    // 启用严格模式
+    "strict": true,
+    // 编译后代码遵循规范
+    "target": "es6",
+    // 要包含的类型声明文件路径列表
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  // 打包 src 目录下的文件
+  "include": [
+    "src/**/*"
+  ],
+  // 排除 node_modules 目录下的文件
+  "exclude": [
+    "node_modules"
+  ]
+}

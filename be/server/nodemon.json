@@ -1,0 +1,20 @@
+{
+  "restartable": "rs",
+  "colours": true,
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "./test"
+  ],
+  "watch": ["./src/**/*"],
+  "verbose": true,
+  "execMap": {
+    "ts": "ts-node -r tsconfig-paths/register"
+  },
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": "3000"
+  },
+  "ext": "ts",
+  "delay": 2.5
+}
