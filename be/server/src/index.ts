@@ -1,12 +1,10 @@
 import * as Koa from 'koa';
-import * as Router from 'koa-router';
 import * as KoaBodyParser from 'koa-bodyparser';
-import config from './common/config';
-import util from './common/util';
-import ApiController from './api/controller';
+import Config from './common/config';
+import Util from './common/util';
+import Router from './router';
 
 const app = new Koa();
-const router = new Router();
 
 app.on('error', (err, ctx): void => {
   console.error('server error', err, ctx);
@@ -18,20 +16,18 @@ app.use(KoaBodyParser());
 
 app.use(async (ctx, next): Promise<void> => {
   Object.assign(ctx, {
-    service: config.service,
-    util,
+    service: Config.service,
+    util: Util,
   });
   await next();
 });
 
 // 路由配置
-(async (): Promise<void> => {
-  const controller = await ApiController();
-  router.all('/api', controller);
-  app.use(router.routes());
-})();
+app
+  .use(Router.instance.routes())
+  .use(Router.instance.allowedMethods());
 
 // 开启端口
-app.listen(config.port, (): void => {
-  console.log(`start blog-server and listen at:  ${config.port}`);
+app.listen(Config.port, (): void => {
+  console.log(`start blog-server and listen at:  ${Config.port}`);
 });

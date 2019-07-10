@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "description": "node blog server",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon --config ./nodemon.json src/index.ts",
-    "build": "tsc"
+    "build": "rm -rf dist && tsc",
+    "start": "node dist/index.js"
   },
   "keywords": [
     "seneca",

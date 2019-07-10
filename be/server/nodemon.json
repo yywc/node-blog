@@ -9,11 +9,11 @@
   "watch": ["./src/**/*"],
   "verbose": true,
   "execMap": {
-    "ts": "ts-node -r tsconfig-paths/register"
+    "ts": "ts-node"
   },
   "env": {
     "NODE_ENV": "development",
-    "PORT": "3000"
+    "PORT": 3000
   },
   "ext": "ts",
   "delay": 2.5

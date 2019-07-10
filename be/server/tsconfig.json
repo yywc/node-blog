@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-    // 允许从没有默认导出的模块中默认导入
-    "allowSyntheticDefaultImports": true,
-    // 指定设置编译后的js代码使用的模块规范
-    "baseUrl": "./",
+    // 映射路径的基础路径
+    "baseUrl": ".",
     // 当前语言
     "module": "commonjs",
     // 报错时不生成输出文件
@@ -13,12 +11,10 @@
     // 若有未使用的参数则抛错
     "noUnusedParameters": true,
     // 生成文件放入 dist 目录
-    "outDir": "./dist",
-    // 模块名到基于 baseUrl的路径映射的列表
+    "outDir": "dist",
+    // 映射路径
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "ctx": ["src/@types"],
     },
     // 移除注释
     "removeComments": true,

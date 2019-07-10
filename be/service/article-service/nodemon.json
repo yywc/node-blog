@@ -13,7 +13,7 @@
   },
   "env": {
     "NODE_ENV": "development",
-    "PORT": "10101"
+    "PORT": 10101
   },
   "ext": "ts",
   "delay": 2.5

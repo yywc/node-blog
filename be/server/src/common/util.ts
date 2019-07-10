@@ -1,7 +1,10 @@
 import { ResponseJSON } from 'ctx';
 
-export default {
-  responseJSON(code: number, msg: string, data: Record<string, any>): ResponseJSON {
+export default class Util {
+  public static responseJSON(
+    code: number,
+    msg: string,
+    data?: Record<string, any>): ResponseJSON {
     const result: ResponseJSON = {
       code,
       msg,
@@ -10,5 +13,5 @@ export default {
       result.data = data;
     }
     return result;
-  },
-};
+  }
+}

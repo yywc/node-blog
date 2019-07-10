@@ -10,6 +10,8 @@ declare module 'ctx' {
 
   export interface Ctx extends ParameterizedContext {
     service: Record<string, Instance>;
-    util: ResponseJSON;
+    util: {
+      responseJSON: (code: number, msg: string, data?: Record<string, any>) => ResponseJSON;
+    };
   }
 }
