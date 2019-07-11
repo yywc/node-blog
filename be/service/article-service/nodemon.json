@@ -9,7 +9,7 @@
   "watch": ["./src/**/*"],
   "verbose": true,
   "execMap": {
-    "ts": "ts-node -r tsconfig-paths/register"
+    "ts": "ts-node"
   },
   "env": {
     "NODE_ENV": "development",

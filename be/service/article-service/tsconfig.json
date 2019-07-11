@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    // 允许从没有默认导出的模块中默认导入
-    "allowSyntheticDefaultImports": true,
     // 指定设置编译后的js代码使用的模块规范
     "baseUrl": "./",
     // 当前语言
@@ -16,8 +14,8 @@
     "outDir": "./dist",
     // 模块名到基于 baseUrl的路径映射的列表
     "paths": {
-      "@/*": [
-        "src/*"
+      "ctx": [
+        "src/@types"
       ]
     },
     // 移除注释
@@ -30,7 +28,8 @@
     "target": "es6",
     // 要包含的类型声明文件路径列表
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "src/@types"
     ]
   },
   // 打包 src 目录下的文件

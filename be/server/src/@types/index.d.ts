@@ -3,14 +3,14 @@ declare module 'ctx' {
   import { Instance } from 'seneca';
 
   export interface ResponseJSON {
-    code: number;
-    msg: string;
+    readonly code: number;
+    readonly msg: string;
     data?: Record<string, any>;
   }
 
   export interface Ctx extends ParameterizedContext {
-    service: Record<string, Instance>;
-    util: {
+    readonly service: Record<string, Instance>;
+    readonly util: {
       responseJSON: (code: number, msg: string, data?: Record<string, any>) => ResponseJSON;
     };
   }
