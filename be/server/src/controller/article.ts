@@ -1,5 +1,5 @@
 import { Ctx } from 'ctx';
-import { ArticleModel } from '../interface';
+import ArticleModel from '../interface/ArticleModel';
 
 const Article: ArticleModel = class {
   public static async getOne(ctx: Ctx): Promise<void> {

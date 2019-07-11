@@ -1,5 +1,5 @@
 import * as mysql from 'mysql';
-import Config from '../common/config';
+import Config from './config';
 
 type Query = (sql: string, values: any[]) => Promise<void>;
 

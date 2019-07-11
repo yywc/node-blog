@@ -1,6 +1,6 @@
 import * as KoaRouter from 'koa-router';
 import Controller from '../controller';
-import { ArticleModel } from '../interface';
+import ArticleModel from '../interface/ArticleModel';
 
 export default class Router {
   public static readonly instance = Router.initRouter();

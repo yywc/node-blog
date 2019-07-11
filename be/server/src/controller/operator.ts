@@ -1,4 +1,4 @@
-import { OperatorModel } from '../interface';
+import OperatorModel from '../interface/OperatorModel';
 
 const Operator: OperatorModel = class {
   public static login(): void {

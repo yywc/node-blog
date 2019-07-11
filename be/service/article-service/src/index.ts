@@ -1,6 +1,6 @@
 import * as Seneca from 'seneca';
 import Config from './common/config';
-import Database from './database';
+import Database from './common/database';
 import { Ctx } from 'ctx';
 import Controller from './controller';
 

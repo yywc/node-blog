@@ -1,6 +1,6 @@
 import { Ctx } from 'ctx';
 
-export interface ArticleModel {
+export default interface ArticleModel {
   getOne(ctx: Ctx): void;
 
   getSome(ctx: Ctx): void;
@@ -12,10 +12,4 @@ export interface ArticleModel {
   deleteOne(ctx: Ctx): void;
 
   createOne(ctx: Ctx): void;
-}
-
-export interface OperatorModel {
-  login(): void;
-
-  logout(): void;
 }
